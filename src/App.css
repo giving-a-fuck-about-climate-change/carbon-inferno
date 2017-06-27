@@ -22,3 +22,25 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.flex-grid {
+  display: flex;
+}
+.info-col {
+  flex: 1;
+  border: 1px dotted grey;
+  height: 300px;
+}
+
+.info-wrapper {
+  margin: 0 auto;
+}
+
+.stat-info {
+  font-size: 46px;
+}
+
+.sub-header {
+  font-size: 14px;
+  color: grey;
+}
