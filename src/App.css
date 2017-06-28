@@ -26,10 +26,11 @@
 .flex-grid {
   display: flex;
 }
+
 .info-col {
   flex: 1;
   border: 1px dotted grey;
-  height: 300px;
+  height: 150px;
 }
 
 .info-wrapper {
