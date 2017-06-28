@@ -91,7 +91,7 @@ class App extends Component {
          <InfoColDiv statInfo={ppmDiff} subHeader={diffPPMSubHeader}/>
          <InfoColDiv statInfo={ppmPercentDiff} subHeader={diffPercentSubHeader}/>
         </div>
-       <div style={{ width: '80%', margin: '0 auto'}}>
+       <div>
          <Line data={data} width={600} height={250}/>
       </div>
       </div>
