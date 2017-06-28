@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/lwm/carbon-inferno.svg?branch=master)](https://travis-ci.org/lwm/carbon-inferno)
+
 # carbon-inferno
 
 A [React.js] web application for interacting with climate change data. We pull
