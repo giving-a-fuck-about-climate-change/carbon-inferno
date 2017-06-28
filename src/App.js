@@ -90,10 +90,10 @@ class App extends Component {
          <InfoColDiv statInfo={todaysPpm} subHeader={globalSubHeader}/>
          <InfoColDiv statInfo={ppmDiff} subHeader={diffPPMSubHeader}/>
          <InfoColDiv statInfo={ppmPercentDiff} subHeader={diffPercentSubHeader}/>
-        </div>
+       </div>
        <div>
          <Line data={data} width={600} height={250}/>
-      </div>
+       </div>
       </div>
     );
   }
