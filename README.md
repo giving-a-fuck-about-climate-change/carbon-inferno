@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/lwm/carbon-inferno.svg?branch=master)](https://travis-ci.org/lwm/carbon-inferno)
+[![Build Status](https://travis-ci.org/giving-a-fuck-about-climate-change/carbon-inferno.svg?branch=master)](https://travis-ci.org/giving-a-fuck-about-climate-change/carbon-inferno)
 
 # carbon-inferno
 
