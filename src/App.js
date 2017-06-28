@@ -19,6 +19,21 @@ const diffPercentSubHeader = 'SINCE LAST WEEK (%)';
   );
  };
 
+
+ const TimeChoiceHeader = () => {
+  return (
+    <div className="time-choice-header">
+      <ul>
+        <li><a href="#TODO">1 Day</a></li>
+        <li><a href="#TODO">1 Week</a></li>
+        <li><a href="#TODO">1 Month</a></li>
+        <li><a href="#TODO">1 Year</a></li>
+        <li><a href="#TODO">All</a></li>
+      </ul>
+    </div>
+  );
+ };
+
 const calculateAverage = (arr) => {
   const totalAmount = arr.reduce((total, item) => {
     return total + item.ppm;
@@ -86,6 +101,9 @@ class App extends Component {
     const { todaysPpm, ppmDiff, ppmPercentDiff } = this.state;
     return (
       <div className="App">
+       <div className="flex-grid">
+         <TimeChoiceHeader/>
+       </div>
        <div className="flex-grid">
          <InfoColDiv statInfo={todaysPpm} subHeader={globalSubHeader}/>
          <InfoColDiv statInfo={ppmDiff} subHeader={diffPPMSubHeader}/>

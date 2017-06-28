@@ -1,3 +1,19 @@
+.time-choice-header{
+  margin-left: auto;
+  margin-right: 5px;
+}
+
+.time-choice-header ul{
+  margin: 5px;
+  padding: 0;
+}
+
+.time-choice-header ul li{
+  list-style: none;
+  display: inline;
+  margin-left: 5px;
+}
+
 .App {
   text-align: center;
   width: 80%;
