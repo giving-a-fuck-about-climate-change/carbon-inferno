@@ -19,7 +19,7 @@ export const weekData = {
 
 export const dayData = {
   "count": 14711,
-  "next": "http://carbondoomsday-test.herokuapp.com/api/measurements/co2/?limit=1&offset=1&ordering=-date",
+  "next": "http://carbondoomsday-test.herokuapp.com/api/co2/?limit=1&offset=1&ordering=-date",
   "previous": null,
   "results": [{
     "ppm": "408.35",
