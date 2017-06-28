@@ -26,7 +26,11 @@ const calculateAverage = (arr) => {
   return (totalAmount / arr.length);
 }
 
-const calculateDiff = (previous, current) => previous > current ? `- ${(previous - current).toFixed(2)}` : `+ ${(current - previous).toFixed(2)}`;
+const calculateDiff = (previous, current) => {
+  return previous > current ?
+    `- ${(previous - current).toFixed(2)}` :
+    `+ ${(current - previous).toFixed(2)}`;
+}
 
 const calculatePercentageDiff = (previous, current) => {
   const diff = ((previous/current) / previous) * 100;
