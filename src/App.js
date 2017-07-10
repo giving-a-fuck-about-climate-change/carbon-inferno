@@ -93,7 +93,7 @@ class App extends Component {
     this.state = {
       todaysPpm: `${currWeekStat} PPM`,
       ppmDiff: `${calculateDiff(lastWeekAverage, currWeekStat)} PPM`,
-      ppmPercentDiff: `${calculatePercentageDiff(lastWeekAverage, currWeekStat)} PPM`
+      ppmPercentDiff: `${calculatePercentageDiff(lastWeekAverage, currWeekStat)} %`
     };
   }
 
@@ -101,16 +101,16 @@ class App extends Component {
     const { todaysPpm, ppmDiff, ppmPercentDiff } = this.state;
     return (
       <div className="App">
-       <div className="flex-grid">
+       <div className="flex-grid-header">
          <TimeChoiceHeader/>
        </div>
        <div className="flex-grid">
-         <InfoColDiv statInfo={todaysPpm} subHeader={globalSubHeader}/>
-         <InfoColDiv statInfo={ppmDiff} subHeader={diffPPMSubHeader}/>
-         <InfoColDiv statInfo={ppmPercentDiff} subHeader={diffPercentSubHeader}/>
+           <InfoColDiv statInfo={todaysPpm} subHeader={globalSubHeader}/>
+           <InfoColDiv statInfo={ppmDiff} subHeader={diffPPMSubHeader}/>
+           <InfoColDiv statInfo={ppmPercentDiff} subHeader={diffPercentSubHeader}/>
        </div>
        <div>
-         <Line data={data} width={600} height={250}/>
+         <Line data={data} width={600} height={200}/>
        </div>
       </div>
     );

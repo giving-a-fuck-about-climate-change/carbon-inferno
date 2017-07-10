@@ -1,55 +1,87 @@
-.time-choice-header{
-  margin-left: auto;
-  margin-right: 5px;
+body {
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;
+  letter-spacing: 1px;
 }
 
-.time-choice-header ul{
+.time-choice-header {
+  position: relative;
+  display: flex;
+  margin-left: auto;
+  padding-bottom: 5px;
+  z-index: 1;
+}
+
+.time-choice-header ul {
   margin: 5px;
   padding: 0;
 }
 
-.time-choice-header ul li{
-  list-style: none;
+.time-choice-header li {
+  list-style-type: none;
+  font-size: 13px;
+  text-transform: uppercase;
   display: inline;
-  margin-left: 5px;
+  margin-left: 20px;
+}
+
+.time-choice-header a {
+  text-decoration: none;
+  color: #d3dbe1;
+  padding-bottom: 10px;
+}
+
+.time-choice-header a:active {
+  border-bottom: 2px solid #21a69c;
+  color: #355c73;
+  font-weight: bold;
+}
+
+.time-choice-header a:hover {
+  border-bottom: 2px solid #21a69c;
+  color: #355c73;
+  font-weight: bold;
+}
+
+.time-choice-header a:target {
+  border-bottom: 2px solid #21a69c;
+  color: #355c73;
+  font-weight: bold;
 }
 
 .App {
   text-align: center;
-  width: 80%;
-  margin: 0 auto;
-  margin-top: 30px;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  margin: 30px auto;
 }
 
 .flex-grid {
   display: flex;
+  color: #355c73;
+  border-bottom: 2px dotted #d3dbe1;
+  padding: 30px 0;
+}
+
+.flex-grid-header {
+  display: flex;
+  color: #355c73;
+  border-bottom: 2px solid #d3dbe1;
 }
 
 .info-col {
   flex: 1;
-  border: 1px dotted grey;
-  height: 150px;
+  flex-flow: row wrap;
+  align-items: center;
+  height: 80px;
+  padding-top: 20px;
+  border-right: 2px solid #d3dbe1;
+  border-left: 2px solid #d3dbe1;
+}
+
+.info-col:first-child {
+  border: none;
+}
+
+.info-col:last-child {
+  border: none;
 }
 
 .info-wrapper {
@@ -57,10 +89,13 @@
 }
 
 .stat-info {
-  font-size: 46px;
+  font-size: 36px;
+  letter-spacing: 2.5px;
+  font-weight: 500;
 }
 
 .sub-header {
-  font-size: 14px;
-  color: grey;
+  font-size: 13px;
+  letter-spacing: 2.5px;
+  color: #d3dbe1;
 }
