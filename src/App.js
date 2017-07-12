@@ -30,11 +30,9 @@ const diffPercentSubHeader = 'SINCE LAST WEEK (%)';
  const Footer = () => {
     return (
         <div className="footer">
-            <div className="footer-section">
                 <ul>
                     <li className="footer-header">Global CO&#8322; Levels</li>
                 </ul>
-            </div>
             <div>
                 <ul>
                     <li className="footer-title">About The Project</li>
