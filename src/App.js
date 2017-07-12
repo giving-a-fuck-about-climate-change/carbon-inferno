@@ -19,6 +19,80 @@ const diffPercentSubHeader = 'SINCE LAST WEEK (%)';
   );
  };
 
+ const Header = () => {
+     return (
+         <div className="header">
+             Global CO&#8322; Levels
+         </div>
+     );
+ };
+
+ const Footer = () => {
+    return (
+        <div className="footer">
+                <ul>
+                    <li className="footer-header">Global CO&#8322; Levels</li>
+                </ul>
+            <div>
+                <ul>
+                    <li className="footer-title">About The Project</li>
+                    <li><a href="#TODO">Mission</a></li>
+                    <li><a href="#TODO">Data Sources</a></li>
+                    <li><a href="#TODO">In The News</a></li>
+                    <li><a href="#TODO">Team</a></li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li className="footer-title">Social</li>
+                    <li><a href="#TODO">Twitter</a></li>
+                    <li><a href="#TODO">Instagram</a></li>
+                    <li><a href="#TODO">Facebook</a></li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li className="footer-title">Contribute</li>
+                    <li><a href="#TODO">Donate</a></li>
+                    <li><a href="#TODO">Give Feedback</a></li>
+                </ul>
+            </div>
+        </div>
+    );
+ };
+
+ const Resources = () => {
+     return (
+         <div className="resources-container">
+             <div className="resources-section">
+                 <ul>
+                     <li className="resources-title">Climate Change in the News</li>
+                     <li>(Newsfeed)</li>
+                 </ul>
+             </div>
+             <div className="resources-section">
+                 <ul>
+                     <li className="resources-title">Learn More</li>
+                     <li><a href="#TODO">Link</a></li>
+                     <li><a href="#TODO">Link</a></li>
+                     <li><a href="#TODO">Link</a></li>
+                     <li><a href="#TODO">Link</a></li>
+                     <li><a href="#TODO">Link</a></li>
+                 </ul>
+             </div>
+             <div className="resources-section">
+                 <ul>
+                     <li className="resources-title">Take Action</li>
+                     <li><a href="#TODO">Link</a></li>
+                     <li><a href="#TODO">Link</a></li>
+                     <li><a href="#TODO">Link</a></li>
+                     <li><a href="#TODO">Link</a></li>
+                     <li><a href="#TODO">Link</a></li>
+                 </ul>
+             </div>
+         </div>
+     );
+ };
 
  const TimeChoiceHeader = () => {
   return (
@@ -93,26 +167,33 @@ class App extends Component {
     this.state = {
       todaysPpm: `${currWeekStat} PPM`,
       ppmDiff: `${calculateDiff(lastWeekAverage, currWeekStat)} PPM`,
-      ppmPercentDiff: `${calculatePercentageDiff(lastWeekAverage, currWeekStat)} PPM`
+      ppmPercentDiff: `${calculatePercentageDiff(lastWeekAverage, currWeekStat)} %`
     };
   }
 
   render() {
     const { todaysPpm, ppmDiff, ppmPercentDiff } = this.state;
     return (
-      <div className="App">
-       <div className="flex-grid">
-         <TimeChoiceHeader/>
-       </div>
-       <div className="flex-grid">
-         <InfoColDiv statInfo={todaysPpm} subHeader={globalSubHeader}/>
-         <InfoColDiv statInfo={ppmDiff} subHeader={diffPPMSubHeader}/>
-         <InfoColDiv statInfo={ppmPercentDiff} subHeader={diffPercentSubHeader}/>
-       </div>
-       <div>
-         <Line data={data} width={600} height={250}/>
-       </div>
-      </div>
+    <div>
+        <div className="page-background">
+        <Header/>
+            <div className="App">
+                <div className="flex-grid-header">
+                    <TimeChoiceHeader/>
+                </div>
+            <div className="flex-grid">
+                <InfoColDiv statInfo={todaysPpm} subHeader={globalSubHeader}/>
+                <InfoColDiv statInfo={ppmDiff} subHeader={diffPPMSubHeader}/>
+                <InfoColDiv statInfo={ppmPercentDiff} subHeader={diffPercentSubHeader}/>
+            </div>
+                <div>
+                    <Line data={data} width={500} height={200}/>
+                </div>
+            </div>
+            <Resources/>
+        </div>
+        <Footer/>
+    </div>
     );
   }
 }
