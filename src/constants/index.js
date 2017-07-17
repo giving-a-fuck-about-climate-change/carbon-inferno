@@ -37,13 +37,13 @@ export const socialLinks = [
 ];
 
 export const contributingLinks = [
-  {href: '', className: 'footer-title', text: 'Contribue'},
+  {href: '', className: 'footer-title', text: 'Contribute'},
   { href: '#TODO', className: '', text: 'Donate'},
   { href: '#TODO', className: '', text: 'Give Feedback'},
 ];
 
 export const footerLinks = [
-  {href: '', className: 'footer-header', text: 'Global CO&#8322"; Levels'},
+  {href: '', className: 'footer-header', text: 'Global CO₂ Levels'},
 ];
 
 export const timeHeaderLinks = [
