@@ -5,9 +5,12 @@ const ListWrapper = ({ className, items}) => {
   return (
     <div className={className}>
       <ul>
-        {items.map((item) => {
+        {items.map((item, index) => {
           return (
-            <ListItem item= {item}/>
+            <ListItem
+              key={`item.text-${index}`}
+              item={item}
+            />
           );
         })}
       </ul>
