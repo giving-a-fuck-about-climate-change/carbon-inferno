@@ -15,13 +15,17 @@ import {
   calculateDiff,
   calculatePercentageDiff,
   getData,
+  todaysDate,
+  subDate,
 } from '../../utils';
+import { timeHeaderLinks } from '../../constants';
+
 
 const globalSubHeader = 'GLOBAL CO₂ LEVEL';
 const diffPPMSubHeader = 'SINCE LAST WEEK';
 const diffPercentSubHeader = 'SINCE LAST WEEK (%)';
 
-const dateRanger = 'http://127.0.0.1:8000/api/measurements/co2/?date__range=2017-07-10,2017-07-17';
+const dateRangQuery = (time) => `http://127.0.0.1:8000/api/measurements/co2/?date__range=${subDate(time)},${todaysDate()}`;
 const currentUrl = 'http://127.0.0.1:8000/api/measurements/co2/?ordering=-date?&limit=1';
 const data = {
   datasets: [
@@ -48,6 +52,26 @@ const data = {
   ]
 }
 
+const populateWithClicks = (dayFunc, weekFunc, monthFunc, yearFunc) => (item) => {
+  const { text } = item;
+  const contains = (time) => {
+    return text.toLowerCase().indexOf(time) !== -1;
+  };
+  if (contains('day')) {
+    return { ...item, onClick: dayFunc};
+  }
+  if (contains('week')) {
+    return { ...item, onClick: weekFunc};
+  }
+  if (contains('month')) {
+    return { ...item, onClick: monthFunc};
+  }
+  if (contains('year')) {
+    return { ...item, onClick: yearFunc};
+  }
+  return item;
+};
+
 const makeApiRequest = (successMethod, errorMethod, url) => {
    return apiRequest(url)
   .then(successMethod)
@@ -71,7 +95,6 @@ const updateUiWithApiResult = (apiResult) => (prevState) => {
     average,
     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
-
   }
 };
 
@@ -103,11 +126,11 @@ class App extends Component {
 
   componentDidMount() {
     makeApiRequest(this.updateWithApiCurrentSuccess, this.updateWithApiError, currentUrl)
-    .then(makeApiRequest(this.updateWithApiSuccess, this.updateWithApiError, dateRanger))
+    .then(makeApiRequest(this.updateWithApiSuccess, this.updateWithApiError, dateRangQuery('week')))
   }
 
-  updateUiAndMakeApiRequest = (url) => {
-    this.setState(updateLoadingState, () => makeApiRequest(this.updateWithApiSuccess, this.updateWithApiError, url));
+  updateUiAndMakeApiRequest = (url) => () => {
+    this.setState(updateLoadingState, () => makeApiRequest(this.updateWithApiSuccess, this.updateWithApiError, dateRangQuery(url)));
   }
 
   updateWithApiCurrentSuccess = (apiResult) => {
@@ -130,7 +153,8 @@ class App extends Component {
         <Header/>
         <div className="App">
           <div className="flex-grid-header">
-            <TimeChoiceHeader/>
+            <TimeChoiceHeader
+              timeHeaderLinks={timeHeaderLinks.map(populateWithClicks(this.updateUiAndMakeApiRequest('day'), this.updateUiAndMakeApiRequest('week'), this.updateUiAndMakeApiRequest('month'), this.updateUiAndMakeApiRequest('year')))}/>
           </div>
           <div className="flex-grid">
             <InfoColumn statInfo={`${currentPPM} PPM`} subHeader={globalSubHeader}/>
