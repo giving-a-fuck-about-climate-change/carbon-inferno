@@ -1,3 +1,4 @@
+import moment from 'moment'
 
 export const calculateAverage = (arr) => {
   const totalAmount = arr.reduce((total, item) => {
@@ -21,3 +22,7 @@ export const getData = (label, weekData) => {
   const { results } = weekData;
   return results.map((data) => data[label]);
 }
+
+export const todaysDate = () => moment().format('YYYY-MM-DD');
+
+export const subDate = (range) => moment().subtract(1, range).format('YYYY-MM-DD');
