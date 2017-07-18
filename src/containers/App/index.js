@@ -18,7 +18,7 @@ import {
   getData,
 } from '../../utils';
 
-const globalSubHeader = 'GLOBAL CO2 LEVEL';
+const globalSubHeader = 'GLOBAL CO₂ LEVEL';
 const diffPPMSubHeader = 'SINCE LAST WEEK';
 const diffPercentSubHeader = 'SINCE LAST WEEK (%)';
 

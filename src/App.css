@@ -1,5 +1,5 @@
 body {
-  font-family: ".SF NS Display", "Hiragino Sans", -apple-system, sans-serif;
+  font-family: "Avenir Next", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   letter-spacing: 1px;
   margin: 0;
 }
@@ -14,7 +14,7 @@ body {
 .header {
   font-size: 30px;
   text-transform: uppercase;
-  font-weight: 200;
+  font-weight: 300;
   letter-spacing: 1px;
   color: #FFFFFF;
   padding-top: 20px;
@@ -26,7 +26,8 @@ body {
   flex-wrap: wrap;
   justify-content: space-around;
   background-color: #FFFFFF;
-  padding: 0 30px;
+  padding: 50px 0 70px 0;
+  line-height: 1.6;
 }
 
 .footer ul {
@@ -71,8 +72,8 @@ body {
 
 .resources-section {
    width: 100%;
-   border-top: 3px solid #ffffff;
-   border-bottom: 3px solid #ffffff;
+   border-top: 2px solid #ffffff;
+   border-bottom: 2px solid #ffffff;
    margin-right: 15px;
    margin-bottom: 40px;
    font-size: 12px;
@@ -88,9 +89,7 @@ body {
 
 .resources-section a {
   font-size: 12px;
-  font-weight: 200;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
   color: #FFFFFF;
 }
 
@@ -137,7 +136,7 @@ body {
 .time-choice-header a {
   text-decoration: none;
   color: #D0C0D5;
-  padding-bottom: 14px;
+  padding-bottom: 11px;
 }
 
 .time-choice-header a:hover,
@@ -145,7 +144,7 @@ body {
 .time-choice-header a:target {
   color: #355c73;
   font-weight: bold;
-  border-bottom: 2px solid #1BA69C;
+  border-bottom: 1px solid #1BA69C;
 }
 
 .App {
@@ -153,30 +152,31 @@ body {
   text-align: center;
   margin: 30px auto;
   padding: 20px;
-  border-radius: 3px;
+  border-radius: 5px;
 }
 
 .flex-grid {
   display: flex;
   color: #365C73;
   padding: 30px 0;
-  border-bottom: 2px dotted #D0C0D5;
+  border-bottom: 2px dotted #DAE1E9;
 }
 
 .flex-grid-header {
   display: flex;
   color: #365C73;
-  border-bottom: 2px solid #D0C0D5;
+  border-bottom: 1px solid #DAE1E9;
 }
 
 .info-col {
-  flex: 1;
+  flex: 1 1 auto;
   flex-flow: row wrap;
   align-items: center;
-  height: 80px;
-  padding-top: 20px;
-  border-right: 2px solid #D0C0D5;
-  border-left: 2px solid #D0C0D5;
+  height: 140px;
+  padding: 20px;
+  box-sizing: border-box;
+  border-left: 1px solid #DAE1E9;
+  border-right: 1px solid #DAE1E9;
 }
 
 .info-col:first-child,
@@ -189,14 +189,48 @@ body {
 }
 
 .stat-info {
-  font-size: 36px;
+  font-size: 48px;
   font-weight: 400;
-  letter-spacing: 2.57px;
+}
+
+@media (max-width: 940px) {
+  .stat-info {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 850px) {
+  .stat-info {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 765px) {
+  .stat-info {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 705px) {
+  .stat-info {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 442px) {
+  .stat-info {
+    font-size: 14px;
+  }
+
+  .sub-header {
+    font-size: 10px;
+  }
 }
 
 .sub-header {
   color: #7A92A4;
+  font-weight: 400;
   font-size: 14px;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   padding-top: 10px;
 }
