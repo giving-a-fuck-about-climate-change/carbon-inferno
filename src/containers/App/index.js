@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
-import 'whatwg-fetch';
+import apiRequest from '../../utils/request';
 
 import '../../App.css';
 import { dayData, weekData } from '../../data'
@@ -49,6 +49,32 @@ const data = {
   ]
 }
 
+const makeApiRequest = (successMethod, errorMethod, url) => {
+   apiRequest(url)
+  .then(successMethod)
+  .catch(errorMethod);
+}
+
+const updateLoadingState = (prevState) => {
+  return {
+    loading: !prevState.loading,
+  };
+}
+
+const updateUiWithApiResult = (apiResult) => () => {
+  return {
+    loading: false,
+    stats: apiResult,
+  }
+};
+
+const updateUiWithApiError = (apiError) => () => {
+  return {
+    loading: false,
+    error: apiError,
+  }
+}
+
 class App extends Component {
 
   constructor(props) {
@@ -56,11 +82,28 @@ class App extends Component {
     const currWeekStat = dayData.results[0].ppm;
     const lastWeekAverage = calculateAverage(weekData.results);
     this.state = {
+      loading: true,
       todaysPpm: `${currWeekStat} PPM`,
       ppmDiff: `${calculateDiff(lastWeekAverage, currWeekStat)} PPM`,
-      ppmPercentDiff: `${calculatePercentageDiff(lastWeekAverage, currWeekStat)} %`
+      ppmPercentDiff: `${calculatePercentageDiff(lastWeekAverage, currWeekStat)} %`,
+      stats: [],
     };
   }
+
+  componentDidMount() {
+    makeApiRequest(this.updateWithApiSuccess, this.updateWithApiError, 'http://127.0.0.1:8000/api/measurements/co2/');
+  }
+
+  updateUiAndMakeApiRequest = (url) => {
+    this.setState(updateLoadingState, () => makeApiRequest(this.updateWithApiSuccess, this.updateWithApiError, url));
+  }
+
+  updateWithApiSuccess = (result) => {
+    console.log('calling set state');
+    this.setState(updateUiWithApiResult(result));
+  }
+
+  updateWithApiError = (error) => this.setState(updateUiWithApiError(error));
 
   render() {
     const { todaysPpm, ppmDiff, ppmPercentDiff } = this.state;
