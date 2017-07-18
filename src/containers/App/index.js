@@ -3,7 +3,6 @@ import { Line } from 'react-chartjs-2';
 import apiRequest from '../../utils/request';
 
 import '../../App.css';
-import { dayData, weekData } from '../../data'
 import {
   Footer,
   Header,
@@ -22,8 +21,9 @@ const globalSubHeader = 'GLOBAL CO₂ LEVEL';
 const diffPPMSubHeader = 'SINCE LAST WEEK';
 const diffPercentSubHeader = 'SINCE LAST WEEK (%)';
 
+const dateRanger = 'http://127.0.0.1:8000/api/measurements/co2/?date__range=2017-07-10,2017-07-17';
+const currentUrl = 'http://127.0.0.1:8000/api/measurements/co2/?ordering=-date?&limit=1';
 const data = {
-  labels: getData('date', weekData),
   datasets: [
     {
       label: 'PPM',
@@ -44,13 +44,12 @@ const data = {
       pointHoverBorderWidth: 2,
       pointRadius: 1,
       pointHitRadius: 10,
-      data: getData('ppm', weekData),
     }
   ]
 }
 
 const makeApiRequest = (successMethod, errorMethod, url) => {
-   apiRequest(url)
+   return apiRequest(url)
   .then(successMethod)
   .catch(errorMethod);
 }
@@ -61,12 +60,27 @@ const updateLoadingState = (prevState) => {
   };
 }
 
-const updateUiWithApiResult = (apiResult) => () => {
+const updateUiWithApiResult = (apiResult) => (prevState) => {
+  const { results } =  apiResult;
+  const { currentPPM } = prevState;
+  const average = calculateAverage(results);
   return {
     loading: false,
-    stats: apiResult,
+    ppms: getData('ppm', results),
+    dates: getData('date', results),
+    average,
+    ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
+    ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
+
   }
 };
+
+const updateUiWithApiCurrentResult = (result) => () => {
+  const { ppm } = result;
+  return {
+    currentPPM: ppm,
+  };
+}
 
 const updateUiWithApiError = (apiError) => () => {
   return {
@@ -79,34 +93,37 @@ class App extends Component {
 
   constructor(props) {
     super(props)
-    const currWeekStat = dayData.results[0].ppm;
-    const lastWeekAverage = calculateAverage(weekData.results);
     this.state = {
       loading: true,
-      todaysPpm: `${currWeekStat} PPM`,
-      ppmDiff: `${calculateDiff(lastWeekAverage, currWeekStat)} PPM`,
-      ppmPercentDiff: `${calculatePercentageDiff(lastWeekAverage, currWeekStat)} %`,
-      stats: [],
+      currentPPM: 0,
+      ppms: [],
+      dates: []
     };
   }
 
   componentDidMount() {
-    makeApiRequest(this.updateWithApiSuccess, this.updateWithApiError, 'http://127.0.0.1:8000/api/measurements/co2/');
+    makeApiRequest(this.updateWithApiCurrentSuccess, this.updateWithApiError, currentUrl)
+    .then(makeApiRequest(this.updateWithApiSuccess, this.updateWithApiError, dateRanger))
   }
 
   updateUiAndMakeApiRequest = (url) => {
     this.setState(updateLoadingState, () => makeApiRequest(this.updateWithApiSuccess, this.updateWithApiError, url));
   }
 
+  updateWithApiCurrentSuccess = (apiResult) => {
+    const { results } = apiResult;
+    this.setState(updateUiWithApiCurrentResult(results[0]));
+  }
+
   updateWithApiSuccess = (result) => {
-    console.log('calling set state');
     this.setState(updateUiWithApiResult(result));
   }
 
   updateWithApiError = (error) => this.setState(updateUiWithApiError(error));
 
   render() {
-    const { todaysPpm, ppmDiff, ppmPercentDiff } = this.state;
+    const { currentPPM, ppmDiff, ppmPercentDiff, ppms, dates } = this.state;
+    const dataset = data.datasets[0];
     return (
     <div>
       <div className="page-background">
@@ -116,12 +133,12 @@ class App extends Component {
             <TimeChoiceHeader/>
           </div>
           <div className="flex-grid">
-            <InfoColumn statInfo={todaysPpm} subHeader={globalSubHeader}/>
+            <InfoColumn statInfo={`${currentPPM} PPM`} subHeader={globalSubHeader}/>
             <InfoColumn statInfo={ppmDiff} subHeader={diffPPMSubHeader}/>
             <InfoColumn statInfo={ppmPercentDiff} subHeader={diffPercentSubHeader}/>
           </div>
           <div>
-            <Line data={data} width={500} height={200}/>
+            <Line data={{...data, labels: dates, datasets: [{...dataset, data: ppms}] }} width={500} height={200}/>
           </div>
         </div>
         <Resources/>

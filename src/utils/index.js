@@ -1,8 +1,8 @@
 import moment from 'moment'
 
-export const calculateAverage = (arr) => {
+export const calculateAverage = (arr = []) => {
   const totalAmount = arr.reduce((total, item) => {
-    return total + item.ppm;
+    return total + parseInt(item.ppm, 10);
   },0);
   return (totalAmount / arr.length);
 }
@@ -18,9 +18,8 @@ export const calculatePercentageDiff = (previous, current) => {
   return diff.toFixed(2);
 }
 
-export const getData = (label, weekData) => {
-  const { results } = weekData;
-  return results.map((data) => data[label]);
+export const getData = (label, statData = []) => {
+  return statData.map((data) => data[label]);
 }
 
 export const todaysDate = () => moment().format('YYYY-MM-DD');
