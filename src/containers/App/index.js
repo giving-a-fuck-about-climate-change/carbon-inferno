@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
 import apiRequest from '../../utils/request';
 
+import config from '../../config';
+
 import '../../App.css';
 import {
   Footer,
@@ -24,9 +26,10 @@ import { timeHeaderLinks } from '../../constants';
 const globalSubHeader = 'GLOBAL CO₂ LEVEL';
 const diffPPMSubHeader = 'SINCE LAST WEEK';
 const diffPercentSubHeader = 'SINCE LAST WEEK (%)';
+const { apiEndpoint } = config;
 
-const dateRangQuery = (time) => `http://127.0.0.1:8000/api/measurements/co2/?date__range=${subDate(time)},${todaysDate()}`;
-const currentUrl = 'http://127.0.0.1:8000/api/measurements/co2/?ordering=-date?&limit=1';
+const dateRangQuery = (time) => `${apiEndpoint}/api/co2/?date__range=${subDate(time)},${todaysDate()}`;
+const currentUrl = `${apiEndpoint}/api/co2/?ordering=-date?&limit=1`;
 const data = {
   datasets: [
     {
@@ -120,7 +123,10 @@ class App extends Component {
       loading: true,
       currentPPM: 0,
       ppms: [],
-      dates: []
+      dates: [],
+      ppmDiff: '',
+      ppmPercentDiff: '',
+      error: '',
     };
   }
 
@@ -129,7 +135,8 @@ class App extends Component {
     .then(makeApiRequest(this.updateWithApiSuccess, this.updateWithApiError, dateRangQuery('week')))
   }
 
-  updateUiAndMakeApiRequest = (url) => () => {
+  updateUiAndMakeApiRequest = (url) => (event) => {
+    event.preventDefault();
     this.setState(updateLoadingState, () => makeApiRequest(this.updateWithApiSuccess, this.updateWithApiError, dateRangQuery(url)));
   }
 
