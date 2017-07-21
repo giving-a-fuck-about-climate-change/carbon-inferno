@@ -9,13 +9,13 @@ export const calculateAverage = (arr = []) => {
 
 export const calculateDiff = (previous, current) => {
   return previous > current ?
-    `- ${(previous - current).toFixed(2)}` :
-    `+ ${(current - previous).toFixed(2)}`;
+    `- ${numChecker((previous - current).toFixed(2))}` :
+    `+ ${numChecker((current - previous).toFixed(2))}`;
 }
 
 export const calculatePercentageDiff = (previous, current) => {
   const diff = ((previous/current) / previous) * 100;
-  return diff.toFixed(2);
+  return numChecker(diff.toFixed(2));
 }
 
 export const getData = (label, statData = []) => {
@@ -25,3 +25,6 @@ export const getData = (label, statData = []) => {
 export const todaysDate = () => moment().format('YYYY-MM-DD');
 
 export const subDate = (range) => moment().subtract(1, range).format('YYYY-MM-DD');
+
+
+export const numChecker = (num) => isNaN(num) ? 0 : num;
