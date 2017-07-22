@@ -47,7 +47,6 @@ export const footerLinks = [
 ];
 
 export const timeHeaderLinks = [
-  { href: '#TODO', className: '', text: '1 Day'},
   { href: '#TODO', className: '', text: '1 Week'},
   { href: '#TODO', className: '', text: '1 Month'},
   { href: '#TODO', className: '', text: '1 Year'},
