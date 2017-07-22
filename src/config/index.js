@@ -9,7 +9,7 @@ const environment = {
     apiEndpoint: 'https://carbondoomsday-test.herokuapp.com',
   },
   production: {
-    apiEndpoint: 'https://carbondoomsday-test.herokuapp.com',
+    apiEndpoint: 'https://carbondoomsday.herokuapp.com',
   },
 }[process.env.NODE_ENV || 'development'];
 
