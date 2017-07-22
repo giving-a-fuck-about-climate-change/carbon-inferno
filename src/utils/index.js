@@ -14,7 +14,7 @@ export const calculateDiff = (previous, current) => {
 }
 
 export const calculatePercentageDiff = (previous, current) => {
-  const diff = ((previous/current) / previous) * 100;
+  const diff = ((previous - current) / previous) * 100;
   return numChecker(diff.toFixed(2));
 }
 

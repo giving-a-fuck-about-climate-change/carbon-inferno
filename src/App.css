@@ -141,8 +141,7 @@ body {
 }
 
 .time-choice-header a:hover,
-.time-choice-header a:visited,
-.time-choice-header a:target {
+.time-choice-header a:active {
   color: #355c73;
   font-weight: bold;
   border-bottom: 1px solid #1BA69C;
