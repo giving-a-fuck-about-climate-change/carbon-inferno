@@ -169,15 +169,15 @@ class App extends Component {
             <InfoColumn statInfo={ppmDiff} subHeader={diffPPMSubHeader}/>
             <InfoColumn statInfo={ppmPercentDiff} subHeader={diffPercentSubHeader}/>
           </div>
-          <div>
-            <Line data={{...data, labels: dates, datasets: [{...dataset, data: ppms}] }} width={500} height={200}/>
+          <div className="graph-container">
+            <Line data={{...data, labels: dates, datasets: [{...dataset, data: ppms}] }}/>
           </div>
         </div>
         <Resources/>
       </div>
       <Footer/>
     </div>
-    );
+  );
   }
 }
 

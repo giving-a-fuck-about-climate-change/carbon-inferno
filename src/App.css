@@ -18,6 +18,7 @@ body {
   letter-spacing: 1px;
   color: #FFFFFF;
   padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .footer {
@@ -67,7 +68,7 @@ body {
 
 .resources-container {
   display: flex;
-  flex-direction: row;
+  padding-top: 50px;
 }
 
 .resources-section {
@@ -153,6 +154,8 @@ body {
   margin: 30px auto;
   padding: 20px;
   border-radius: 5px;
+  margin: 0 auto;
+  width: 80%;
 }
 
 .flex-grid {
@@ -233,4 +236,9 @@ body {
   font-size: 14px;
   letter-spacing: 2px;
   padding-top: 10px;
+}
+
+.graph-container {
+  margin: 0 auto;
+  width: 80%;
 }
