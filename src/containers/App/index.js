@@ -173,7 +173,6 @@ class App extends Component {
             <Line data={{...data, labels: dates, datasets: [{...dataset, data: ppms}] }}/>
           </div>
         </div>
-        <Resources/>
       </div>
       <Footer/>
     </div>

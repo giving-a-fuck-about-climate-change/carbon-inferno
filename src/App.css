@@ -163,6 +163,7 @@ body {
   color: #365C73;
   padding: 30px 0;
   border-bottom: 2px dotted #DAE1E9;
+  padding-bottom: 20px;
 }
 
 .flex-grid-header {
