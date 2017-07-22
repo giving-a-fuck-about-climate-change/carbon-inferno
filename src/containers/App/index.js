@@ -9,7 +9,6 @@ import {
   Footer,
   Header,
   InfoColumn,
-  Resources,
   TimeChoiceHeader,
 } from '../../components'
 import {
@@ -43,15 +42,6 @@ const data = {
       borderDash: [],
       borderDashOffset: 0.0,
       borderJoinStyle: 'miter',
-      pointBorderColor: 'rgba(75,192,192,1)',
-      pointBackgroundColor: '#fff',
-      pointBorderWidth: 8,
-      pointHoverRadius: 2,
-      pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-      pointHoverBorderColor: 'rgba(220,220,220,1)',
-      pointHoverBorderWidth: 2,
-      pointRadius: 1,
-      pointHitRadius: 10,
     }
   ]
 }
@@ -79,6 +69,12 @@ const makeApiRequest = (successMethod, errorMethod, url) => {
   .catch(errorMethod);
 }
 
+const makeApiRequestWithCount = (successMethod, errorMethod, url) => (result) => {
+   return apiRequest(`${url}&limit=${result.count}`)
+  .then(successMethod)
+  .catch(errorMethod);
+}
+
 const updateLoadingState = (prevState) => {
   return {
     loading: !prevState.loading,
@@ -91,7 +87,7 @@ const updateUiWithApiResult = (apiResult) => (prevState) => {
   const average = calculateAverage(results);
   return {
     loading: false,
-    ppms: getData('ppm', results),
+    ppms: reverseArray(getData('ppm', results)),
     dates: reverseArray(getData('date', results)),
     average,
     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
@@ -138,6 +134,15 @@ class App extends Component {
     this.setState(updateLoadingState, () => makeApiRequest(this.updateWithApiSuccess, this.updateWithApiError, dateRangQuery(url)));
   }
 
+  updateUiAndMakeApiCountRequest = (url) => (event) => {
+    event.preventDefault();
+    this.setState(updateLoadingState, () => {
+      const urlEndpoint = dateRangQuery(url);
+      const successMethod = makeApiRequestWithCount(this.updateWithApiSuccess, this.updateWithApiError, urlEndpoint);
+      return makeApiRequest(successMethod, this.updateWithApiError, urlEndpoint);
+    });
+  }
+
   updateWithApiCurrentSuccess = (apiResult) => {
     const { results } = apiResult;
     this.setState(updateUiWithApiCurrentResult(results[0]));
@@ -159,7 +164,7 @@ class App extends Component {
         <div className="App">
           <div className="flex-grid-header">
             <TimeChoiceHeader
-              timeHeaderLinks={timeHeaderLinks.map(populateWithClicks(this.updateUiAndMakeApiRequest('week'), this.updateUiAndMakeApiRequest('month'), this.updateUiAndMakeApiRequest('year')))}/>
+              timeHeaderLinks={timeHeaderLinks.map(populateWithClicks(this.updateUiAndMakeApiRequest('week'), this.updateUiAndMakeApiRequest('month'), this.updateUiAndMakeApiCountRequest('year')))}/>
           </div>
           <div className="flex-grid">
             <InfoColumn statInfo={`${currentPPM} PPM`} subHeader={globalSubHeader}/>
