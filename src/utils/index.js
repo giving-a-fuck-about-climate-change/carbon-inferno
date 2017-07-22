@@ -28,3 +28,5 @@ export const subDate = (range) => moment().subtract(1, range).format('YYYY-MM-DD
 
 
 export const numChecker = (num) => isNaN(num) ? 0 : num;
+
+export const reverseArray = (arr = []) => arr.reverse();

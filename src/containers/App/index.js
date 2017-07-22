@@ -19,6 +19,7 @@ import {
   getData,
   todaysDate,
   subDate,
+  reverseArray
 } from '../../utils';
 import { timeHeaderLinks } from '../../constants';
 
@@ -94,7 +95,7 @@ const updateUiWithApiResult = (apiResult) => (prevState) => {
   return {
     loading: false,
     ppms: getData('ppm', results),
-    dates: getData('date', results),
+    dates: reverseArray(getData('date', results)),
     average,
     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
