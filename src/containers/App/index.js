@@ -24,8 +24,23 @@ import { timeHeaderLinks } from '../../constants';
 
 
 const globalSubHeader = 'GLOBAL CO₂ LEVEL';
-const diffPPMSubHeader = 'SINCE LAST WEEK';
-const diffPercentSubHeader = 'SINCE LAST WEEK (%)';
+
+const calculateSubHeader = (timePeriod) => {
+  const getHeader = (period) => {
+    return { ppmDiff: `SINCE LAST ${period}`, percentDiff: `SINCE LAST ${period} (%)` }
+  };
+  switch (timePeriod) {
+    case 'week':
+      return getHeader('week');
+    case 'month':
+      return getHeader('month');
+    case 'year':
+      return getHeader('year');
+    default:
+    return { ppmDiff: '', percentDiff: '' };
+  }
+};
+
 const { apiEndpoint } = config;
 
 const dateRangQuery = (time) => `${apiEndpoint}/api/co2/?date__range=${subDate(time)},${todaysDate()}`;
@@ -75,9 +90,12 @@ const makeApiRequestWithCount = (successMethod, errorMethod, url) => (result) =>
   .catch(errorMethod);
 }
 
-const updateLoadingState = (prevState) => {
+const updateLoadingState = (url) => (prevState) => {
   return {
     loading: !prevState.loading,
+    diffPPMSubHeader: calculateSubHeader(url).ppmDiff,
+    diffPercentSubHeader: calculateSubHeader(url).percentDiff,
+
   };
 }
 
@@ -121,6 +139,8 @@ class App extends Component {
       ppmDiff: '',
       ppmPercentDiff: '',
       error: '',
+      diffPPMSubHeader: calculateSubHeader('month').ppmDiff,
+      diffPercentSubHeader: calculateSubHeader('month').percentDiff,
     };
   }
 
@@ -131,12 +151,12 @@ class App extends Component {
 
   updateUiAndMakeApiRequest = (url) => (event) => {
     event.preventDefault();
-    this.setState(updateLoadingState, () => makeApiRequest(this.updateWithApiSuccess, this.updateWithApiError, dateRangQuery(url)));
+    this.setState(updateLoadingState(url), () => makeApiRequest(this.updateWithApiSuccess, this.updateWithApiError, dateRangQuery(url)));
   }
 
   updateUiAndMakeApiCountRequest = (url) => (event) => {
     event.preventDefault();
-    this.setState(updateLoadingState, () => {
+    this.setState(updateLoadingState(url), () => {
       const urlEndpoint = dateRangQuery(url);
       const successMethod = makeApiRequestWithCount(this.updateWithApiSuccess, this.updateWithApiError, urlEndpoint);
       return makeApiRequest(successMethod, this.updateWithApiError, urlEndpoint);
@@ -155,7 +175,7 @@ class App extends Component {
   updateWithApiError = (error) => this.setState(updateUiWithApiError(error));
 
   render() {
-    const { currentPPM, ppmDiff, ppmPercentDiff, ppms, dates } = this.state;
+    const { currentPPM, ppmDiff, ppmPercentDiff, ppms, dates, diffPPMSubHeader, diffPercentSubHeader } = this.state;
     const dataset = data.datasets[0];
     return (
     <div>

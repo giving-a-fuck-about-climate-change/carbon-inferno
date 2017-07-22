@@ -237,6 +237,7 @@ body {
   font-size: 14px;
   letter-spacing: 2px;
   padding-top: 10px;
+  text-transform: uppercase;
 }
 
 .graph-container {
