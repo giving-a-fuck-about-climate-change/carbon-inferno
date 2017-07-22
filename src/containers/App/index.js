@@ -56,14 +56,11 @@ const data = {
   ]
 }
 
-const populateWithClicks = (dayFunc, weekFunc, monthFunc, yearFunc) => (item) => {
+const populateWithClicks = (weekFunc, monthFunc, yearFunc) => (item) => {
   const { text } = item;
   const contains = (time) => {
     return text.toLowerCase().indexOf(time) !== -1;
   };
-  if (contains('day')) {
-    return { ...item, onClick: dayFunc};
-  }
   if (contains('week')) {
     return { ...item, onClick: weekFunc};
   }
@@ -162,7 +159,7 @@ class App extends Component {
         <div className="App">
           <div className="flex-grid-header">
             <TimeChoiceHeader
-              timeHeaderLinks={timeHeaderLinks.map(populateWithClicks(this.updateUiAndMakeApiRequest('day'), this.updateUiAndMakeApiRequest('week'), this.updateUiAndMakeApiRequest('month'), this.updateUiAndMakeApiRequest('year')))}/>
+              timeHeaderLinks={timeHeaderLinks.map(populateWithClicks(this.updateUiAndMakeApiRequest('week'), this.updateUiAndMakeApiRequest('month'), this.updateUiAndMakeApiRequest('year')))}/>
           </div>
           <div className="flex-grid">
             <InfoColumn statInfo={`${currentPPM} PPM`} subHeader={globalSubHeader}/>
