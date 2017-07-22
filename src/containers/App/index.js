@@ -132,7 +132,7 @@ class App extends Component {
 
   componentDidMount() {
     makeApiRequest(this.updateWithApiCurrentSuccess, this.updateWithApiError, currentUrl)
-    .then(makeApiRequest(this.updateWithApiSuccess, this.updateWithApiError, dateRangQuery('week')))
+    .then(makeApiRequest(this.updateWithApiSuccess, this.updateWithApiError, dateRangQuery('month')))
   }
 
   updateUiAndMakeApiRequest = (url) => (event) => {
