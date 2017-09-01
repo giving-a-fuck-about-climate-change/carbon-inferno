@@ -46,11 +46,16 @@ export const footerLinks = [
   {href: '', className: 'footer-header', text: 'Global CO₂ Levels'},
 ];
 
+export const WEEK = 'week';
+export const MONTH = 'month';
+export const YEAR = 'year';
+export const ALL = 'all';
+
 export const timeHeaderLinks = [
-  { href: '#TODO', className: '', text: '1 Week', type: 'week'},
-  { href: '#TODO', className: '', text: '1 Month', type: 'month'},
-  { href: '#TODO', className: '', text: '1 Year', type: 'year'},
-  { href: '#TODO', className: '', text: 'All', type: 'all'},
+  { href: '#TODO', className: '', text: '1 Week', type: WEEK},
+  { href: '#TODO', className: '', text: '1 Month', type: MONTH},
+  { href: '#TODO', className: '', text: '1 Year', type: YEAR},
+  { href: '#TODO', className: '', text: 'All', type: ALL},
 ];
 
 export const globalSubHeader = 'GLOBAL CO₂ LEVEL';
