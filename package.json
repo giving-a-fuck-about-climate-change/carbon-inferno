@@ -8,6 +8,7 @@
     "react": "^15.6.1",
     "react-chartjs-2": "^2.1.0",
     "react-dom": "^15.6.1",
+    "react-google-analytics": "^0.2.0",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
