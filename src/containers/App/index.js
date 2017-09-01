@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import 'whatwg-fetch';
 import { Line } from 'react-chartjs-2';
 
-import apiRequest from '../../utils/request';
+import fetchData from '../../utils/request';
 
 import config from '../../config';
 
@@ -22,7 +23,6 @@ import {
   getData,
   todaysDate,
   subDate,
-  reverseArray
 } from '../../utils';
 
 import {
@@ -41,9 +41,11 @@ const datasetForRender = datasets[0];
 
 const { apiEndpoint } = config;
 const ppmEndpoint = `${apiEndpoint}/api/co2`;
-const dateRangQuery = (timePeriod) => `${ppmEndpoint}/?date__range=${subDate(timePeriod)},${todaysDate()}`;
+
+const dateRangQuery = (timePeriod) => `${ppmEndpoint}/?ordering=+date&date__range=${subDate(timePeriod)},${todaysDate()}`;
 const currentPpmEndpoint= `${ppmEndpoint}/?ordering=-date?&limit=1`;
-const getEndpointForAll = ({ count }) => `${ppmEndpoint}/?limit=${count}`;
+const getEndpointForAll = ({ count }) => `${ppmEndpoint}/?ordering=+date&limit=${count}`;
+const monthEndpoint = dateRangQuery(MONTH);
 
 // EXTENDED COMPONENT FUNCTIONALITY HELPERS
 
@@ -85,20 +87,6 @@ const populateWithClicks = (callApi, callApiWithCount) => (item) => {
   }
 };
 
-// API CALL'S
-
-const makeApiReq = (successMethod, errorMethod, url) => {
-  return apiRequest(url)
-  .then(successMethod)
-  .catch(errorMethod);
-}
-
-const makeApiReqWithCount = (successMethod, errorMethod, url) => ({ count }) => {
-   return apiRequest(`${url}&limit=${count}`)
-  .then(successMethod)
-  .catch(errorMethod);
-}
-
 // METHODS USED TO UPDATE THE STATE
 
 const setStateWithLoading = (rangeType) => (prevState) => {
@@ -111,14 +99,13 @@ const setStateWithLoading = (rangeType) => (prevState) => {
   };
 }
 
-const setStateWithApiResult = (rangeType, apiResponse) => (prevState) => {
-  const { results } =  apiResponse;
+const setStateWithApiResult = (rangeType, results) => (prevState) => {
   const { currentPPM } = prevState;
   const average = calculateAverage(results);
   return {
     loading: false,
-    ppms: reverseArray(getData('ppm', results)),
-    dates: reverseArray(getData('date', results)),
+    ppms: getData('ppm', results),
+    dates: getData('date', results),
     average,
     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
@@ -126,12 +113,19 @@ const setStateWithApiResult = (rangeType, apiResponse) => (prevState) => {
   }
 };
 
-const setStateWithCurrentPpm = (apiResponse) => () => {
-  const { count, results } = apiResponse;
-  const { ppm } = results[0];
+const setStateWithInitialPpmReq = (apiResponse) => () => {
+  const { currentPPM, ppmsForMonth, totalPPMCount, rangeType } = apiResponse;
+  const average = calculateAverage(ppmsForMonth);
   return {
-    currentPPM: ppm,
-    count,
+    loading: false,
+    currentPPM: currentPPM,
+    count: totalPPMCount,
+    ppms: getData('ppm', ppmsForMonth),
+    dates: getData('date', ppmsForMonth),
+    average,
+    ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
+    ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
+    rangeType,
   };
 }
 
@@ -161,22 +155,37 @@ class App extends Component {
   }
   /**
    When the component mounts we want to make two queries
-    - Get the current ppm and total amount of ppms ever (used for all).
+    - Get the current ppm and total amount of ppms ever (used for the query to get all ppms).
     - The amount of ppms for this month
   **/
-  componentDidMount() {
-    // TODO Do Promise.all then update the state (avoids two renders :D ).
-    makeApiReq(this.updateWithApiCurrentSuccess, this.updateStateWithApiError(MONTH), currentPpmEndpoint)
-    .then(makeApiReq(this.updateStateWithApiSuccess(MONTH), this.updateStateWithApiError(MONTH), dateRangQuery(MONTH)))
+  async componentDidMount() {
+    try {
+      const [currentPPM, ppmsForMonth] = await Promise.all([fetchData(currentPpmEndpoint), fetchData(monthEndpoint)]);
+      const totalPPMCount = currentPPM.count;
+      const { ppm } = currentPPM.results[0];
+      const { results } = ppmsForMonth;
+      this.setState(setStateWithInitialPpmReq({
+        currentPPM: ppm,
+        ppmsForMonth: results,
+        totalPPMCount,
+      }));
+    } catch (err) {
+      this.setState(setStateWithApiError(MONTH, err));
+    }
   }
 
-  updateLoadingStateAndMakeApiReq = (rangeType) => (event) => {
+  fetchPpmsForRange = (rangeType) => (event) => {
     event.preventDefault();
     if (rangeTypeHasChanged(rangeType, this.state.rangeType)) { // only call api when the rangeType has changed.
-      this.setState(setStateWithLoading(rangeType), () => {
-        const isReqForAll = rangeType === ALL
+      this.setState(setStateWithLoading(rangeType), async () => {
+        const isReqForAll = rangeType === ALL;
         const endpoint = isReqForAll ? getEndpointForAll(this.state) : dateRangQuery(rangeType);
-        return makeApiReq(this.updateStateWithApiSuccess(rangeType), this.updateStateWithApiError(rangeType), endpoint);
+        try {
+          const { results } = await fetchData(endpoint);
+          this.setState(setStateWithApiResult(rangeType, results));
+        } catch (err) {
+          this.setState(setStateWithApiError(rangeType, err));
+        }
       });
     }
   }
@@ -187,32 +196,37 @@ class App extends Component {
    the specifying that we want all the entries for that date range by using
    the count param
   **/
-  updateLoadingStateAndMakeApiCountReq = (rangeType) => (event) => {
+  fetchPpmsForRangeBasedOnCount = (rangeType) => (event) => {
     event.preventDefault();
     if (rangeTypeHasChanged(rangeType, this.state.rangeType)) { // only call api when the rangeType has changed.
-      this.setState(setStateWithLoading(rangeType), () => {
-        const endpoint = dateRangQuery(rangeType);
-        // configure the request with count
-        const reqWithCount = makeApiReqWithCount(this.updateStateWithApiSuccess(rangeType), this.updateStateWithApiError(rangeType), endpoint);
-        // when the below is done, requestWithCount is called with the res if successful
-        return makeApiReq(reqWithCount, this.updateStateWithApiError(rangeType), endpoint);
+      this.setState(setStateWithLoading(rangeType), async () => {
+        try {
+          const endpoint = dateRangQuery(rangeType);
+          const { count } = await fetchData(endpoint); // get total amount of ppms for specified date range
+          const { results } = await fetchData(`${endpoint}&limit=${count}`); // query for ppms limiting to count result
+          this.setState(setStateWithApiResult(rangeType, results));
+        } catch (err) {
+          this.setState(setStateWithApiError(rangeType, err));
+        }
       });
     }
   }
-  // Only used to update state with current ppm and total count of entries (needed for 'all' query)
-  updateWithApiCurrentSuccess = (apiResult) => this.setState(setStateWithCurrentPpm(apiResult));
-
-  updateStateWithApiSuccess = (rangeType) => (result) => this.setState(setStateWithApiResult(rangeType, result));
-
-  updateStateWithApiError = (rangeType) => (error) => this.setState(setStateWithApiError(rangeType, error));
 
   // Decorate links with click functionality depending on link type : year, month etc
-  populateWithClickFuncs = () => {
-    return populateWithClicks(this.updateLoadingStateAndMakeApiReq, this.updateLoadingStateAndMakeApiCountReq);
-  };
+  populateWithClickFuncs = () => populateWithClicks(this.fetchPpmsForRange, this.fetchPpmsForRangeBasedOnCount);
 
   render() {
-    const { currentPPM, ppmDiff, ppmPercentDiff, ppms, dates, diffPPMSubHeader, diffPercentSubHeader, rangeType, loading } = this.state;
+    const {
+      currentPPM,
+      ppmDiff,
+      ppmPercentDiff,
+      ppms,
+      dates,
+      diffPPMSubHeader,
+      diffPercentSubHeader,
+      rangeType,
+      loading
+     } = this.state;
     return (
     <div>
       <div className="page-background">
