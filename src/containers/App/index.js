@@ -219,6 +219,7 @@ class App extends Component {
         <Header/>
         <div className="App">
           <div className="flex-grid-header">
+            <div> test div </div>
             <TimeChoiceHeader timeHeaderLinks={timeHeaderLinks.map(this.populateWithClickFuncs())}/>
           </div>
           <LoadingWrapper loading={loading}>

@@ -9,6 +9,7 @@
 // This link also includes instructions on opting out of this behavior.
 
 export default function register() {
+  /**
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
@@ -39,13 +40,14 @@ export default function register() {
           console.error('Error during service worker registration:', error);
         });
     });
-  }
+  }**/
 }
 
 export function unregister() {
+  /**
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(registration => {
       registration.unregister();
     });
-  }
+  }**/
 }
