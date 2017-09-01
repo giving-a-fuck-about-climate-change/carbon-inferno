@@ -47,8 +47,25 @@ export const footerLinks = [
 ];
 
 export const timeHeaderLinks = [
-  { href: '#TODO', className: '', text: '1 Week'},
-  { href: '#TODO', className: '', text: '1 Month'},
-  { href: '#TODO', className: '', text: '1 Year'},
-  { href: '#TODO', className: '', text: 'All'},
+  { href: '#TODO', className: '', text: '1 Week', type: 'week'},
+  { href: '#TODO', className: '', text: '1 Month', type: 'month'},
+  { href: '#TODO', className: '', text: '1 Year', type: 'year'},
+  { href: '#TODO', className: '', text: 'All', type: 'all'},
 ];
+
+export const globalSubHeader = 'GLOBAL CO₂ LEVEL';
+
+export const datasets = [
+  {
+    label: 'PPM',
+    fill: true,
+    lineTension: 0.1,
+    backgroundColor: 'rgba(240, 153, 159, 0.81)',
+    borderColor: 'rgba(255, 107, 117, 0.81)',
+    borderCapStyle: 'butt',
+    borderDash: [],
+    borderDashOffset: 0.0,
+    borderJoinStyle: 'miter',
+  }
+];
+export const graphConfig = { datasets };
