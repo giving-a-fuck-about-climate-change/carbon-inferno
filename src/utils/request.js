@@ -49,7 +49,6 @@ function checkStatus(response) {
  */
 export default function request(url, options) {
   return fetch(url, {
-    credentials: 'true',
     ...options,
   })
     .then(checkStatus)
