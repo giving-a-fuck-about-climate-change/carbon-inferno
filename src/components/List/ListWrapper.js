@@ -9,7 +9,9 @@ const ListWrapper = ({ className, items}) => {
           return (
             <ListItem
               key={`item.text-${index}`}
-              item={item}
+              className={item.className}
+              href={item.href}
+              text={item.text}
             />
           );
         })}
