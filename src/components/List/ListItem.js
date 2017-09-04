@@ -1,11 +1,11 @@
 import React from 'react';
 
-const ListItem = ({ item }) => {
+const List = ({ className, href, text, onClick }) => {
   return (
-    <li className={item.className}>
-      {item.href ? <a onClick={item.onClick} href={item.href}>{item.text}</a> : item.text}
+    <li className={className}>
+      {href ? <a onClick={onClick} href={href}>{text}</a> : text}
     </li>
   );
 }
 
-export default ListItem;
+export default List;
