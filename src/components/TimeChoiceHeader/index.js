@@ -1,9 +1,9 @@
 import React from 'react';
 
-import ListWrapper from '../List/ListWrapper';
+import { ActiveListWrapper } from '../List/ListWrapper';
 
 const TimeChoiceHeader = ({ timeHeaderLinks }) => {
-  return (<ListWrapper className="time-choice-header" items={timeHeaderLinks}/>);
+  return (<ActiveListWrapper className="time-choice-header" items={timeHeaderLinks}/>);
 };
 
 export default TimeChoiceHeader;

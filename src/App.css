@@ -134,14 +134,19 @@ body {
   margin-left: 20px;
 }
 
-.time-choice-header a {
-  text-decoration: none;
-  color: #D0C0D5;
+.selected {
+  color: #355c73 !important;
+  font-weight: bold;
+  border-bottom: 1px solid #1BA69C;
   padding-bottom: 11px;
 }
 
-.time-choice-header a:hover,
-.time-choice-header a:active {
+.time-choice-header a {
+  text-decoration: none;
+  padding-bottom: 11px;
+}
+
+.time-choice-header a:hover {
   color: #355c73;
   font-weight: bold;
   border-bottom: 1px solid #1BA69C;
