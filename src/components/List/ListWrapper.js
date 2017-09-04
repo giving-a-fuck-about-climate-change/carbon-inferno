@@ -7,12 +7,12 @@ const ListWrapper = ({ className, items}) => {
       <ul>
         {items.map((item, index) => {
           return (
-        <ListItem
-          key={`item.text-${index}`}
-          className={item.className}
-          href={item.href}
-          text={item.text}
-        />
+            <ListItem
+              key={`item.text-${index}`}
+              className={item.className}
+              href={item.href}
+              text={item.text}
+            />
           );
         })}
       </ul>
