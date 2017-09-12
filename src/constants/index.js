@@ -58,6 +58,13 @@ export const timeHeaderLinks = [
   { href: '#TODO', className: '', text: 'All', type: ALL},
 ];
 
+export const teamItems = [
+    { src: 'https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAK5AAAAJGIyYTg4M2Q5LWM0YzMtNGNjNC1iMTExLWYzZDE5NzY3MzhkNg.jpg', name: 'Stephanie Tassone', location: 'Berlin, Germany', position: 'Frontend Developer', alt: 'Stephanie Tassone'},
+    { src: 'https://www.linkedin.com/in/martin-o-grady-2405b347/?ppe=1', name: 'Martin OGrady', location: 'Berlin, Germany', position: 'Frontend Developer', alt: 'Martin OGrady'},
+    { src: 'https://www.linkedin.com/in/martin-o-grady-2405b347/?ppe=1', name: 'Luke Murphy', location: 'Rotterdam, The Netherlands', position: 'Backend Developer', alt: 'Luke Murphy'},
+    { src: '#TODO', name: '', location: '', position: '', alt: ''},
+];
+
 export const globalSubHeader = 'GLOBAL CO₂ LEVEL';
 
 export const datasets = [

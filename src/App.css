@@ -249,3 +249,31 @@ body {
   margin: 0 auto;
   width: 80%;
 }
+
+.team-name {
+  font-weight: bold;
+  margin: 0;
+}
+
+.team-location {
+  font-style: italic;
+  margin: 0;
+}
+
+.team-position {
+  margin: 0;
+}
+
+.team-image {
+  border-radius: 5px;
+  width: 200px;
+}
+
+.team-header {
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: 1px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
