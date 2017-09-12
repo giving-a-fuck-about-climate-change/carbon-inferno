@@ -234,6 +234,10 @@ body {
   .sub-header {
     font-size: 10px;
   }
+
+  .team-grid {
+    justify-content: center;
+  }
 }
 
 .sub-header {
@@ -248,6 +252,10 @@ body {
 .graph-container {
   margin: 0 auto;
   width: 80%;
+}
+
+.team-content {
+  margin-bottom: 15px;
 }
 
 .team-name {
@@ -266,6 +274,7 @@ body {
 
 .team-image {
   border-radius: 5px;
+  margin: 15px;
   width: 200px;
 }
 
@@ -273,7 +282,28 @@ body {
   font-size: 20px;
   text-transform: uppercase;
   font-weight: 300;
+  text-align: center;
+  color: #FFFFFF;
   letter-spacing: 1px;
   padding-top: 20px;
-  padding-bottom: 20px;
+}
+
+.team-grid {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background-color: #FFFFFF;
+  margin: 30px auto;
+  padding: 30px;
+  border-radius: 5px;
+  width: 80%;
+  text-align: center;
+}
+
+@media (max-width: 569px) {
+  .team-grid {
+    justify-content: center;
+  }
 }

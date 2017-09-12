@@ -12,11 +12,11 @@ const Team = (item) => (
     <div>
         <div className="page-background">
             <Header/>
-            <div className="App">
-                <div className="team-header">
-                    Team Carbon Doomsday
-                </div>
-                <div>
+            <div className="team-header">
+                Team Carbon Doomsday
+            </div>
+            <div>
+                <div className="team-grid">
                 {teamItems.map((item) => (
                     <TeamItem
                         name={item.name}
