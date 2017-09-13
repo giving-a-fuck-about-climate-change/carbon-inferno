@@ -5,6 +5,8 @@ export const calculateAverage = (arr = []) => {
   return (totalAmount / arr.length);
 };
 
+export const numChecker = num => (isNaN(num) ? 0 : num);
+
 export const calculateDiff = (previous, current) => (previous > current ?
   `- ${numChecker((previous - current).toFixed(2))}` :
   `+ ${numChecker((current - previous).toFixed(2))}`);
@@ -19,8 +21,5 @@ export const getData = (label, statData = []) => statData.map(data => data[label
 export const todaysDate = () => moment().format('YYYY-MM-DD');
 
 export const subDate = range => moment().subtract(1, range).format('YYYY-MM-DD');
-
-
-export const numChecker = num => (isNaN(num) ? 0 : num);
 
 export const reverseArray = (arr = []) => arr.reverse();

@@ -1,6 +1,6 @@
 import ga from 'react-google-analytics';
 
-// TODO: Load these in via webpack or inject into html with webpack during the build 
+// TODO: Load these in via webpack or inject into html with webpack during the build
 export default function () {
   if (process.env.NODE_ENV === 'production') {
     // google-analytics
