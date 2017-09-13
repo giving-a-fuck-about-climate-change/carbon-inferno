@@ -13,8 +13,8 @@ import {
   Header,
   InfoColumnHOC,
   TimeChoiceHeader,
-  LoadingWrapper
-} from '../../components'
+  LoadingWrapper,
+} from '../../components';
 
 import {
   calculateAverage,
@@ -26,13 +26,13 @@ import {
 } from '../../utils';
 
 import {
-   timeHeaderLinks,
-   graphConfig,
-   datasets,
-   WEEK,
-   MONTH,
-   YEAR,
-   ALL
+  timeHeaderLinks,
+  graphConfig,
+  datasets,
+  WEEK,
+  MONTH,
+  YEAR,
+  ALL,
 } from '../../constants';
 
 const datasetForRender = datasets[0];
@@ -42,21 +42,19 @@ const datasetForRender = datasets[0];
 const { apiEndpoint } = config;
 const ppmEndpoint = `${apiEndpoint}/api/co2`;
 
-const dateRangQuery = (timePeriod) => `${ppmEndpoint}/?ordering=+date&date__range=${subDate(timePeriod)},${todaysDate()}`;
-const currentPpmEndpoint= `${ppmEndpoint}/?ordering=-date?&limit=1`;
+const dateRangQuery = timePeriod => `${ppmEndpoint}/?ordering=+date&date__range=${subDate(timePeriod)},${todaysDate()}`;
+const currentPpmEndpoint = `${ppmEndpoint}/?ordering=-date?&limit=1`;
 const getEndpointForAll = ({ count }) => `${ppmEndpoint}/?ordering=+date&limit=${count}`;
 const monthEndpoint = dateRangQuery(MONTH);
 
 // EXTENDED COMPONENT FUNCTIONALITY HELPERS
 
-const rangeTypeHasChanged = (updatedRangeType, currentRangeType) => {
-  return updatedRangeType !== currentRangeType
-};
+const rangeTypeHasChanged = (updatedRangeType, currentRangeType) => (
+  updatedRangeType !== currentRangeType
+);
 
 const calculateSubHeader = (rangeType) => {
-  const getHeader = (range) => {
-    return { ppmDiff: `SINCE LAST ${range}`, percentDiff: `SINCE LAST ${range} (%)` }
-  };
+  const getHeader = range => ({ ppmDiff: `SINCE LAST ${range}`, percentDiff: `SINCE LAST ${range} (%)` });
   switch (rangeType) {
     case WEEK:
       return getHeader(WEEK);
@@ -65,7 +63,7 @@ const calculateSubHeader = (rangeType) => {
     case YEAR:
       return getHeader(YEAR);
     default:
-    return { ppmDiff: '', percentDiff: '' };
+      return { ppmDiff: '', percentDiff: '' };
   }
 };
 
@@ -89,15 +87,15 @@ const populateWithClicks = (callApi, callApiWithCount) => (item) => {
 
 // METHODS USED TO UPDATE THE STATE
 
-const setStateWithLoading = (rangeType) => (prevState) => {
-  const { ppmDiff, percentDiff} = calculateSubHeader(rangeType);
+const setStateWithLoading = rangeType => (prevState) => {
+  const { ppmDiff, percentDiff } = calculateSubHeader(rangeType);
   return {
     loading: !prevState.loading,
     diffPPMSubHeader: ppmDiff,
     diffPercentSubHeader: percentDiff,
     rangeType,
   };
-}
+};
 
 const setStateWithApiResult = (rangeType, results) => (prevState) => {
   const { currentPPM } = prevState;
@@ -110,15 +108,15 @@ const setStateWithApiResult = (rangeType, results) => (prevState) => {
     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
     rangeType,
-  }
+  };
 };
 
-const setStateWithInitialPpmReq = (apiResponse) => () => {
+const setStateWithInitialPpmReq = apiResponse => () => {
   const { currentPPM, ppmsForMonth, totalPPMCount, rangeType } = apiResponse;
   const average = calculateAverage(ppmsForMonth);
   return {
     loading: false,
-    currentPPM: currentPPM,
+    currentPPM,
     count: totalPPMCount,
     ppms: getData('ppm', ppmsForMonth),
     dates: getData('date', ppmsForMonth),
@@ -127,19 +125,16 @@ const setStateWithInitialPpmReq = (apiResponse) => () => {
     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
     rangeType,
   };
-}
+};
 
-const setStateWithApiError = (rangeType, apiError) => () => {
-  return {
-    loading: false,
-    error: apiError,
-    rangeType,
-  }
-}
+const setStateWithApiError = (rangeType, apiError) => () => ({
+  loading: false,
+  error: apiError,
+  rangeType,
+});
 
 // Component
 class App extends Component {
-
   state = {
     loading: true,
     currentPPM: 0,
@@ -153,28 +148,28 @@ class App extends Component {
     count: 0, // total recorded ppms for 'all' query
     rangeType: MONTH, // Intitial date range query
   }
-  /**
+  /*
    When the component mounts we want to make two queries
     - Get the current ppm and total amount of ppms ever (used for the query to get all ppms).
     - The amount of ppms for this month
-  **/
+  */
   async componentDidMount() {
     try {
       const [currentPPM, ppmsForMonth] = await Promise.all([fetchData(currentPpmEndpoint), fetchData(monthEndpoint)]);
       const totalPPMCount = currentPPM.count;
       const { ppm } = currentPPM.results[0];
       const { results } = ppmsForMonth;
-      this.setState(setStateWithInitialPpmReq({
+      this.setState(setStateWithInitialPpmReq({ // eslint-disable-line
         currentPPM: ppm,
         ppmsForMonth: results,
         totalPPMCount,
       }));
     } catch (err) {
-      this.setState(setStateWithApiError(MONTH, err));
+      this.setState(setStateWithApiError(MONTH, err)); // eslint-disable-line
     }
   }
 
-  fetchPpmsForRange = (rangeType) => (event) => {
+  fetchPpmsForRange = rangeType => (event) => {
     event.preventDefault();
     if (rangeTypeHasChanged(rangeType, this.state.rangeType)) { // only call api when the rangeType has changed.
       this.setState(setStateWithLoading(rangeType), async () => {
@@ -195,8 +190,8 @@ class App extends Component {
    for the amount of entries for a date range and then make another query
    the specifying that we want all the entries for that date range by using
    the count param
-  **/
-  fetchPpmsForRangeBasedOnCount = (rangeType) => (event) => {
+  */
+  fetchPpmsForRangeBasedOnCount = rangeType => (event) => {
     event.preventDefault();
     if (rangeTypeHasChanged(rangeType, this.state.rangeType)) { // only call api when the rangeType has changed.
       this.setState(setStateWithLoading(rangeType), async () => {
@@ -225,35 +220,35 @@ class App extends Component {
       diffPPMSubHeader,
       diffPercentSubHeader,
       rangeType,
-      loading
-     } = this.state;
+      loading,
+    } = this.state;
     return (
-    <div>
-      <div className="page-background">
-        <Header/>
-        <div className="App">
-          <div className="flex-grid-header">
-            <TimeChoiceHeader timeHeaderLinks={timeHeaderLinks.map(this.populateWithClickFuncs())}/>
-          </div>
-          <LoadingWrapper loading={loading}>
-            <div>
-              <InfoColumnHOC
+      <div>
+        <div className="page-background">
+          <Header />
+          <div className="App">
+            <div className="flex-grid-header">
+              <TimeChoiceHeader timeHeaderLinks={timeHeaderLinks.map(this.populateWithClickFuncs())} />
+            </div>
+            <LoadingWrapper loading={loading}>
+              <div>
+                <InfoColumnHOC
                   rangeType={rangeType}
                   currentPPM={currentPPM}
                   ppmDiff={ppmDiff}
                   ppmPercentDiff={ppmPercentDiff}
                   diffPPMSubHeader={diffPPMSubHeader}
                   diffPercentSubHeader={diffPercentSubHeader}
-              />
-              <div className="graph-container">
-                <Line data={{...graphConfig, labels: dates, datasets: [{...datasetForRender, data: ppms}] }}/>
+                />
+                <div className="graph-container">
+                  <Line data={{ ...graphConfig, labels: dates, datasets: [{ ...datasetForRender, data: ppms }] }} />
+                </div>
               </div>
-            </div>
-          </LoadingWrapper>
+            </LoadingWrapper>
+          </div>
         </div>
+        <Footer />
       </div>
-      <Footer/>
-    </div>
     );
   }
 }

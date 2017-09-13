@@ -12,15 +12,13 @@ function parseJSON(response) {
 }
 
 
-export const headerOptions = (method = 'POST') => {
-  return {
-    method,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json; charset=utf-8',
-    },
-  };
-};
+export const headerOptions = (method = 'POST') => ({
+  method,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json; charset=utf-8',
+  },
+});
 
 /**
  * Checks if a network request came back fine, and throws an error if not
