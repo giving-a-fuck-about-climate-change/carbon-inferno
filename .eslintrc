@@ -16,7 +16,8 @@
     "quote-props": 1,
     "react/prop-types": 1,
     "react/no-array-index-key": 1,
-    "no-param-reassign": 1
+    "no-param-reassign": 1,
+    "react/no-did-mount-set-state": 1
   },
   "parser": "babel-eslint",
   "globals": {
