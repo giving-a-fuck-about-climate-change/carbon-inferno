@@ -8,7 +8,7 @@ import {
 import TeamItem from '../../components/TeamItem/index';
 import { teamItems } from '../../constants/index';
 
-const Team = (item) => (
+const Team = ({ items }) => (
     <div>
         <div className="page-background">
             <Header/>
@@ -17,20 +17,19 @@ const Team = (item) => (
             </div>
             <div>
                 <div className="team-grid">
-                {teamItems.map((item) => (
-                    <TeamItem
-                        name={item.name}
-                        location={item.location}
-                        src={item.src}
-                        alt={item.alt}
-                        position={item.position}
-                    /> )
-                )}
+                    {items.map((item) => (
+                        <TeamItem {...item} /> )
+                    )}
                 </div>
             </div>
         </div>
         <Footer/>
     </div>
 );
+
+Team.defaultProps = {
+    items: teamItems
+};
+
 
 export default Team;

@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "chart.js": "^2.6.0",
+    "chart.js": "^2.7.0",
     "moment": "^2.18.1",
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
-    "react-chartjs-2": "^2.1.0",
+    "react-chartjs-2": "^2.6.2",
     "react-dom": "^15.6.1",
     "react-google-analytics": "^0.2.0",
     "react-router-dom": "^4.2.2",
@@ -16,10 +17,10 @@
     "babel-eslint": "^7.2.3",
     "eslint": "^3.19.0",
     "eslint-config-react-app": "^1.0.4",
-    "eslint-plugin-flowtype": "^2.33.0",
+    "eslint-plugin-flowtype": "^2.35.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^5.0.1",
-    "eslint-plugin-react": "^7.0.1",
+    "eslint-plugin-react": "^7.3.0",
     "react-scripts": "1.0.7"
   },
   "scripts": {

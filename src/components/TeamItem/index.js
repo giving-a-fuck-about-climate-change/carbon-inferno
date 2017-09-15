@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const TeamItem = ({ name, location, position, src, alt }) => (
     <div>
@@ -10,5 +11,13 @@ const TeamItem = ({ name, location, position, src, alt }) => (
         </div>
     </div>
 );
+
+TeamItem.propTypes = {
+    name: PropTypes.string,
+    location: PropTypes.string,
+    src: PropTypes.string,
+    alt: PropTypes.string,
+    position: PropTypes.string,
+};
 
 export default TeamItem;
