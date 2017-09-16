@@ -238,23 +238,23 @@ class App extends Component {
           <LoadingWrapper loading={loading}>
             <div>
               <InfoColumnHOC
-                rangeType={rangeType}
-                currentPPM={currentPPM}
-                ppmDiff={ppmDiff}
-                ppmPercentDiff={ppmPercentDiff}
-                diffPPMSubHeader={diffPPMSubHeader}
-                diffPercentSubHeader={diffPercentSubHeader}
+                  rangeType={rangeType}
+                  currentPPM={currentPPM}
+                  ppmDiff={ppmDiff}
+                  ppmPercentDiff={ppmPercentDiff}
+                  diffPPMSubHeader={diffPPMSubHeader}
+                  diffPercentSubHeader={diffPercentSubHeader}
               />
               <div className="graph-container">
                 <Line data={{...graphConfig, labels: dates, datasets: [{...datasetForRender, data: ppms}] }}/>
               </div>
             </div>
-         </LoadingWrapper>
+          </LoadingWrapper>
         </div>
       </div>
       <Footer/>
     </div>
-  );
+    );
   }
 }
 
