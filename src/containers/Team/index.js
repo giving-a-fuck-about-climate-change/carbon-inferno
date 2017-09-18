@@ -22,7 +22,7 @@ const Team = ({ items }) => (
 );
 
 Team.propTypes = {
-  items: PropTypes.Array,
+  items: PropTypes.array, //eslint-disable-line
 };
 
 Team.defaultProps = {
