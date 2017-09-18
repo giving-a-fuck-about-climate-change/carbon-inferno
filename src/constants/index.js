@@ -26,7 +26,7 @@ export const aboutProjectLinks = [
   { href: '#TODO', className: '', text: 'Mission' },
   { href: '#TODO', className: '', text: 'Data Sources' },
   { href: '#TODO', className: '', text: 'In The News' },
-  { href: 'http://carbondoomsday.com/team', className: '', text: 'Team' },
+  { href: '/team', className: '', text: 'Team' },
 ];
 
 export const socialLinks = [

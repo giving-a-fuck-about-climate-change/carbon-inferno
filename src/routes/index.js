@@ -1,2 +1,2 @@
 export const ROOT = '/';
-export const TEAM_PAGE ='/team';
+export const TEAM_PAGE = '/team';
