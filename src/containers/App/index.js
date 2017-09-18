@@ -42,19 +42,25 @@ const datasetForRender = datasets[0];
 const { apiEndpoint } = config;
 const ppmEndpoint = `${apiEndpoint}/api/co2`;
 
-const dateRangQuery = timePeriod => `${ppmEndpoint}/?ordering=+date&date__range=${subDate(timePeriod)},${todaysDate()}`;
+const dateRangQuery = timePeriod =>
+  `${ppmEndpoint}/?ordering=+date&date__range=${subDate(
+    timePeriod,
+  )},${todaysDate()}`;
 const currentPpmEndpoint = `${ppmEndpoint}/?ordering=-date?&limit=1`;
-const getEndpointForAll = ({ count }) => `${ppmEndpoint}/?ordering=+date&limit=${count}`;
+const getEndpointForAll = ({ count }) =>
+  `${ppmEndpoint}/?ordering=+date&limit=${count}`;
 const monthEndpoint = dateRangQuery(MONTH);
 
 // EXTENDED COMPONENT FUNCTIONALITY HELPERS
 
-const rangeTypeHasChanged = (updatedRangeType, currentRangeType) => (
-  updatedRangeType !== currentRangeType
-);
+const rangeTypeHasChanged = (updatedRangeType, currentRangeType) =>
+  updatedRangeType !== currentRangeType;
 
 const calculateSubHeader = (rangeType) => {
-  const getHeader = range => ({ ppmDiff: `SINCE LAST ${range}`, percentDiff: `SINCE LAST ${range} (%)` });
+  const getHeader = range => ({
+    ppmDiff: `SINCE LAST ${range}`,
+    percentDiff: `SINCE LAST ${range} (%)`,
+  });
   switch (rangeType) {
     case WEEK:
       return getHeader(WEEK);
@@ -147,7 +153,7 @@ class App extends Component {
     diffPercentSubHeader: initalSubHeader.percentDiff,
     count: 0, // total recorded ppms for 'all' query
     rangeType: MONTH, // Intitial date range query
-  }
+  };
   /*
    When the component mounts we want to make two queries
     - Get the current ppm and total amount of ppms ever (used for the query to get all ppms).
@@ -155,15 +161,21 @@ class App extends Component {
   */
   async componentDidMount() {
     try {
-      const [currentPPM, ppmsForMonth] = await Promise.all([fetchData(currentPpmEndpoint), fetchData(monthEndpoint)]);
+      const [currentPPM, ppmsForMonth] = await Promise.all([
+        fetchData(currentPpmEndpoint),
+        fetchData(monthEndpoint),
+      ]);
       const totalPPMCount = currentPPM.count;
       const { ppm } = currentPPM.results[0];
       const { results } = ppmsForMonth;
-      this.setState(setStateWithInitialPpmReq({ // eslint-disable-line
-        currentPPM: ppm,
-        ppmsForMonth: results,
-        totalPPMCount,
-      }));
+      this.setState(
+        setStateWithInitialPpmReq({
+          // eslint-disable-line
+          currentPPM: ppm,
+          ppmsForMonth: results,
+          totalPPMCount,
+        }),
+      );
     } catch (err) {
       this.setState(setStateWithApiError(MONTH, err)); // eslint-disable-line
     }
@@ -171,10 +183,13 @@ class App extends Component {
 
   fetchPpmsForRange = rangeType => (event) => {
     event.preventDefault();
-    if (rangeTypeHasChanged(rangeType, this.state.rangeType)) { // only call api when the rangeType has changed.
+    if (rangeTypeHasChanged(rangeType, this.state.rangeType)) {
+      // only call api when the rangeType has changed.
       this.setState(setStateWithLoading(rangeType), async () => {
         const isReqForAll = rangeType === ALL;
-        const endpoint = isReqForAll ? getEndpointForAll(this.state) : dateRangQuery(rangeType);
+        const endpoint = isReqForAll
+          ? getEndpointForAll(this.state)
+          : dateRangQuery(rangeType);
         try {
           const { results } = await fetchData(endpoint);
           this.setState(setStateWithApiResult(rangeType, results));
@@ -183,7 +198,7 @@ class App extends Component {
         }
       });
     }
-  }
+  };
   /*
    The api does not return all entries for a given date range,
    if we want all entries we need to sepcify a count, here we query
@@ -193,7 +208,8 @@ class App extends Component {
   */
   fetchPpmsForRangeBasedOnCount = rangeType => (event) => {
     event.preventDefault();
-    if (rangeTypeHasChanged(rangeType, this.state.rangeType)) { // only call api when the rangeType has changed.
+    if (rangeTypeHasChanged(rangeType, this.state.rangeType)) {
+      // only call api when the rangeType has changed.
       this.setState(setStateWithLoading(rangeType), async () => {
         try {
           const endpoint = dateRangQuery(rangeType);
@@ -205,10 +221,14 @@ class App extends Component {
         }
       });
     }
-  }
+  };
 
   // Decorate links with click functionality depending on link type : year, month etc
-  populateWithClickFuncs = () => populateWithClicks(this.fetchPpmsForRange, this.fetchPpmsForRangeBasedOnCount);
+  populateWithClickFuncs = () =>
+    populateWithClicks(
+      this.fetchPpmsForRange,
+      this.fetchPpmsForRangeBasedOnCount,
+    );
 
   render() {
     const {
@@ -228,7 +248,11 @@ class App extends Component {
           <Header />
           <div className="App">
             <div className="flex-grid-header">
-              <TimeChoiceHeader timeHeaderLinks={timeHeaderLinks.map(this.populateWithClickFuncs())} />
+              <TimeChoiceHeader
+                timeHeaderLinks={timeHeaderLinks.map(
+                  this.populateWithClickFuncs(),
+                )}
+              />
             </div>
             <LoadingWrapper loading={loading}>
               <div>
@@ -241,7 +265,13 @@ class App extends Component {
                   diffPercentSubHeader={diffPercentSubHeader}
                 />
                 <div className="graph-container">
-                  <Line data={{ ...graphConfig, labels: dates, datasets: [{ ...datasetForRender, data: ppms }] }} />
+                  <Line
+                    data={{
+                      ...graphConfig,
+                      labels: dates,
+                      datasets: [{ ...datasetForRender, data: ppms }],
+                    }}
+                  />
                 </div>
               </div>
             </LoadingWrapper>

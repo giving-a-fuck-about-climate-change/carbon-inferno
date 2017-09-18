@@ -11,7 +11,6 @@ function parseJSON(response) {
   return response.json();
 }
 
-
 export const headerOptions = (method = 'POST') => ({
   method,
   headers: {

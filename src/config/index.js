@@ -13,6 +13,9 @@ const environment = {
   },
 }[process.env.NODE_ENV || 'development'];
 
-module.exports = Object.assign({
-  node_env: process.env.NODE_ENV || 'development',
-}, environment);
+module.exports = Object.assign(
+  {
+    node_env: process.env.NODE_ENV || 'development',
+  },
+  environment,
+);

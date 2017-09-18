@@ -17,7 +17,11 @@ export const resourcesTakeActionLinks = [
 ];
 
 export const resourcesNewsLinks = [
-  { href: '', className: 'resources-title', text: 'Climate Change in the News' },
+  {
+    href: '',
+    className: 'resources-title',
+    text: 'Climate Change in the News',
+  },
   { href: '', className: '', text: '(Newsfeed)' },
 ];
 
@@ -59,12 +63,53 @@ export const timeHeaderLinks = [
 ];
 
 export const teamItems = [
-    { src: '', name: 'Luke Murphy', location: 'Rotterdam, The Netherlands', position: 'Backend Developer', alt: 'Luke Murphy'},
-    { src: 'https://media.licdn.com/media/AAEAAQAAAAAAAAPwAAAAJGQ1ZTM1NDA2LTA0YmMtNDBiZi05OTU3LTE2MTMwMTY2M2UyNg.jpg', name: 'Tito Jankowski', location: 'San Francisco, USA', position: 'Water Boy', alt: 'Tito Jankowski'},
-    { src: 'https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAK5AAAAJGIyYTg4M2Q5LWM0YzMtNGNjNC1iMTExLWYzZDE5NzY3MzhkNg.jpg', name: 'Stephanie Tassone', location: 'Berlin, Germany', position: 'Frontend Developer', alt: 'Stephanie Tassone'},
-    { src: 'https://media.licdn.com/media/AAEAAQAAAAAAAALiAAAAJDVkMDNhZGZjLTg0ZmItNGVlZS05MmVhLTE4YzVlZjRjNjQzMw.jpg', name: 'Martin OGrady', location: 'Berlin, Germany', position: 'Frontend Developer', alt: 'Martin OGrady'},
-    { src: 'https://media.licdn.com/media/AAEAAQAAAAAAAAr_AAAAJDk4MGI1YmNkLThjOWQtNDExZi1iMDU3LWI1NDIwNTg5MTg1Yw.jpg', name: 'Dan Walsh', location: 'San Francisco, USA', position: 'Marketer', alt: 'Dan Walsh'},
-    { src: 'https://media.licdn.com/media/AAEAAQAAAAAAAAiWAAAAJDhiN2Q4NTViLTQ2YjYtNGUyYS1hMGU4LTdmMWNiZjc4OGNiYg.jpg', name: 'Purin Phanichphant', location: 'San Francisco, USA', position: 'UX/UI', alt: 'Purin Phanichphant'},
+  {
+    src: '',
+    name: 'Luke Murphy',
+    location: 'Rotterdam, The Netherlands',
+    position: 'Backend Developer',
+    alt: 'Luke Murphy',
+  },
+  {
+    src:
+      'https://media.licdn.com/media/AAEAAQAAAAAAAAPwAAAAJGQ1ZTM1NDA2LTA0YmMtNDBiZi05OTU3LTE2MTMwMTY2M2UyNg.jpg',
+    name: 'Tito Jankowski',
+    location: 'San Francisco, USA',
+    position: 'Water Boy',
+    alt: 'Tito Jankowski',
+  },
+  {
+    src:
+      'https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAK5AAAAJGIyYTg4M2Q5LWM0YzMtNGNjNC1iMTExLWYzZDE5NzY3MzhkNg.jpg',
+    name: 'Stephanie Tassone',
+    location: 'Berlin, Germany',
+    position: 'Frontend Developer',
+    alt: 'Stephanie Tassone',
+  },
+  {
+    src:
+      'https://media.licdn.com/media/AAEAAQAAAAAAAALiAAAAJDVkMDNhZGZjLTg0ZmItNGVlZS05MmVhLTE4YzVlZjRjNjQzMw.jpg',
+    name: 'Martin OGrady',
+    location: 'Berlin, Germany',
+    position: 'Frontend Developer',
+    alt: 'Martin OGrady',
+  },
+  {
+    src:
+      'https://media.licdn.com/media/AAEAAQAAAAAAAAr_AAAAJDk4MGI1YmNkLThjOWQtNDExZi1iMDU3LWI1NDIwNTg5MTg1Yw.jpg',
+    name: 'Dan Walsh',
+    location: 'San Francisco, USA',
+    position: 'Marketer',
+    alt: 'Dan Walsh',
+  },
+  {
+    src:
+      'https://media.licdn.com/media/AAEAAQAAAAAAAAiWAAAAJDhiN2Q4NTViLTQ2YjYtNGUyYS1hMGU4LTdmMWNiZjc4OGNiYg.jpg',
+    name: 'Purin Phanichphant',
+    location: 'San Francisco, USA',
+    position: 'UX/UI',
+    alt: 'Purin Phanichphant',
+  },
 ];
 
 export const globalSubHeader = 'GLOBAL CO₂ LEVEL';
