@@ -36,6 +36,6 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,json,css}": ["prettier --write", "git add"]
+    "src/*.{js,json,css}": ["eslint", "git add"]
   }
 }
