@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import "whatwg-fetch";
-import { Line } from "react-chartjs-2";
+import React, { Component } from 'react';
+import 'whatwg-fetch';
+import { Line } from 'react-chartjs-2';
 
-import fetchData from "../../utils/request";
+import fetchData from '../../utils/request';
 
-import config from "../../config";
+import config from '../../config';
 
 import {
   InfoColumnHOC,
   LoadingWrapper,
-  TimeChoiceHeader
-} from "../../components";
+  TimeChoiceHeader,
+} from '../../components';
 
 import {
   calculateAverage,
@@ -18,8 +18,8 @@ import {
   calculatePercentageDiff,
   getData,
   todaysDate,
-  subDate
-} from "../../utils";
+  subDate,
+} from '../../utils';
 
 import {
   timeHeaderLinks,
@@ -28,8 +28,8 @@ import {
   WEEK,
   MONTH,
   YEAR,
-  ALL
-} from "../../constants";
+  ALL,
+} from '../../constants';
 
 const datasetForRender = datasets[0];
 
@@ -40,7 +40,7 @@ const ppmEndpoint = `${apiEndpoint}/api/co2`;
 
 const dateRangQuery = timePeriod =>
   `${ppmEndpoint}/?ordering=+date&date__range=${subDate(
-    timePeriod
+    timePeriod,
   )},${todaysDate()}`;
 const currentPpmEndpoint = `${ppmEndpoint}/?ordering=-date?&limit=1`;
 const getEndpointForAll = ({ count }) =>
@@ -52,10 +52,10 @@ const monthEndpoint = dateRangQuery(MONTH);
 const rangeTypeHasChanged = (updatedRangeType, currentRangeType) =>
   updatedRangeType !== currentRangeType;
 
-const calculateSubHeader = rangeType => {
+const calculateSubHeader = (rangeType) => {
   const getHeader = range => ({
     ppmDiff: `SINCE LAST ${range}`,
-    percentDiff: `SINCE LAST ${range} (%)`
+    percentDiff: `SINCE LAST ${range} (%)`,
   });
   switch (rangeType) {
     case WEEK:
@@ -65,13 +65,13 @@ const calculateSubHeader = rangeType => {
     case YEAR:
       return getHeader(YEAR);
     default:
-      return { ppmDiff: "", percentDiff: "" };
+      return { ppmDiff: '', percentDiff: '' };
   }
 };
 
 const initalSubHeader = calculateSubHeader(MONTH);
 
-const populateWithClicks = (callApi, callApiWithCount) => item => {
+const populateWithClicks = (callApi, callApiWithCount) => (item) => {
   const { type } = item;
   switch (type) {
     case WEEK:
@@ -89,27 +89,27 @@ const populateWithClicks = (callApi, callApiWithCount) => item => {
 
 // METHODS USED TO UPDATE THE STATE
 
-const setStateWithLoading = rangeType => prevState => {
+const setStateWithLoading = rangeType => (prevState) => {
   const { ppmDiff, percentDiff } = calculateSubHeader(rangeType);
   return {
     loading: !prevState.loading,
     diffPPMSubHeader: ppmDiff,
     diffPercentSubHeader: percentDiff,
-    rangeType
+    rangeType,
   };
 };
 
-const setStateWithApiResult = (rangeType, results) => prevState => {
+const setStateWithApiResult = (rangeType, results) => (prevState) => {
   const { currentPPM } = prevState;
   const average = calculateAverage(results);
   return {
     loading: false,
-    ppms: getData("ppm", results),
-    dates: getData("date", results),
+    ppms: getData('ppm', results),
+    dates: getData('date', results),
     average,
     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
-    rangeType
+    rangeType,
   };
 };
 
@@ -120,19 +120,19 @@ const setStateWithInitialPpmReq = apiResponse => () => {
     loading: false,
     currentPPM,
     count: totalPPMCount,
-    ppms: getData("ppm", ppmsForMonth),
-    dates: getData("date", ppmsForMonth),
+    ppms: getData('ppm', ppmsForMonth),
+    dates: getData('date', ppmsForMonth),
     average,
     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
-    rangeType
+    rangeType,
   };
 };
 
 const setStateWithApiError = (rangeType, apiError) => () => ({
   loading: false,
   error: apiError,
-  rangeType
+  rangeType,
 });
 
 // Component
@@ -142,13 +142,13 @@ class ChartInfo extends Component {
     currentPPM: 0,
     ppms: [],
     dates: [],
-    ppmDiff: "",
-    ppmPercentDiff: "",
-    error: "",
+    ppmDiff: '',
+    ppmPercentDiff: '',
+    error: '',
     diffPPMSubHeader: initalSubHeader.ppmDiff,
     diffPercentSubHeader: initalSubHeader.percentDiff,
     count: 0, // total recorded ppms for 'all' query
-    rangeType: MONTH // Intitial date range query
+    rangeType: MONTH, // Intitial date range query
   };
   /*
    When the component mounts we want to make two queries
@@ -159,7 +159,7 @@ class ChartInfo extends Component {
     try {
       const [currentPPM, ppmsForMonth] = await Promise.all([
         fetchData(currentPpmEndpoint),
-        fetchData(monthEndpoint)
+        fetchData(monthEndpoint),
       ]);
       const totalPPMCount = currentPPM.count;
       const { ppm } = currentPPM.results[0];
@@ -168,15 +168,15 @@ class ChartInfo extends Component {
         setStateWithInitialPpmReq({
           currentPPM: ppm,
           ppmsForMonth: results,
-          totalPPMCount
-        })
+          totalPPMCount,
+        }),
       );
     } catch (err) {
       this.setState(setStateWithApiError(MONTH, err)); // eslint-disable-line
     }
   }
 
-  fetchPpmsForRange = rangeType => event => {
+  fetchPpmsForRange = rangeType => (event) => {
     event.preventDefault();
     if (rangeTypeHasChanged(rangeType, this.state.rangeType)) {
       // only call api when the rangeType has changed.
@@ -201,7 +201,7 @@ class ChartInfo extends Component {
    the specifying that we want all the entries for that date range by using
    the count param
   */
-  fetchPpmsForRangeBasedOnCount = rangeType => event => {
+  fetchPpmsForRangeBasedOnCount = rangeType => (event) => {
     event.preventDefault();
     if (rangeTypeHasChanged(rangeType, this.state.rangeType)) {
       // only call api when the rangeType has changed.
@@ -222,7 +222,7 @@ class ChartInfo extends Component {
   populateWithClickFuncs = () =>
     populateWithClicks(
       this.fetchPpmsForRange,
-      this.fetchPpmsForRangeBasedOnCount
+      this.fetchPpmsForRangeBasedOnCount,
     );
 
   render() {
@@ -235,7 +235,7 @@ class ChartInfo extends Component {
       diffPPMSubHeader,
       diffPercentSubHeader,
       rangeType,
-      loading
+      loading,
     } = this.state;
     return (
       <div>
@@ -259,7 +259,7 @@ class ChartInfo extends Component {
                 data={{
                   ...graphConfig,
                   labels: dates,
-                  datasets: [{ ...datasetForRender, data: ppms }]
+                  datasets: [{ ...datasetForRender, data: ppms }],
                 }}
               />
             </div>

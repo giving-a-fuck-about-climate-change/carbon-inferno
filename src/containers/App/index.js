@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import "../../App.css";
+import '../../App.css';
 
-import { Footer, Header } from "../../components";
+import { Footer, Header } from '../../components';
 
-import ChartInfo from "../ChartInfo";
+import ChartInfo from '../ChartInfo';
 
 export const App = () => (
   <div>
