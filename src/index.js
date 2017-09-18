@@ -9,12 +9,13 @@ import loadScripts from './analytics';
 import registerServiceWorker from './registerServiceWorker';
 
 loadScripts();
-ReactDOM.render((
+ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Route exact path={ROOT} component={App} />
       <Route path={TEAM_PAGE} component={Team} />
     </Switch>
-  </BrowserRouter>
-), document.getElementById('root'));
+  </BrowserRouter>,
+  document.getElementById('root'),
+);
 registerServiceWorker();

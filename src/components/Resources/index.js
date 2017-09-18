@@ -10,7 +10,10 @@ const Resources = () => (
   <div className="resources-container">
     <ListWrapper className="resources-section" items={resourcesNewsLinks} />
     <ListWrapper className="resources-section" items={resourcesLearnLinks} />
-    <ListWrapper className="resources-section" items={resourcesTakeActionLinks} />
+    <ListWrapper
+      className="resources-section"
+      items={resourcesTakeActionLinks}
+    />
   </div>
 );
 

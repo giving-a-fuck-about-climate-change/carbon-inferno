@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import ListItem from './ListItem';
 
 const ListWrapper = ({ className, items }) => (
@@ -15,6 +17,13 @@ const ListWrapper = ({ className, items }) => (
     </ul>
   </div>
 );
+ListWrapper.defaultProps = {
+  items: [],
+};
+ListWrapper.propTypes = {
+  className: PropTypes.string, //eslint-disable-line
+  items: PropTypes.array, //eslint-disable-line
+};
 
 export class ActiveListWrapper extends Component {
   constructor(props) {
@@ -24,19 +33,18 @@ export class ActiveListWrapper extends Component {
     };
   }
 
-  updateItem = (type, submitClick) => (
-    (event) => {
-      event.preventDefault();
-      this.state.items.map((item) => {
-        if (item.type === type) {
-          item.className = 'selected';
-          return item;
-        } item.className = '';
+  updateItem = (type, submitClick) => (event) => {
+    event.preventDefault();
+    this.state.items.map((item) => {
+      if (item.type === type) {
+        item.className = 'selected';
         return item;
-      });
-      submitClick(event);
-    }
-  );
+      }
+      item.className = '';
+      return item;
+    });
+    submitClick(event);
+  };
 
   render() {
     return (
@@ -56,5 +64,14 @@ export class ActiveListWrapper extends Component {
     );
   }
 }
+
+ActiveListWrapper.propTypes = {
+  className: PropTypes.string.isRequired,
+  items: PropTypes.array, //eslint-disable-line
+};
+
+ActiveListWrapper.defaultProps = {
+  items: [],
+};
 
 export default ListWrapper;
