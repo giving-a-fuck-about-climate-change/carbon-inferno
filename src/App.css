@@ -66,7 +66,6 @@ body {
   color: #355c73;
   font-weight: bold;
 }
-
 .footer-header {
   font-size: 20px;
   color: #46494e;
@@ -74,7 +73,6 @@ body {
   padding-right: 40px;
   margin-right: 15px;
 }
-
 .footer-title {
   color: #46494e;
   font-size: 12px;
@@ -176,7 +174,6 @@ body {
   color: #365c73;
   border-bottom: 1px solid #dae1e9;
 }
-
 .info-col {
   flex: 1 1 auto;
   flex-flow: row wrap;
@@ -194,7 +191,6 @@ body {
 .info-wrapper {
   margin: 0 auto;
 }
-
 .stat-info {
   font-size: 48px;
   font-weight: 400;
