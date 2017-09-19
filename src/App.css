@@ -28,7 +28,9 @@ body {
   ); /* ff3.6+ */
   padding: 30px;
 }
-.header {
+.header,
+.header a:link,
+.header a:visited {
   font-size: 30px;
   text-transform: uppercase;
   font-weight: 300;
@@ -36,6 +38,7 @@ body {
   color: #ffffff;
   padding-top: 20px;
   padding-bottom: 20px;
+  text-decoration: none;
 }
 .footer {
   display: flex;
@@ -148,13 +151,11 @@ body {
   text-decoration: none;
   padding-bottom: 11px;
 }
-
 .time-choice-header a:hover {
   color: #355c73;
   font-weight: bold;
   border-bottom: 1px solid #1ba69c;
 }
-
 .App {
   background-color: #ffffff;
   text-align: center;
@@ -163,7 +164,6 @@ body {
   border-radius: 5px;
   width: 80%;
 }
-
 .flex-grid {
   display: flex;
   color: #365c73;
@@ -171,7 +171,6 @@ body {
   border-bottom: 2px dotted #dae1e9;
   padding-bottom: 20px;
 }
-
 .flex-grid-header {
   display: flex;
   color: #365c73;
@@ -287,7 +286,6 @@ body {
     justify-content: center;
   }
 }
-
 .text-page {
   background-color: #ffffff;
   text-align: left;
@@ -298,14 +296,12 @@ body {
   line-height: 2;
   color: #46494e;
 }
-
 .text-page a {
   text-decoration: none;
   color: #46494e;
   font-size: 16px;
   border-bottom: 1px solid #1ba69c;
 }
-
 .text-page a:hover {
   color: #355c73;
   font-weight: bold;

@@ -40,7 +40,7 @@ export const socialLinks = [
 export const contributingLinks = [
   { href: '', className: 'footer-title', text: 'Give a Fuck' },
   { href: '/contribute', className: '', text: 'Contribute' },
-  { href: '#TODO', className: '', text: 'Contact Us' },
+  { href: 'mailto:contact@carbondoomsday.com', className: '', text: 'Contact Us' },
 ];
 
 export const footerLinks = [
