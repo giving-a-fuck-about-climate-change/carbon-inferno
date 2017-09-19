@@ -63,6 +63,7 @@ body {
   color: #355c73;
   font-weight: bold;
 }
+
 .footer-header {
   font-size: 20px;
   color: #46494e;
@@ -147,11 +148,13 @@ body {
   text-decoration: none;
   padding-bottom: 11px;
 }
+
 .time-choice-header a:hover {
   color: #355c73;
   font-weight: bold;
   border-bottom: 1px solid #1ba69c;
 }
+
 .App {
   background-color: #ffffff;
   text-align: center;
@@ -160,6 +163,7 @@ body {
   border-radius: 5px;
   width: 80%;
 }
+
 .flex-grid {
   display: flex;
   color: #365c73;
@@ -167,6 +171,7 @@ body {
   border-bottom: 2px dotted #dae1e9;
   padding-bottom: 20px;
 }
+
 .flex-grid-header {
   display: flex;
   color: #365c73;
@@ -275,9 +280,33 @@ body {
   border-radius: 5px;
   width: 80%;
   text-align: center;
+  color: #46494e;
 }
 @media (max-width: 569px) {
   .team-grid {
     justify-content: center;
   }
+}
+
+.text-page {
+  background-color: #ffffff;
+  text-align: left;
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: 5px;
+  width: 80%;
+  line-height: 2;
+  color: #46494e;
+}
+
+.text-page a {
+  text-decoration: none;
+  color: #46494e;
+  font-size: 16px;
+  border-bottom: 1px solid #1ba69c;
+}
+
+.text-page a:hover {
+  color: #355c73;
+  font-weight: bold;
 }
