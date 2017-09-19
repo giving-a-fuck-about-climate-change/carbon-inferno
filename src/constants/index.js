@@ -86,7 +86,7 @@ export const teamItems = [
   {
     src:
       'https://media.licdn.com/media/AAEAAQAAAAAAAALiAAAAJDVkMDNhZGZjLTg0ZmItNGVlZS05MmVhLTE4YzVlZjRjNjQzMw.jpg',
-    name: 'Martin OGrady',
+    name: "Martin O'Grady",
     location: 'Berlin, Germany',
     position: 'Frontend Developer',
     alt: 'Martin OGrady',
