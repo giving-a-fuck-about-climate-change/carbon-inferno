@@ -9,13 +9,13 @@ import {
   InfoColumnHOC,
   LoadingWrapper,
   TimeChoiceHeader,
+  PpmChart,
 } from '../../components';
 
 import {
   calculateAverage,
   calculateDiff,
   calculatePercentageDiff,
-  getData,
   todaysDate,
   subDate,
 } from '../../utils';
@@ -93,8 +93,6 @@ const setStateWithApiResult = (rangeType, results) => (prevState) => {
   const average = calculateAverage(results);
   return {
     loading: false,
-    ppms: getData('ppm', results),
-    dates: getData('date', results),
     average,
     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
@@ -118,8 +116,6 @@ const setStateWithInitialPpmReq = apiResponse => () => {
     loading: false,
     currentPPM,
     count: totalPPMCount,
-    ppms: getData('ppm', ppmsForMonth),
-    dates: getData('date', ppmsForMonth),
     average,
     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
@@ -235,205 +231,6 @@ class ChartInfo extends Component {
       this.fetchPpmsForRangeBasedOnCount,
     );
 
-  // GET X & Y || MAX & MIN
-  getX() {
-    const { data } = this.state;
-    return {
-      min: data[0].x,
-      max: data[data.length - 1].x,
-    };
-  }
-  getY() {
-    const { data } = this.state;
-    return {
-      min: data.reduce((min, p) => (p.y < min ? p.y : min), data[0].y),
-      max: data.reduce((max, p) => (p.y > max ? p.y : max), data[0].y),
-    };
-  }
-  // GET SVG COORDINATES
-  getSvgX(x) {
-    const { svgWidth, yLabelSize } = this.props;
-    return yLabelSize + x / this.getX().max * (svgWidth - yLabelSize);
-  }
-  getSvgY(y) {
-    const { svgHeight, xLabelSize } = this.props;
-    const gY = this.getY();
-    return (
-      ((svgHeight - xLabelSize) * gY.max - (svgHeight - xLabelSize) * y) /
-      (gY.max - gY.min)
-    );
-  } // BUILD SVG PATH
-  makePath() {
-    const { color } = this.props;
-    const { data } = this.state;
-
-    let pathD = `M ${this.getSvgX(data[0].x)} ${this.getSvgY(data[0].y)} `;
-
-    pathD += data.map(
-      point => `L ${this.getSvgX(point.x)} ${this.getSvgY(point.y)} `,
-    );
-    return (
-      <path className="linechart_path" d={pathD} style={{ stroke: color }} />
-    );
-  }
-  // BUILD SHADED AREA
-  makeArea() {
-    const { data } = this.state;
-    let pathD = `M ${this.getSvgX(data[0].x)} ${this.getSvgY(data[0].y)} `;
-
-    pathD += data.map(
-      (point, i) => `L ${this.getSvgX(point.x)} ${this.getSvgY(point.y)} `,
-    );
-
-    const x = this.getX();
-    const y = this.getY();
-    pathD +=
-      `L ${this.getSvgX(x.max)} ${this.getSvgY(y.min)} ` +
-      `L ${this.getSvgX(x.min)} ${this.getSvgY(y.min)} `;
-
-    return <path className="linechart_area" d={pathD} />;
-  }
-  // BUILD GRID AXIS
-  makeAxis() {
-    const { yLabelSize } = this.props;
-    const x = this.getX();
-    const y = this.getY();
-
-    const topLineXBeginPos = this.getSvgX(x.min) - yLabelSize;
-    const topLineYBeginPos = this.getSvgY(y.min);
-    const topLineXEndPos = this.getSvgX(x.max);
-    const topLineYEndPos = this.getSvgY(y.min);
-
-    const bottomLineXBeginPos = this.getSvgX(x.min) - yLabelSize;
-    const bottomLineYBeginPos = this.getSvgY(y.max);
-    const bottomLineXEndPos = this.getSvgX(x.max);
-    const bottomLineYEndPos = this.getSvgY(y.max);
-
-    return (
-      <g className="linechart_axis">
-        <line
-          x1={topLineXBeginPos}
-          y1={topLineYBeginPos}
-          x2={topLineXEndPos}
-          y2={topLineYEndPos}
-          strokeDasharray="5"
-        />
-        <line
-          x1={bottomLineXBeginPos}
-          y1={bottomLineYBeginPos}
-          x2={bottomLineXEndPos}
-          y2={bottomLineYEndPos}
-          strokeDasharray="5"
-        />
-      </g>
-    );
-  }
-
-  makeLabels() {
-    const { svgHeight, svgWidth, xLabelSize, yLabelSize } = this.props;
-    const padding = 5;
-    return (
-      <g className="linechart_label">
-        {/* Y AXIS LABELS */}
-        <text
-          transform={`translate(${yLabelSize / 2}, 20)`}
-          textAnchor="middle"
-        >
-          {this.getY().max}
-        </text>
-        <text
-          transform={`translate(${yLabelSize / 2}, ${svgHeight -
-            xLabelSize -
-            padding})`}
-          textAnchor="middle"
-        >
-          {this.getY().min}
-        </text>
-        {/* X AXIS LABELS */}
-        <text
-          transform={`translate(${yLabelSize}, ${svgHeight})`}
-          textAnchor="start"
-        >
-          {this.state.data[0].d}
-        </text>
-        <text
-          transform={`translate(${svgWidth}, ${svgHeight})`}
-          textAnchor="end"
-        >
-          {this.state.data[this.state.data.length - 1].d}
-        </text>
-      </g>
-    );
-  }
-
-  // FIND CLOSEST POINT TO MOUSE
-  getCoords = (e) => {
-    const { svgWidth, yLabelSize } = this.props;
-    const { data } = this.state;
-    const svgLocation = document
-      .getElementsByClassName('linechart')[0]
-      .getBoundingClientRect();
-    const adjustment = (svgLocation.width - svgWidth) / 2; // takes padding into consideration
-    const relativeLoc = e.clientX - svgLocation.left - adjustment;
-
-    const svgData = [];
-    data.map((point) => {
-      svgData.push({
-        svgX: this.getSvgX(point.x),
-        svgY: this.getSvgY(point.y),
-        d: point.d,
-        p: point.p,
-      });
-    });
-
-    let closestPoint = {};
-    for (let i = 0, c = 500; i < svgData.length; i++) {
-      if (Math.abs(svgData[i].svgX - this.state.hoverLoc) <= c) {
-        c = Math.abs(svgData[i].svgX - this.state.hoverLoc);
-        closestPoint = svgData[i];
-      }
-    }
-
-    if (relativeLoc - yLabelSize < 0) {
-      this.stopHover();
-    } else {
-      this.setState({
-        hoverLoc: relativeLoc,
-        activePoint: closestPoint,
-      });
-    }
-  };
-  // STOP HOVER
-  stopHover = () => {
-    this.setState({ hoverLoc: null, activePoint: null });
-  };
-  // MAKE ACTIVE POINT
-  makeActivePoint() {
-    const { color, pointRadius } = this.props;
-    return (
-      <circle
-        className="linechart_point"
-        style={{ stroke: color }}
-        r={pointRadius}
-        cx={this.state.activePoint.svgX}
-        cy={this.state.activePoint.svgY}
-      />
-    );
-  }
-  // MAKE HOVER LINE
-  createLine() {
-    const { svgHeight, xLabelSize } = this.props;
-    return (
-      <line
-        className="hoverLine"
-        x1={this.state.hoverLoc}
-        y1={-8}
-        x2={this.state.hoverLoc}
-        y2={svgHeight - xLabelSize}
-      />
-    );
-  }
-
   render() {
     const {
       currentPPM,
@@ -443,9 +240,8 @@ class ChartInfo extends Component {
       diffPercentSubHeader,
       rangeType,
       loading,
+      data,
     } = this.state;
-    const svgHeight = 300;
-    const svgWidth = 900;
     return (
       <div>
         <div className="flex-grid-header">
@@ -464,25 +260,7 @@ class ChartInfo extends Component {
               diffPercentSubHeader={diffPercentSubHeader}
             />
             <div className="graph-container">
-              {this.state.data.length > 0 ? (
-                <svg
-                  width={svgWidth}
-                  height={svgHeight}
-                  viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-                  className={'linechart'}
-                  onMouseMove={this.getCoords}
-                  onMouseLeave={this.stopHover}
-                >
-                  <g>
-                    {this.makeAxis()}
-                    {this.makePath()}
-                    {this.makeArea()}
-                    {this.makeLabels()}
-                    {this.state.hoverLoc ? this.createLine() : null}
-                    {this.state.hoverLoc ? this.makeActivePoint() : null}
-                  </g>
-                </svg>
-              ) : null}
+              {data.length > 0 ? <PpmChart data={data} /> : null}
             </div>
           </div>
         </LoadingWrapper>
