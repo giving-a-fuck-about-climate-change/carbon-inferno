@@ -6,3 +6,5 @@ export { default as TimeChoiceHeader } from './TimeChoiceHeader';
 export { default as LoadingWrapper } from './Loading';
 export { default as ToolTip } from './ToolTip';
 export { default as PpmChart } from './PpmChart';
+export { default as Axis } from './Axis';
+export { default as AxisLabels } from './Axis/labels';

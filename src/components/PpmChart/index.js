@@ -11,33 +11,33 @@ class PpmChart extends Component {
   };
 
   // GET X & Y || MAX & MIN
-  getX() {
+  getX = () => {
     const { data } = this.props;
     return {
       min: data[0].x,
       max: data[data.length - 1].x,
     };
-  }
-  getY() {
+  };
+  getY = () => {
     const { data } = this.props;
     return {
       min: data.reduce((min, p) => (p.y < min ? p.y : min), data[0].y),
       max: data.reduce((max, p) => (p.y > max ? p.y : max), data[0].y),
     };
-  }
+  };
   // GET SVG COORDINATES
-  getSvgX(x) {
+  getSvgX = (x) => {
     const { svgWidth, yLabelSize } = this.props;
     return yLabelSize + x / this.getX().max * (svgWidth - yLabelSize); //eslint-disable-line
-  }
-  getSvgY(y) {
+  };
+  getSvgY = (y) => {
     const { svgHeight, xLabelSize } = this.props;
     const gY = this.getY();
     return (
       ((svgHeight - xLabelSize) * gY.max - (svgHeight - xLabelSize) * y) / //eslint-disable-line
       (gY.max - gY.min)
     );
-  }
+  };
 
   // FIND CLOSEST POINT TO MOUSE
   getCoords = (e) => {
@@ -76,113 +76,6 @@ class PpmChart extends Component {
     }
   };
 
-  // BUILD SVG PATH
-  makePath() {
-    const { color, data } = this.props;
-    const markerTo = `M ${this.getSvgX(data[0].x)} ${this.getSvgY(data[0].y)} `;
-
-    const linePath = data.reduce(
-      (pathString, point) =>
-        `${pathString}L ${this.getSvgX(point.x)} ${this.getSvgY(point.y)} `,
-      markerTo,
-    );
-
-    return (
-      <path className="linechart_path" d={linePath} style={{ stroke: color }} />
-    );
-  }
-  // BUILD SHADED AREA
-  makeArea() {
-    const { data } = this.props;
-    const markerTo = `M ${this.getSvgX(data[0].x)} ${this.getSvgY(data[0].y)} `;
-
-    let linePath = data.reduce(
-      (pathString, point) =>
-        `${pathString}L ${this.getSvgX(point.x)} ${this.getSvgY(point.y)} `,
-      markerTo,
-    );
-
-    const x = this.getX();
-    const y = this.getY();
-    linePath +=
-      `L ${this.getSvgX(x.max)} ${this.getSvgY(y.min)} ` +
-      `L ${this.getSvgX(x.min)} ${this.getSvgY(y.min)} `;
-
-    return <path className="linechart_area" d={linePath} />;
-  }
-  // BUILD GRID AXIS
-  makeAxis() {
-    const { yLabelSize } = this.props;
-    const x = this.getX();
-    const y = this.getY();
-
-    const topLineXBeginPos = this.getSvgX(x.min) - yLabelSize;
-    const topLineYBeginPos = this.getSvgY(y.min);
-    const topLineXEndPos = this.getSvgX(x.max);
-    const topLineYEndPos = this.getSvgY(y.min);
-
-    const bottomLineXBeginPos = this.getSvgX(x.min) - yLabelSize;
-    const bottomLineYBeginPos = this.getSvgY(y.max);
-    const bottomLineXEndPos = this.getSvgX(x.max);
-    const bottomLineYEndPos = this.getSvgY(y.max);
-
-    return (
-      <g className="linechart_axis">
-        <line
-          x1={topLineXBeginPos}
-          y1={topLineYBeginPos}
-          x2={topLineXEndPos}
-          y2={topLineYEndPos}
-          strokeDasharray="5"
-        />
-        <line
-          x1={bottomLineXBeginPos}
-          y1={bottomLineYBeginPos}
-          x2={bottomLineXEndPos}
-          y2={bottomLineYEndPos}
-          strokeDasharray="5"
-        />
-      </g>
-    );
-  }
-
-  makeLabels() {
-    const { svgHeight, svgWidth, xLabelSize, yLabelSize, data } = this.props;
-    const padding = 5;
-    return (
-      <g className="linechart_label">
-        {/* Y AXIS LABELS */}
-        <text
-          transform={`translate(${yLabelSize / 2}, 20)`}
-          textAnchor="middle"
-        >
-          {this.getY().max}
-        </text>
-        <text
-          transform={`translate(${yLabelSize / 2}, ${svgHeight -
-            xLabelSize -
-            padding})`}
-          textAnchor="middle"
-        >
-          {this.getY().min}
-        </text>
-        {/* X AXIS LABELS */}
-        <text
-          transform={`translate(${yLabelSize}, ${svgHeight})`}
-          textAnchor="start"
-        >
-          {this.props.data[0].d}
-        </text>
-        <text
-          transform={`translate(${svgWidth}, ${svgHeight})`}
-          textAnchor="end"
-        >
-          {data[data.length - 1].d}
-        </text>
-      </g>
-    );
-  }
-
   // STOP HOVER
   stopHover = () => {
     this.setState({ hoverLoc: null, activePoint: null });
@@ -215,8 +108,7 @@ class PpmChart extends Component {
   }
 
   render() {
-    const svgHeight = 300;
-    const svgWidth = 900;
+    const { yLabelSize, xLabelSize, svgHeight, svgWidth, data } = this.props;
     return (
       <div>
         <div className="row">
@@ -242,10 +134,19 @@ class PpmChart extends Component {
               <g>
                 {this.state.hoverLoc ? this.createLine() : null}
                 {this.state.hoverLoc ? this.makeActivePoint() : null}
-                {this.makePath()}
-                {this.makeArea()}
-                {this.makeLabels()}
-                {this.makeAxis()}
+                {this.props.children({
+                  cordFuncs: {
+                    getX: this.getX,
+                    getY: this.getY,
+                    getSvgX: this.getSvgX,
+                    getSvgY: this.getSvgY,
+                  },
+                  svgHeight,
+                  svgWidth,
+                  xLabelSize,
+                  yLabelSize,
+                  svgData: data,
+                })}
               </g>
             </svg>
           ) : null}
@@ -264,6 +165,7 @@ PpmChart.propTypes = {
   xLabelSize: PropTypes.number,
   yLabelSize: PropTypes.number,
   data: PropTypes.array, //eslint-disable-line
+  children: PropTypes.func.isRequired,
 };
 // DEFAULT PROPS
 PpmChart.defaultProps = {
