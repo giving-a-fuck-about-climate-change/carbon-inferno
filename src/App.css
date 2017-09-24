@@ -31,14 +31,14 @@ body {
 .header,
 .header a:link,
 .header a:visited {
-  font-size: 30px;
-  text-transform: uppercase;
-  font-weight: 300;
-  letter-spacing: 1px;
-  color: #ffffff;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  text-decoration: none;
+	font-size: 30px;
+	text-transform: uppercase;
+	font-weight: 300;
+	letter-spacing: 1px;
+	color: #ffffff;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	text-decoration: none;
 }
 .footer {
 	display: flex;
@@ -80,12 +80,17 @@ body {
 	color: #355c73;
 	font-weight: bold;
 }
-.footer-header {
+.footer-header,
+.footer-header a:link,
+.footer-header a:hover,
+.footer-header a:visited {
 	font-size: 20px;
 	color: #46494e;
 	text-transform: uppercase;
 	padding-right: 40px;
 	margin-right: 15px;
+	text-decoration: none;
+	font-weight: normal;
 }
 .footer-title {
 	color: #46494e;
@@ -277,18 +282,18 @@ body {
 	padding-top: 20px;
 }
 .team-grid {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  background-color: #ffffff;
-  margin: 30px auto;
-  padding: 30px;
-  border-radius: 5px;
-  width: 80%;
-  text-align: center;
-  color: #46494e;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	background-color: #ffffff;
+	margin: 30px auto;
+	padding: 30px;
+	border-radius: 5px;
+	max-width: 800px;
+	text-align: center;
+	color: #46494e;
 }
 @media (max-width: 569px) {
 	.team-grid {
@@ -296,22 +301,22 @@ body {
 	}
 }
 .text-page {
-  background-color: #ffffff;
-  text-align: left;
-  margin: 30px auto;
-  padding: 20px;
-  border-radius: 5px;
-  width: 80%;
-  line-height: 2;
-  color: #46494e;
+	background-color: #ffffff;
+	text-align: left;
+	margin: 30px auto;
+	padding: 20px;
+	border-radius: 5px;
+	width: 80%;
+	line-height: 2;
+	color: #46494e;
 }
 .text-page a {
-  text-decoration: none;
-  color: #46494e;
-  font-size: 16px;
-  border-bottom: 1px solid #1ba69c;
+	text-decoration: none;
+	color: #46494e;
+	font-size: 16px;
+	border-bottom: 1px solid #1ba69c;
 }
 .text-page a:hover {
-  color: #355c73;
-  font-weight: bold;
+	color: #355c73;
+	font-weight: bold;
 }
