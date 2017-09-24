@@ -27,23 +27,20 @@ export const resourcesNewsLinks = [
 
 export const aboutProjectLinks = [
   { href: '', className: 'footer-title', text: 'About The Project' },
-  { href: '#TODO', className: '', text: 'Mission' },
-  { href: '#TODO', className: '', text: 'Data Sources' },
-  { href: '#TODO', className: '', text: 'In The News' },
+  { href: '/about', className: '', text: 'Mission' },
+  { href: '/datasources', className: '', text: 'Data Sources' },
   { href: '/team', className: '', text: 'Team' },
 ];
 
 export const socialLinks = [
   { href: '', className: 'footer-title', text: 'Social' },
-  { href: '#TODO', className: '', text: 'Twitter' },
-  { href: '#TODO', className: '', text: 'Instagram' },
-  { href: '#TODO', className: '', text: 'Facebook' },
+  { href: 'https://twitter.com/carbondoomsday', className: '', text: 'Twitter' },
 ];
 
 export const contributingLinks = [
-  { href: '', className: 'footer-title', text: 'Contribute' },
-  { href: '#TODO', className: '', text: 'Donate' },
-  { href: '#TODO', className: '', text: 'Give Feedback' },
+  { href: '', className: 'footer-title', text: 'Give a Fuck' },
+  { href: '/contribute', className: '', text: 'Contribute' },
+  { href: 'mailto:contact@carbondoomsday.com', className: '', text: 'Contact Us' },
 ];
 
 export const footerLinks = [
@@ -89,7 +86,7 @@ export const teamItems = [
   {
     src:
       'https://media.licdn.com/media/AAEAAQAAAAAAAALiAAAAJDVkMDNhZGZjLTg0ZmItNGVlZS05MmVhLTE4YzVlZjRjNjQzMw.jpg',
-    name: 'Martin OGrady',
+    name: "Martin O'Grady",
     location: 'Berlin, Germany',
     position: 'Frontend Developer',
     alt: 'Martin OGrady',

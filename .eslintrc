@@ -17,7 +17,9 @@
     "react/prop-types": 1,
     "react/no-array-index-key": 1,
     "no-param-reassign": 1,
-    "react/no-did-mount-set-state": 1
+    "react/no-did-mount-set-state": 1,
+    "import/no-named-as-default": 1,
+    "react/no-unescaped-entities": 1
   },
   "parser": "babel-eslint",
   "globals": {
