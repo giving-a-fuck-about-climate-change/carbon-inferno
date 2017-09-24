@@ -319,7 +319,7 @@ body {
   padding: 15px;
 }
 .linechart_path {
-  stroke-width: 3;
+  stroke-width: 2;
   fill: none;
 }
 
@@ -334,17 +334,27 @@ body {
 
 .linechart_area {
   padding: 8px;
-  fill: #64b5f6;
+  fill: #f3acb1;
   stroke: none;
-  opacity: 0.4;
+  opacity: 0.3;
 }
 
 .linechart_label {
-  fill: #64b5f6;
-  font-weight: 700;
+  fill: #355c73;
+  font-weight: 400;
 }
 
 .hoverLine {
-  stroke: #7d95b6;
-  stroke-width: 1;
+  stroke: #1ba69c;
+  stroke-width: 2;
+}
+
+.popup {
+  min-height: 25px;
+  vertical-align: top;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
 }

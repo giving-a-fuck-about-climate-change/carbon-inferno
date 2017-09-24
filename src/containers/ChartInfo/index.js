@@ -10,11 +10,7 @@ import {
   LoadingWrapper,
   TimeChoiceHeader,
   PpmChart,
-  Axis,
-  AxisLabels,
 } from '../../components';
-
-import { ShadedArea, SvgPath } from '../../components/AreaChart';
 
 import {
   calculateAverage,
@@ -264,32 +260,7 @@ class ChartInfo extends Component {
               diffPercentSubHeader={diffPercentSubHeader}
             />
             <div className="graph-container">
-              {data.length > 0 ? (
-                <PpmChart data={data}>
-                  {({
-                    cordFuncs,
-                    svgHeight,
-                    svgWidth,
-                    xLabelSize,
-                    yLabelSize,
-                    svgData,
-                  }) => (
-                    <g>
-                      <Axis yLabelSize={yLabelSize} {...cordFuncs} />
-                      <AxisLabels
-                        svgHeight={svgHeight}
-                        svgWidth={svgWidth}
-                        xLabelSize={xLabelSize}
-                        yLabelSize={yLabelSize}
-                        getY={cordFuncs.getY}
-                        data={svgData}
-                      />
-                      <ShadedArea {...cordFuncs} data={svgData} />
-                      <SvgPath {...cordFuncs} data={svgData} />
-                    </g>
-                  )}
-                </PpmChart>
-              ) : null}
+              {data.length > 0 ? <PpmChart data={data} /> : null}
             </div>
           </div>
         </LoadingWrapper>
@@ -299,12 +270,3 @@ class ChartInfo extends Component {
 }
 
 export default ChartInfo;
-// DEFAULT PROPS
-ChartInfo.defaultProps = {
-  color: '#2196F3',
-  pointRadius: 5,
-  svgHeight: 300,
-  svgWidth: 900,
-  xLabelSize: 20,
-  yLabelSize: 80,
-};

@@ -8,3 +8,6 @@ export { default as ToolTip } from './ToolTip';
 export { default as PpmChart } from './PpmChart';
 export { default as Axis } from './Axis';
 export { default as AxisLabels } from './Axis/labels';
+export { default as Svg } from './Svg';
+export { default as Point } from './Point';
+export { default as Line } from './Line';

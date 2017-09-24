@@ -15,7 +15,7 @@ export const SvgPath = ({ getSvgX, getSvgY, color, data, className }) => {
 SvgPath.defaultProps = {
   data: [],
   className: 'linechart_path',
-  color: '#2196F3',
+  color: '#f3acb1',
 };
 SvgPath.propTypes = {
   getSvgX: PropTypes.func.isRequired,

@@ -6,10 +6,10 @@
   position: absolute;
   padding: 5px;
   border-radius: 4px;
-  background-color: #2196f3;
+  background-color: #1ba69c;
   color: white;
 }
 
-.hover .price {
-  font-weight: 700;
+.hover .ppm {
+  font-weight: 400;
 }

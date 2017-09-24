@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import ToolTip from '../ToolTip';
+import Svg from '../Svg';
+import Axis from '../Axis';
+import AxisLabels from '../Axis/labels';
+import { ShadedArea, SvgPath } from '../../components/AreaChart';
+import { Point as ActivePoint } from '../Point';
+import { Line as HoverLine } from '../Line';
 
 // Component
 class PpmChart extends Component {
@@ -10,48 +16,18 @@ class PpmChart extends Component {
     activePoint: null,
   };
 
-  // GET X & Y || MAX & MIN
-  getX = () => {
-    const { data } = this.props;
-    return {
-      min: data[0].x,
-      max: data[data.length - 1].x,
-    };
-  };
-  getY = () => {
-    const { data } = this.props;
-    return {
-      min: data.reduce((min, p) => (p.y < min ? p.y : min), data[0].y),
-      max: data.reduce((max, p) => (p.y > max ? p.y : max), data[0].y),
-    };
-  };
-  // GET SVG COORDINATES
-  getSvgX = (x) => {
-    const { svgWidth, yLabelSize } = this.props;
-    return yLabelSize + x / this.getX().max * (svgWidth - yLabelSize); //eslint-disable-line
-  };
-  getSvgY = (y) => {
-    const { svgHeight, xLabelSize } = this.props;
-    const gY = this.getY();
-    return (
-      ((svgHeight - xLabelSize) * gY.max - (svgHeight - xLabelSize) * y) / //eslint-disable-line
-      (gY.max - gY.min)
-    );
-  };
-
   // FIND CLOSEST POINT TO MOUSE
-  getCoords = (e) => {
-    const { svgWidth, yLabelSize, data } = this.props;
-    const svgLocation = document
-      .getElementsByClassName('linechart')[0]
-      .getBoundingClientRect();
+  getCoords = ({ getSvgY, getSvgX }, e) => {
+    const { yLabelSize, data } = this.props;
+    const svgElement = document.getElementsByClassName('linechart')[0];
+    const svgLocation = svgElement.getBoundingClientRect();
+    const svgWidth = parseFloat(window.getComputedStyle(svgElement).width);
     const adjustment = (svgLocation.width - svgWidth) / 2; // takes padding into consideration
     const relativeLoc = e.clientX - svgLocation.left - adjustment;
-
     const svgData = data.reduce((svgPointArr, point) => {
       const currCord = {
-        svgX: this.getSvgX(point.x),
-        svgY: this.getSvgY(point.y),
+        svgX: getSvgX(point.x),
+        svgY: getSvgY(point.y),
         d: point.d,
         p: point.p,
       };
@@ -80,76 +56,60 @@ class PpmChart extends Component {
   stopHover = () => {
     this.setState({ hoverLoc: null, activePoint: null });
   };
-  // MAKE ACTIVE POINT
-  makeActivePoint() {
-    const { color, pointRadius } = this.props;
-    return (
-      <circle
-        className="linechart_point"
-        style={{ stroke: color }}
-        r={pointRadius}
-        cx={this.state.activePoint.svgX}
-        cy={this.state.activePoint.svgY}
-      />
-    );
-  }
-  // MAKE HOVER LINE
-  createLine() {
-    const { svgHeight, xLabelSize } = this.props;
-    return (
-      <line
-        className="hoverLine"
-        x1={this.state.hoverLoc}
-        y1={-8}
-        x2={this.state.hoverLoc}
-        y2={svgHeight - xLabelSize}
-      />
-    );
-  }
 
   render() {
-    const { yLabelSize, xLabelSize, svgHeight, svgWidth, data } = this.props;
+    const { data } = this.props;
     return (
       <div>
-        <div className="row">
-          <div className="popup">
-            {this.state.hoverLoc ? (
-              <ToolTip
-                hoverLoc={this.state.hoverLoc}
-                activePoint={this.state.activePoint}
-              />
-            ) : null}
-          </div>
-        </div>
         <div className="graph-container">
-          {this.props.data.length > 0 ? (
-            <svg
-              width={svgWidth}
-              height={svgHeight}
-              viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-              className={'linechart'}
-              onMouseMove={this.getCoords}
-              onMouseLeave={this.stopHover}
-            >
+          <div className="row">
+            <div className="popup">
+              {this.state.hoverLoc ? (
+                <ToolTip
+                  hoverLoc={this.state.hoverLoc}
+                  text={this.state.activePoint.p}
+                />
+              ) : null}
+            </div>
+          </div>
+          <Svg
+            data={data}
+            onMouseMove={this.getCoords}
+            onMouseLeave={this.stopHover}
+          >
+            {({ cordFuncs, svgHeight, svgData }) => (
               <g>
-                {this.state.hoverLoc ? this.createLine() : null}
-                {this.state.hoverLoc ? this.makeActivePoint() : null}
-                {this.props.children({
-                  cordFuncs: {
-                    getX: this.getX,
-                    getY: this.getY,
-                    getSvgX: this.getSvgX,
-                    getSvgY: this.getSvgY,
-                  },
-                  svgHeight,
-                  svgWidth,
-                  xLabelSize,
-                  yLabelSize,
-                  svgData: data,
-                })}
+                <Axis {...cordFuncs} />
+                <AxisLabels svgHeight={svgHeight} getY={cordFuncs.getY} />
+                <ShadedArea {...cordFuncs} data={svgData} />
+                <SvgPath {...cordFuncs} data={svgData} />
+                {this.state.hoverLoc ? (
+                  <HoverLine
+                    x1={this.state.hoverLoc}
+                    y1={-8} // TODO: Understand Why -8 ???
+                    x2={this.state.hoverLoc}
+                    y2={this.props.svgHeight}
+                  />
+                ) : null}
+                {this.state.hoverLoc ? (
+                  <ActivePoint
+                    xCoord={this.state.activePoint.svgX}
+                    yCoord={this.state.activePoint.svgY}
+                  />
+                ) : null}
               </g>
-            </svg>
-          ) : null}
+            )}
+          </Svg>
+          <div className="row">
+            <div className="popup">
+              {this.state.hoverLoc ? (
+                <ToolTip
+                  hoverLoc={this.state.hoverLoc}
+                  text={this.state.activePoint.d}
+                />
+              ) : null}
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -165,14 +125,13 @@ PpmChart.propTypes = {
   xLabelSize: PropTypes.number,
   yLabelSize: PropTypes.number,
   data: PropTypes.array, //eslint-disable-line
-  children: PropTypes.func.isRequired,
 };
 // DEFAULT PROPS
 PpmChart.defaultProps = {
   color: '#2196F3',
   pointRadius: 5,
-  svgHeight: 300,
-  svgWidth: 900,
+  svgHeight: 300, // TODO: Understand how we could use this to increase the graph and be responsive.
+  svgWidth: 700, // TODO: Understand how we could use this to increase the graph and be responsive.
   xLabelSize: 20,
   yLabelSize: 80,
   data: [],
