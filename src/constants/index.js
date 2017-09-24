@@ -34,17 +34,25 @@ export const aboutProjectLinks = [
 
 export const socialLinks = [
   { href: '', className: 'footer-title', text: 'Social' },
-  { href: 'https://twitter.com/carbondoomsday', className: '', text: 'Twitter' },
+  {
+    href: 'https://twitter.com/carbondoomsday',
+    className: '',
+    text: 'Twitter',
+  },
 ];
 
 export const contributingLinks = [
   { href: '', className: 'footer-title', text: 'Give a Fuck' },
   { href: '/contribute', className: '', text: 'Contribute' },
-  { href: 'mailto:contact@carbondoomsday.com', className: '', text: 'Contact Us' },
+  {
+    href: 'mailto:contact@carbondoomsday.com',
+    className: '',
+    text: 'Contact Us',
+  },
 ];
 
 export const footerLinks = [
-  { href: '', className: 'footer-header', text: 'Global CO₂ Levels' },
+  { href: '/', className: 'footer-header', text: 'Global CO₂ Levels' },
 ];
 
 export const WEEK = 'week';
@@ -61,47 +69,42 @@ export const timeHeaderLinks = [
 
 export const teamItems = [
   {
-    src: 'https://avatars1.githubusercontent.com/u/1991377?v=4&s=400&u=f401f8cf851b08ad2f95b937c438c2c760e8edb1',
+    src: 'https://i.imgur.com/XkcNjYd.jpg',
     name: 'Luke Murphy',
     location: 'Rotterdam, The Netherlands',
     position: 'Backend Developer',
     alt: 'Luke Murphy',
   },
   {
-    src:
-      'https://media.licdn.com/media/AAEAAQAAAAAAAAPwAAAAJGQ1ZTM1NDA2LTA0YmMtNDBiZi05OTU3LTE2MTMwMTY2M2UyNg.jpg',
+    src: 'https://i.imgur.com/ZZgP1Un.jpg',
     name: 'Tito Jankowski',
     location: 'San Francisco, USA',
     position: 'Water Boy',
     alt: 'Tito Jankowski',
   },
   {
-    src:
-      'https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAK5AAAAJGIyYTg4M2Q5LWM0YzMtNGNjNC1iMTExLWYzZDE5NzY3MzhkNg.jpg',
-    name: 'Stephanie Tassone',
-    location: 'Berlin, Germany',
-    position: 'Frontend Developer',
-    alt: 'Stephanie Tassone',
-  },
-  {
-    src:
-      'https://media.licdn.com/media/AAEAAQAAAAAAAALiAAAAJDVkMDNhZGZjLTg0ZmItNGVlZS05MmVhLTE4YzVlZjRjNjQzMw.jpg',
+    src: 'https://i.imgur.com/v5WOyPs.jpg',
     name: "Martin O'Grady",
     location: 'Berlin, Germany',
     position: 'Frontend Developer',
     alt: 'Martin OGrady',
   },
   {
-    src:
-      'https://media.licdn.com/media/AAEAAQAAAAAAAAr_AAAAJDk4MGI1YmNkLThjOWQtNDExZi1iMDU3LWI1NDIwNTg5MTg1Yw.jpg',
+    src: 'https://i.imgur.com/GbF4PWV.jpg',
+    name: 'Stephanie Tassone',
+    location: 'Berlin, Germany',
+    position: 'Frontend Developer',
+    alt: 'Stephanie Tassone',
+  },
+  {
+    src: 'https://i.imgur.com/pBbJxNn.jpg',
     name: 'Dan Walsh',
     location: 'San Francisco, USA',
     position: 'Marketer',
     alt: 'Dan Walsh',
   },
   {
-    src:
-      'https://media.licdn.com/media/AAEAAQAAAAAAAAiWAAAAJDhiN2Q4NTViLTQ2YjYtNGUyYS1hMGU4LTdmMWNiZjc4OGNiYg.jpg',
+    src: 'https://i.imgur.com/NvgqRSm.jpg',
     name: 'Purin Phanichphant',
     location: 'San Francisco, USA',
     position: 'UX/UI',
