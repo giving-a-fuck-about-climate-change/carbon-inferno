@@ -61,7 +61,7 @@ export const timeHeaderLinks = [
 
 export const teamItems = [
   {
-    src: '',
+    src: 'https://avatars1.githubusercontent.com/u/1991377?v=4&s=400&u=f401f8cf851b08ad2f95b937c438c2c760e8edb1',
     name: 'Luke Murphy',
     location: 'Rotterdam, The Netherlands',
     position: 'Backend Developer',

@@ -13,8 +13,8 @@ export const App = () => (
       <div className="App">
         <ChartInfo />
       </div>
-      <Footer />
     </div>
+    <Footer />
   </div>
 );
 
