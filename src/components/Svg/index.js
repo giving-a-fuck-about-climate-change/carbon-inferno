@@ -43,7 +43,7 @@ class Svg extends Component {
   };
 
   render() {
-    const { svgHeight, svgWidth, data, className, style } = this.props;
+    const { svgHeight, svgWidth, data, className, style } = this.props; // TODO: spread props here?
     return (
       <svg
         width={'100%'} // TODO: Make prop

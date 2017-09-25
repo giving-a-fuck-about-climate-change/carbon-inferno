@@ -48,6 +48,7 @@ class PpmChart extends Component {
     }
 
     if (hoverLoc - yLabelSize < 0) {
+      // TODO stop hover on right side of graph.
       this.stopHover();
     } else {
       this.setState({

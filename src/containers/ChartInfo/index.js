@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
-import moment from 'moment';
 import fetchData from '../../utils/request';
 
 import config from '../../config';
@@ -16,6 +15,7 @@ import {
   calculateAverage,
   calculateDiff,
   calculatePercentageDiff,
+  createGraphData,
   todaysDate,
   subDate,
 } from '../../utils';
@@ -97,15 +97,7 @@ const setStateWithApiResult = (rangeType, results) => (prevState) => {
     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
     rangeType,
-    data: results.map((item, idx) => {
-      const { date, ppm } = item;
-      return {
-        d: moment(date).format('MMM DD YYYY'),
-        p: parseInt(ppm, 10),
-        x: idx,
-        y: parseInt(ppm, 10),
-      };
-    }),
+    data: createGraphData(results),
   };
 };
 
@@ -120,15 +112,7 @@ const setStateWithInitialPpmReq = apiResponse => () => {
     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
     rangeType,
-    data: ppmsForMonth.map((item, idx) => {
-      const { date, ppm } = item;
-      return {
-        d: moment(date).format('MMM DD YYYY'),
-        p: parseInt(ppm, 10),
-        x: idx,
-        y: parseInt(ppm, 10),
-      };
-    }),
+    data: createGraphData(ppmsForMonth),
   };
 };
 
