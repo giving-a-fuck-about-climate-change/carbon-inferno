@@ -14,6 +14,7 @@ class PpmChart extends Component {
   state = {
     hoverLoc: null,
     activePoint: null,
+    mocLoc: null,
   };
 
   // FIND CLOSEST POINT TO MOUSE
@@ -54,13 +55,14 @@ class PpmChart extends Component {
       this.setState({
         hoverLoc,
         activePoint: closestPoint,
+        mouseLoc: e.clientX,
       });
     }
   };
 
   // STOP HOVER
   stopHover = () => {
-    this.setState({ hoverLoc: null, activePoint: null });
+    this.setState({ hoverLoc: null, activePoint: null, mocLoc: null });
   };
 
   render() {
@@ -72,7 +74,7 @@ class PpmChart extends Component {
             <div className="popup">
               {this.state.hoverLoc ? (
                 <ToolTip
-                  hoverLoc={this.state.hoverLoc}
+                  hoverLoc={this.state.mouseLoc}
                   text={this.state.activePoint.p}
                 />
               ) : null}
@@ -110,7 +112,7 @@ class PpmChart extends Component {
             <div className="popup">
               {this.state.hoverLoc ? (
                 <ToolTip
-                  hoverLoc={this.state.hoverLoc}
+                  hoverLoc={this.state.mouseLoc}
                   text={this.state.activePoint.d}
                 />
               ) : null}
