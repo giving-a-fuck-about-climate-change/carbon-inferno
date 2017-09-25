@@ -2,18 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './ToolTip.css';
 
-const ToolTip = ({ hoverLoc, text }) => {
-  // TODO: {Type:GrpahLib} Make a helper function for this ?
-  const svgLocation = document
-    .getElementsByClassName('linechart')[0]
+const ToolTip = ({
+  hoverLoc,
+  text,
+  documentDependency,
+  classToFind,
+  width,
+}) => {
+  const svgLocation = documentDependency
+    .getElementsByClassName(classToFind)[0]
     .getBoundingClientRect();
-  const placementStyles = {};
-  const width = 100;
-  const hoverLocLeft = hoverLoc + svgLocation.left;
-  const halfWidth = width / 2;
-
-  placementStyles.width = `${150}px`;
-  placementStyles.left = hoverLocLeft - halfWidth;
+  const placementStyles = {
+    width: `${width}px`,
+    left: hoverLoc + svgLocation.left,
+  };
   return (
     <div className="hover" style={placementStyles}>
       <div className="ppm">{text}</div>
@@ -23,6 +25,13 @@ const ToolTip = ({ hoverLoc, text }) => {
 ToolTip.propTypes = {
   hoverLoc: PropTypes.number.isRequired,
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  documentDependency: PropTypes.object, //eslint-disable-line
+  classToFind: PropTypes.string,
+  width: PropTypes.number,
 };
-
+ToolTip.defaultProps = {
+  documentDependency: document, // dependency injection (makes it easier to test)
+  classToFind: 'linechart',
+  width: 150,
+};
 export default ToolTip;

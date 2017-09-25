@@ -46,8 +46,10 @@ class Svg extends Component {
     const { svgHeight, svgWidth, data, className, style } = this.props;
     return (
       <svg
+        width={'100%'} // TODO: Make prop
+        height={svgHeight}
+        viewBox={`0 0 ${svgWidth} ${svgHeight}`} // TODO: Different props for this.
         style={style}
-        viewBox={`0 0 ${svgWidth} ${svgHeight}`}
         className={className}
         onMouseMove={this.handleMouseMove}
         onMouseLeave={this.handleMouseLeave}
@@ -86,7 +88,7 @@ Svg.propTypes = {
 // DEFAULT PROPS
 Svg.defaultProps = {
   svgHeight: 300,
-  svgWidth: 700,
+  svgWidth: 800,
   data: [],
   className: 'linechart',
   onMouseMove: () => {},

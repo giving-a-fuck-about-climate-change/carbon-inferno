@@ -18,12 +18,17 @@ class PpmChart extends Component {
 
   // FIND CLOSEST POINT TO MOUSE
   getCoords = ({ getSvgY, getSvgX }, e) => {
-    const { yLabelSize, data } = this.props;
-    const svgElement = document.getElementsByClassName('linechart')[0];
-    const svgLocation = svgElement.getBoundingClientRect();
-    const svgWidth = parseFloat(window.getComputedStyle(svgElement).width);
-    const adjustment = (svgLocation.width - svgWidth) / 2; // takes padding into consideration
-    const relativeLoc = e.clientX - svgLocation.left - adjustment;
+    const { yLabelSize, data, documentDependency } = this.props;
+    // http://www.codedread.com/blog/archives/2005/12/21/how-to-enable-dragging-in-svg/
+    const svgElement = documentDependency.getElementsByClassName(
+      'linechart',
+    )[0];
+    const svgCoords = svgElement.getScreenCTM();
+    const svgPoint = svgElement.createSVGPoint();
+    svgPoint.x = e.clientX; // set x coord to x coord pos of the mouse
+    // http://wesbos.com/destructuring-renaming/
+    const { x: hoverLoc } = svgPoint.matrixTransform(svgCoords.inverse());
+
     const svgData = data.reduce((svgPointArr, point) => {
       const currCord = {
         svgX: getSvgX(point.x),
@@ -36,17 +41,17 @@ class PpmChart extends Component {
 
     let closestPoint = {};
     for (let i = 0, c = 500; i < svgData.length; i++) {
-      if (Math.abs(svgData[i].svgX - this.state.hoverLoc) <= c) {
-        c = Math.abs(svgData[i].svgX - this.state.hoverLoc);
+      if (Math.abs(svgData[i].svgX - hoverLoc) <= c) {
+        c = Math.abs(svgData[i].svgX - hoverLoc);
         closestPoint = svgData[i];
       }
     }
 
-    if (relativeLoc - yLabelSize < 0) {
+    if (hoverLoc - yLabelSize < 0) {
       this.stopHover();
     } else {
       this.setState({
-        hoverLoc: relativeLoc,
+        hoverLoc,
         activePoint: closestPoint,
       });
     }
@@ -88,7 +93,7 @@ class PpmChart extends Component {
                     x1={this.state.hoverLoc}
                     y1={-8} // TODO: Understand Why -8 ???
                     x2={this.state.hoverLoc}
-                    y2={this.props.svgHeight}
+                    y2={svgHeight}
                   />
                 ) : null}
                 {this.state.hoverLoc ? (
@@ -120,19 +125,17 @@ export default PpmChart;
 PpmChart.propTypes = {
   color: PropTypes.string,
   pointRadius: PropTypes.number,
-  svgHeight: PropTypes.number,
-  svgWidth: PropTypes.number,
   xLabelSize: PropTypes.number,
   yLabelSize: PropTypes.number,
   data: PropTypes.array, //eslint-disable-line
+  documentDependency: PropTypes.object, //eslint-disable-line
 };
 // DEFAULT PROPS
 PpmChart.defaultProps = {
   color: '#2196F3',
   pointRadius: 5,
-  svgHeight: 300, // TODO: Understand how we could use this to increase the graph and be responsive.
-  svgWidth: 700, // TODO: Understand how we could use this to increase the graph and be responsive.
   xLabelSize: 20,
   yLabelSize: 80,
   data: [],
+  documentDependency: document, // dependency injection (makes it easier to test)
 };
