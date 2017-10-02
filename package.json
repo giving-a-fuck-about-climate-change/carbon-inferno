@@ -6,6 +6,7 @@
     "chart.js": "^2.7.0",
     "moment": "^2.18.1",
     "prop-types": "^15.5.10",
+    "ramda": "^0.24.1",
     "react": "^15.6.1",
     "react-chartjs-2": "^2.6.2",
     "react-dom": "^15.6.1",
@@ -36,6 +37,9 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "src/*.{js,json,css}": ["eslint", "git add"]
+    "src/*.{js,json,css}": [
+      "eslint",
+      "git add"
+    ]
   }
 }

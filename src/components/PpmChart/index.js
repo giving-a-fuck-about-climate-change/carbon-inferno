@@ -1,13 +1,64 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import ToolTip from '../ToolTip';
-import Svg from '../Svg';
-import Axis from '../Axis';
-import AxisLabels from '../Axis/labels';
-import { ShadedArea, SvgPath } from '../../components/AreaChart';
-import { Point as ActivePoint } from '../Point';
-import { Line as HoverLine } from '../Line';
+// import ToolTip from '../ToolTip';
+// import Svg from '../Svg';
+// import Axis from '../Axis';
+// import AxisLabels from '../Axis/labels';
+// import { ShadedArea, SvgPath } from '../../components/AreaChart';
+// import { Point as ActivePoint } from '../Point';
+// import { Line as HoverLine } from '../Line';
+import Canvas from '../Canvas';
+//eslint-disable-line
+/* <div className="row">
+  <div className="popup">
+    {this.state.hoverLoc ? (
+      <ToolTip
+        hoverLoc={this.state.mouseLoc}
+        text={this.state.activePoint.p}
+      />
+    ) : null}
+  </div>
+</div>
+<Svg
+  data={data}
+  onMouseMove={this.getCoords}
+  onMouseLeave={this.stopHover}
+>
+  {({ cordFuncs, svgHeight, svgData }) => (
+    <g>
+      <Axis {...cordFuncs} />
+      <AxisLabels svgHeight={svgHeight} getY={cordFuncs.getY} />
+      <ShadedArea {...cordFuncs} data={svgData} />
+      <SvgPath {...cordFuncs} data={svgData} />
+      {this.state.hoverLoc ? (
+        <HoverLine
+          x1={this.state.hoverLoc}
+          y1={-8} // TODO: Understand Why -8 ???
+          x2={this.state.hoverLoc}
+          y2={svgHeight}
+        />
+      ) : null}
+      {this.state.hoverLoc ? (
+        <ActivePoint
+          xCoord={this.state.activePoint.svgX}
+          yCoord={this.state.activePoint.svgY}
+        />
+      ) : null}
+    </g>
+  )}
+</Svg>
+<div className="row">
+  <div className="popup">
+    {this.state.hoverLoc ? (
+      <ToolTip
+        hoverLoc={this.state.mouseLoc}
+        text={this.state.activePoint.d}
+      />
+    ) : null}
+  </div>
+</div>
+</div> */
 
 // Component
 class PpmChart extends Component {
@@ -70,54 +121,7 @@ class PpmChart extends Component {
     return (
       <div>
         <div className="graph-container">
-          <div className="row">
-            <div className="popup">
-              {this.state.hoverLoc ? (
-                <ToolTip
-                  hoverLoc={this.state.mouseLoc}
-                  text={this.state.activePoint.p}
-                />
-              ) : null}
-            </div>
-          </div>
-          <Svg
-            data={data}
-            onMouseMove={this.getCoords}
-            onMouseLeave={this.stopHover}
-          >
-            {({ cordFuncs, svgHeight, svgData }) => (
-              <g>
-                <Axis {...cordFuncs} />
-                <AxisLabels svgHeight={svgHeight} getY={cordFuncs.getY} />
-                <ShadedArea {...cordFuncs} data={svgData} />
-                <SvgPath {...cordFuncs} data={svgData} />
-                {this.state.hoverLoc ? (
-                  <HoverLine
-                    x1={this.state.hoverLoc}
-                    y1={-8} // TODO: Understand Why -8 ???
-                    x2={this.state.hoverLoc}
-                    y2={svgHeight}
-                  />
-                ) : null}
-                {this.state.hoverLoc ? (
-                  <ActivePoint
-                    xCoord={this.state.activePoint.svgX}
-                    yCoord={this.state.activePoint.svgY}
-                  />
-                ) : null}
-              </g>
-            )}
-          </Svg>
-          <div className="row">
-            <div className="popup">
-              {this.state.hoverLoc ? (
-                <ToolTip
-                  hoverLoc={this.state.mouseLoc}
-                  text={this.state.activePoint.d}
-                />
-              ) : null}
-            </div>
-          </div>
+          <Canvas data={data} />
         </div>
       </div>
     );
