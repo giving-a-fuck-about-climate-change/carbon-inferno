@@ -358,3 +358,7 @@ body {
   display: flex;
   justify-content: center;
 }
+
+.changer {
+  padding: 20px;
+}

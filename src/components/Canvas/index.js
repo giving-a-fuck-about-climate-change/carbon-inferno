@@ -110,29 +110,65 @@ class Canvas extends Component {
 
   drawLines = () => {
     const { data } = this.props;
+
+    const x = this.getX();
+    const y = this.getY();
+
+    // Drawing the line graph
     this.ctx.beginPath();
-    this.ctx.moveTo(this.getX().min, this.getY().min);
+    this.ctx.moveTo(this.getSvgX(data[0].x), this.getSvgY(data[0].y));
     data.forEach((item) => {
       this.ctx.lineTo(this.getSvgX(item.x), this.getSvgY(item.y));
     });
     this.ctx.strokeStyle = '#e96972';
-    this.ctx.lineWidth = 4;
+    this.ctx.lineWidth = 1;
     this.ctx.stroke();
     this.ctx.closePath();
 
+    // Drawing the area graph
     this.ctx.beginPath();
-    this.ctx.moveTo(this.getX().min, this.getY().min);
+    this.ctx.moveTo(this.getSvgX(data[0].x), this.getSvgY(data[0].y));
     data.forEach((item) => {
       this.ctx.lineTo(this.getSvgX(item.x), this.getSvgY(item.y));
     });
-    const x = this.getX();
-    const y = this.getY();
+
     this.ctx.lineTo(this.getSvgX(x.max), this.getSvgY(y.min));
     this.ctx.lineTo(this.getSvgX(0), this.getSvgY(0));
     this.ctx.strokeStyle = '#e96972';
     this.ctx.stroke();
-    this.ctx.fillStyle = '#f3acb1';
+    this.ctx.fillStyle = 'rgba(243, 172, 177, 0.3)';
+
     this.ctx.fill();
+    this.ctx.closePath();
+
+    // draw the top axis
+    this.ctx.beginPath();
+    this.ctx.setLineDash([10, 4]);
+    this.ctx.moveTo(this.getSvgX(x.min), this.getSvgY(y.max));
+    this.ctx.lineTo(this.getSvgX(x.max), this.getSvgY(y.max));
+    this.ctx.strokeStyle = '#bdc3c7';
+    this.ctx.stroke();
+    this.ctx.lineWidth = 3;
+    this.ctx.closePath();
+
+    // draw the bottom axis
+    this.ctx.beginPath();
+    this.ctx.setLineDash([10, 4]);
+    this.ctx.moveTo(this.getSvgX(x.min), 300);
+    this.ctx.lineTo(this.getSvgX(x.max), 300);
+    this.ctx.strokeStyle = '#bdc3c7';
+    this.ctx.stroke();
+    this.ctx.closePath();
+    this.ctx.setLineDash([]);
+
+    // draw text
+    this.ctx.font = '12px Arial';
+    this.ctx.fillStyle = 'black';
+    this.ctx.fill();
+    this.ctx.fillText(`${this.getY().max} PPM`, 0, 10);
+    this.ctx.fillText(`${this.getY().min} PPM`, 0, 300);
+
+    // saving the state of the graph.
     const imageData = this.ctx.getImageData(
       0,
       0,
@@ -159,7 +195,7 @@ class Canvas extends Component {
     this.ctx.moveTo(xer, -8);
     this.ctx.lineTo(xer, this.props.svgHeight);
     this.ctx.strokeStyle = '#e96972';
-    this.ctx.lineWidth = 4;
+    this.ctx.lineWidth = 2;
     this.ctx.stroke();
     this.ctx.closePath();
     // const mouseX = parseInt(event.clientX - offsetX);
