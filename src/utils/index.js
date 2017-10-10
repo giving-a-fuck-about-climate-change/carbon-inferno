@@ -16,7 +16,7 @@ export const calculateDiff = (previous, current) => {
 };
 
 export const calculatePercentageDiff = (previous, current) => {
-  const diff = (current - previous) / current * 100;
+  const diff = (current - previous) / current * 100; // eslint-disable-line
   return numChecker(diff.toFixed(2));
 };
 
