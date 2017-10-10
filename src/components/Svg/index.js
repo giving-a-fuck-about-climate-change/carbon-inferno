@@ -3,6 +3,36 @@ import PropTypes from 'prop-types';
 
 // Component (TODO: Make it possible to also be a HOC )
 class Svg extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      svgData: props.data.reduce((svgPointArr, point) => {
+        const currCord = {
+          svgX: this.getSvgX(point.x),
+          svgY: this.getSvgY(point.y),
+          d: point.d,
+          p: point.p,
+        };
+        return [currCord, ...svgPointArr];
+      }, []),
+    };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.data.length !== prevProps.data.length) {
+      const svgData = this.props.data.reduce((svgPointArr, point) => {
+        const currCord = {
+          svgX: this.getSvgX(point.x),
+          svgY: this.getSvgY(point.y),
+          d: point.d,
+          p: point.p,
+        };
+        return [currCord, ...svgPointArr];
+      }, []);
+
+      this.setState({ svgData }); //eslint-disable-line
+    }
+  }
   // GET X & Y || MAX & MIN
   getX = () => {
     const { data } = this.props;
@@ -33,8 +63,8 @@ class Svg extends Component {
   };
 
   handleMouseMove = (event) => {
-    const { getSvgX, getSvgY } = this;
-    this.props.onMouseMove({ getSvgX, getSvgY }, event);
+    const { svgData } = this.state;
+    this.props.onMouseMove(svgData, event);
   };
 
   handleMouseLeave = (event) => {
@@ -43,10 +73,10 @@ class Svg extends Component {
   };
 
   render() {
-    const { svgHeight, svgWidth, data, className, style } = this.props; // TODO: spread props here?
+    const { svgHeight, svgWidth, className, style, widthPercent } = this.props; // TODO: spread props here?
     return (
       <svg
-        width={'100%'} // TODO: Make prop
+        width={widthPercent}
         height={svgHeight}
         viewBox={`0 0 ${svgWidth} ${svgHeight}`} // TODO: Different props for this.
         style={style}
@@ -64,7 +94,7 @@ class Svg extends Component {
             },
             svgHeight,
             svgWidth,
-            svgData: data,
+            svgData: this.state.svgData,
           })}
         </g>
       </svg>
@@ -84,6 +114,7 @@ Svg.propTypes = {
   xLabelSize: PropTypes.number, // TODO: Understand and Investigate to remove from here.
   yLabelSize: PropTypes.number, // TODO: Understand and Investigate to remove from here.
   style: PropTypes.object, //eslint-disable-line
+  widthPercent: PropTypes.string,
 };
 // DEFAULT PROPS
 Svg.defaultProps = {
@@ -96,4 +127,5 @@ Svg.defaultProps = {
   xLabelSize: 20,
   yLabelSize: 80,
   style: { display: 'block' },
+  widthPercent: '100%',
 };

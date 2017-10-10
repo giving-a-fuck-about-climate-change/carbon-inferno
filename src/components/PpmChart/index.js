@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 
 import ToolTip from '../ToolTip';
 import Svg from '../Svg';
-import Axis from '../Axis';
-import AxisLabels from '../Axis/labels';
-import { ShadedArea, SvgPath } from '../../components/AreaChart';
 import { Point as ActivePoint } from '../Point';
 import { Line as HoverLine } from '../Line';
+import AreaChart from '../../components/AreaChart';
 
 // Component
 class PpmChart extends Component {
@@ -18,8 +16,8 @@ class PpmChart extends Component {
   };
 
   // FIND CLOSEST POINT TO MOUSE
-  getCoords = ({ getSvgY, getSvgX }, e) => {
-    const { yLabelSize, data, documentDependency } = this.props;
+  getCoords = (svgData, e) => {
+    const { yLabelSize, documentDependency } = this.props;
     // http://www.codedread.com/blog/archives/2005/12/21/how-to-enable-dragging-in-svg/
     const svgElement = documentDependency.getElementsByClassName(
       'linechart',
@@ -30,16 +28,6 @@ class PpmChart extends Component {
     // http://wesbos.com/destructuring-renaming/
     const { x: hoverLoc } = svgPoint.matrixTransform(svgCoords.inverse());
 
-    const svgData = data.reduce((svgPointArr, point) => {
-      const currCord = {
-        svgX: getSvgX(point.x),
-        svgY: getSvgY(point.y),
-        d: point.d,
-        p: point.p,
-      };
-      return [currCord, ...svgPointArr];
-    }, []);
-
     let closestPoint = {};
     for (let i = 0, c = 500; i < svgData.length; i++) {
       if (Math.abs(svgData[i].svgX - hoverLoc) <= c) {
@@ -47,7 +35,6 @@ class PpmChart extends Component {
         closestPoint = svgData[i];
       }
     }
-
     if (hoverLoc - yLabelSize < 0) {
       // TODO stop hover on right side of graph.
       this.stopHover();
@@ -85,12 +72,13 @@ class PpmChart extends Component {
             onMouseMove={this.getCoords}
             onMouseLeave={this.stopHover}
           >
-            {({ cordFuncs, svgHeight, svgData }) => (
+            {({ cordFuncs, svgHeight }) => (
               <g>
-                <Axis {...cordFuncs} />
-                <AxisLabels svgHeight={svgHeight} getY={cordFuncs.getY} />
-                <ShadedArea {...cordFuncs} data={svgData} />
-                <SvgPath {...cordFuncs} data={svgData} />
+                <AreaChart
+                  svgData={data}
+                  cordFuncs={cordFuncs}
+                  svgHeight={svgHeight}
+                />
                 {this.state.hoverLoc ? (
                   <HoverLine
                     x1={this.state.hoverLoc}
@@ -126,18 +114,12 @@ class PpmChart extends Component {
 
 export default PpmChart;
 PpmChart.propTypes = {
-  color: PropTypes.string,
-  pointRadius: PropTypes.number,
-  xLabelSize: PropTypes.number,
   yLabelSize: PropTypes.number,
   data: PropTypes.array, //eslint-disable-line
   documentDependency: PropTypes.object, //eslint-disable-line
 };
 // DEFAULT PROPS
 PpmChart.defaultProps = {
-  color: '#2196F3',
-  pointRadius: 5,
-  xLabelSize: 20,
   yLabelSize: 80,
   data: [],
   documentDependency: document, // dependency injection (makes it easier to test)

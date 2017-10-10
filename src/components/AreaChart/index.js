@@ -1,71 +1,40 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Axis from '../Axis';
+import AxisLabels from '../Axis/labels';
+import { Path, ShadedPath } from '../Path';
 
-export const SvgPath = ({ getSvgX, getSvgY, color, data, className }) => {
-  const markerTo = `M ${getSvgX(data[0].x)} ${getSvgY(data[0].y)} `;
+class AreaChart extends Component {
+  // When we render 'all' its very expensive, so only render when the chart changes
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.svgData.length !== this.props.svgData.length) {
+      return true;
+    }
+    return false;
+  }
 
-  const linePath = data.reduce(
-    (pathString, point) =>
-      `${pathString}L ${getSvgX(point.x)} ${getSvgY(point.y)} `,
-    markerTo,
-  );
-
-  return <path className={className} d={linePath} style={{ stroke: color }} />;
-};
-SvgPath.defaultProps = {
-  data: [],
-  className: 'linechart_path',
-  color: '#f3acb1',
-};
-SvgPath.propTypes = {
-  getSvgX: PropTypes.func.isRequired,
-  getSvgY: PropTypes.func.isRequired,
-  color: PropTypes.string.isRequired,
-  data: PropTypes.array, //eslint-disable-line
-  className: PropTypes.string,
-};
-
-export const ShadedArea = ({
-  getSvgX,
-  getSvgY,
-  getX,
-  getY,
-  data,
-  className,
-}) => {
-  const markerTo = `M ${getSvgX(data[0].x)} ${getSvgY(data[0].y)} `;
-
-  let linePath = data.reduce(
-    (pathString, point) =>
-      `${pathString}L ${getSvgX(point.x)} ${getSvgY(point.y)} `,
-    markerTo,
-  );
-
-  const x = getX();
-  const y = getY();
-  linePath +=
-    `L ${getSvgX(x.max)} ${getSvgY(y.min)} ` +
-    `L ${getSvgX(x.min)} ${getSvgY(y.min)} `;
-
-  return <path className={className} d={linePath} />;
+  render() {
+    const { cordFuncs, svgHeight, svgData } = this.props;
+    return (
+      <g>
+        <Axis {...cordFuncs} />
+        <AxisLabels svgHeight={svgHeight} getY={cordFuncs.getY} />
+        <ShadedPath {...cordFuncs} data={svgData} />
+        <Path {...cordFuncs} data={svgData} />
+      </g>
+    );
+  }
+}
+AreaChart.propTypes = {
+  cordFuncs: PropTypes.object, // eslint-disable-line
+  svgHeight: PropTypes.number, // eslint-disable-line
+  svgData: PropTypes.array, // eslint-disable-line
 };
 
-ShadedArea.propTypes = {
-  getSvgX: PropTypes.func.isRequired,
-  getSvgY: PropTypes.func.isRequired,
-  getX: PropTypes.func.isRequired,
-  getY: PropTypes.func.isRequired,
-  data: PropTypes.array, //eslint-disable-line
-  className: PropTypes.string,
+AreaChart.defaultProps = {
+  cordFuncs: {},
+  svgHeight: 0,
+  svgData: [],
 };
 
-ShadedArea.defaultProps = {
-  data: [],
-  className: 'linechart_area',
-};
-// TODO: React 16 not needed to wrap within a div ;) I think ?
-// const AreaChart = ({}) => {
-//   return (
-//
-//   );
-// };
+export default AreaChart;
