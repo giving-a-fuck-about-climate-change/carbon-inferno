@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "chart.js": "^2.7.0",
-    "moment": "^2.18.1",
+    "moment": "2.18.1",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-chartjs-2": "^2.6.2",
