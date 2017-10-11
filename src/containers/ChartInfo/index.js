@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
-import { Line } from 'react-chartjs-2';
-
 import fetchData from '../../utils/request';
 
 import config from '../../config';
@@ -10,28 +8,19 @@ import {
   InfoColumnHOC,
   LoadingWrapper,
   TimeChoiceHeader,
+  PpmChart,
 } from '../../components';
 
 import {
   calculateAverage,
   calculateDiff,
   calculatePercentageDiff,
-  getData,
+  createGraphData,
   todaysDate,
   subDate,
 } from '../../utils';
 
-import {
-  timeHeaderLinks,
-  graphConfig,
-  datasets,
-  WEEK,
-  MONTH,
-  YEAR,
-  ALL,
-} from '../../constants';
-
-const datasetForRender = datasets[0];
+import { timeHeaderLinks, WEEK, MONTH, YEAR, ALL } from '../../constants';
 
 // ENDPOINTS
 
@@ -104,12 +93,11 @@ const setStateWithApiResult = (rangeType, results) => (prevState) => {
   const average = calculateAverage(results);
   return {
     loading: false,
-    ppms: getData('ppm', results),
-    dates: getData('date', results),
     average,
     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
     rangeType,
+    data: createGraphData(results),
   };
 };
 
@@ -120,12 +108,11 @@ const setStateWithInitialPpmReq = apiResponse => () => {
     loading: false,
     currentPPM,
     count: totalPPMCount,
-    ppms: getData('ppm', ppmsForMonth),
-    dates: getData('date', ppmsForMonth),
     average,
     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
     rangeType,
+    data: createGraphData(ppmsForMonth),
   };
 };
 
@@ -149,6 +136,9 @@ class ChartInfo extends Component {
     diffPercentSubHeader: initalSubHeader.percentDiff,
     count: 0, // total recorded ppms for 'all' query
     rangeType: MONTH, // Intitial date range query
+    data: [],
+    hoverLoc: null,
+    activePoint: null,
   };
   /*
    When the component mounts we want to make two queries
@@ -230,12 +220,11 @@ class ChartInfo extends Component {
       currentPPM,
       ppmDiff,
       ppmPercentDiff,
-      ppms,
-      dates,
       diffPPMSubHeader,
       diffPercentSubHeader,
       rangeType,
       loading,
+      data,
     } = this.state;
     return (
       <div>
@@ -255,13 +244,7 @@ class ChartInfo extends Component {
               diffPercentSubHeader={diffPercentSubHeader}
             />
             <div className="graph-container">
-              <Line
-                data={{
-                  ...graphConfig,
-                  labels: dates,
-                  datasets: [{ ...datasetForRender, data: ppms }],
-                }}
-              />
+              {data.length > 0 ? <PpmChart data={data} /> : null}
             </div>
           </div>
         </LoadingWrapper>

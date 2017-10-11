@@ -10,18 +10,26 @@ export const calculateAverage = (arr = []) => {
 
 export const numChecker = num => (isNaN(num) ? 0 : num);
 
-export const calculateDiff = (previous, current) =>
-  (previous > current
-    ? `- ${numChecker((previous - current).toFixed(2))}`
-    : `+ ${numChecker((current - previous).toFixed(2))}`);
+export const calculateDiff = (previous, current) => {
+  const diff = current - previous;
+  return `${numChecker(diff.toFixed(2))}`;
+};
 
 export const calculatePercentageDiff = (previous, current) => {
-  const diff = (previous - current) / (previous * 100);
+  const diff = (current - previous) / current * 100; // eslint-disable-line
   return numChecker(diff.toFixed(2));
 };
 
-export const getData = (label, statData = []) =>
-  statData.map(data => data[label]);
+export const createGraphData = (arr = []) =>
+  arr.map((item, idx) => {
+    const { date, ppm } = item;
+    return {
+      d: moment(date).format('MMM DD YYYY'),
+      p: parseInt(ppm, 10),
+      x: idx,
+      y: parseInt(ppm, 10),
+    };
+  });
 
 export const todaysDate = () => moment().format('YYYY-MM-DD');
 

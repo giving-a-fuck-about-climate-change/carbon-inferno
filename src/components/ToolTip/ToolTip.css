@@ -1,0 +1,15 @@
+.hover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: absolute;
+  padding: 5px;
+  border-radius: 4px;
+  background-color: #1ba69c;
+  color: white;
+}
+
+.hover .ppm {
+  font-weight: 400;
+}
