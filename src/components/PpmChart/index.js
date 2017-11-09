@@ -6,6 +6,17 @@ import Svg from '../Svg';
 import { Point as ActivePoint } from '../Point';
 import { Line as HoverLine } from '../Line';
 import AreaChart from '../../components/AreaChart';
+import { WEEK, MONTH } from '../../constants';
+
+const shouldShowActivePoint = (hoverState, type) => {
+  if (hoverState) {
+    if (type === WEEK || type === MONTH) {
+      return false;
+    }
+    return true;
+  }
+  return false;
+};
 
 // Component
 class PpmChart extends Component {
@@ -53,7 +64,8 @@ class PpmChart extends Component {
   };
 
   render() {
-    const { data } = this.props;
+    const { data, rangeType } = this.props;
+    console.log(this.props);
     return (
       <div>
         <div className="graph-container">
@@ -87,7 +99,7 @@ class PpmChart extends Component {
                     y2={svgHeight}
                   />
                 ) : null}
-                {this.state.hoverLoc ? (
+                {shouldShowActivePoint(this.state.hoverLoc, rangeType) ? (
                   <ActivePoint
                     xCoord={this.state.activePoint.svgX}
                     yCoord={this.state.activePoint.svgY}
@@ -117,6 +129,7 @@ PpmChart.propTypes = {
   yLabelSize: PropTypes.number,
   data: PropTypes.array, //eslint-disable-line
   documentDependency: PropTypes.object, //eslint-disable-line
+  rangeType: PropTypes.string.isRequired,
 };
 // DEFAULT PROPS
 PpmChart.defaultProps = {

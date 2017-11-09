@@ -102,7 +102,7 @@ const setStateWithApiResult = (rangeType, results) => (prevState) => {
 };
 
 const setStateWithInitialPpmReq = apiResponse => () => {
-  const { currentPPM, ppmsForMonth, totalPPMCount, rangeType } = apiResponse;
+  const { currentPPM, ppmsForMonth, totalPPMCount } = apiResponse;
   const average = calculateAverage(ppmsForMonth);
   return {
     loading: false,
@@ -111,7 +111,6 @@ const setStateWithInitialPpmReq = apiResponse => () => {
     average,
     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
-    rangeType,
     data: createGraphData(ppmsForMonth),
   };
 };
@@ -244,7 +243,9 @@ class ChartInfo extends Component {
               diffPercentSubHeader={diffPercentSubHeader}
             />
             <div className="graph-container">
-              {data.length > 0 ? <PpmChart data={data} /> : null}
+              {data.length > 0 ? (
+                <PpmChart data={data} rangeType={rangeType} />
+              ) : null}
             </div>
           </div>
         </LoadingWrapper>
