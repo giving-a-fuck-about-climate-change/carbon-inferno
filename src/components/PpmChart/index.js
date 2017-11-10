@@ -9,6 +9,34 @@ import { Line as HoverLine } from '../Line';
 import AreaChart from '../../components/AreaChart';
 import { WEEK, MONTH } from '../../constants';
 
+const binarySearch = (data = [{}], target = 0) => {
+  const end = data.length - 1;
+  if (target >= data[0].svgX) {
+    return data[0];
+  }
+  if (target <= data[end].svgX) {
+    return data[end];
+  }
+  let middle = Math.round(data.length / 2);
+  while (middle <= end) {
+    // debugger; //eslint-disable-line
+    if (target >= data[middle].svgX) {
+      if (target <= data[middle - 1].svgX) {
+        return data[middle];
+      }
+      middle -= 1;
+    } else if (target <= data[middle].svgX) {
+      if (target >= data[middle + 1].svgX) {
+        return data[middle];
+      }
+      middle += 1;
+    } else {
+      return data[middle];
+    }
+  }
+  return {};
+};
+
 const shouldShowActivePoint = (hoverState, type) => {
   if (hoverState) {
     if (type === WEEK || type === MONTH) {
@@ -42,21 +70,14 @@ class PpmChart extends Component {
   }
 
   // FIND CLOSEST POINT TO MOUSE
-  getCoords = throttle(100, (svgData, e) => {
+  getCoords = throttle(60, (svgData, e) => {
     const { yLabelSize } = this.props;
     const { svgPoint, svgCoords } = this.state;
     // http://www.codedread.com/blog/archives/2005/12/21/how-to-enable-dragging-in-svg/
     svgPoint.x = e.clientX; // set x coord to x coord pos of the mouse
     // http://wesbos.com/destructuring-renaming/
     const { x: hoverLoc } = svgPoint.matrixTransform(svgCoords.inverse());
-
-    let closestPoint = {};
-    for (let i = 0, c = 500; i < svgData.length; i++) {
-      if (Math.abs(svgData[i].svgX - hoverLoc) <= c) {
-        c = Math.abs(svgData[i].svgX - hoverLoc);
-        closestPoint = svgData[i];
-      }
-    }
+    const closestPoint = binarySearch(svgData, hoverLoc);
     if (hoverLoc - yLabelSize < 0) {
       // TODO stop hover on right side of graph.
       this.stopHover();
@@ -90,6 +111,7 @@ class PpmChart extends Component {
             </div>
           </div>
           <Svg
+            svgWidth={800}
             data={data}
             onMouseMove={this.getCoords}
             onMouseLeave={this.stopHover}
