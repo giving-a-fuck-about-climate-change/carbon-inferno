@@ -27,16 +27,25 @@ class PpmChart extends Component {
     mocLoc: null,
   };
 
-  // FIND CLOSEST POINT TO MOUSE
-  getCoords = throttle(100, (svgData, e) => {
-    console.log('I am being called ');
-    const { yLabelSize, documentDependency } = this.props;
+  componentDidMount() {
+    const { documentDependency } = this.props;
     // http://www.codedread.com/blog/archives/2005/12/21/how-to-enable-dragging-in-svg/
     const svgElement = documentDependency.getElementsByClassName(
       'linechart',
     )[0];
     const svgCoords = svgElement.getScreenCTM();
     const svgPoint = svgElement.createSVGPoint();
+    this.setState({
+      svgCoords,
+      svgPoint,
+    });
+  }
+
+  // FIND CLOSEST POINT TO MOUSE
+  getCoords = throttle(100, (svgData, e) => {
+    const { yLabelSize } = this.props;
+    const { svgPoint, svgCoords } = this.state;
+    // http://www.codedread.com/blog/archives/2005/12/21/how-to-enable-dragging-in-svg/
     svgPoint.x = e.clientX; // set x coord to x coord pos of the mouse
     // http://wesbos.com/destructuring-renaming/
     const { x: hoverLoc } = svgPoint.matrixTransform(svgCoords.inverse());
@@ -62,7 +71,6 @@ class PpmChart extends Component {
 
   // STOP HOVER
   stopHover = debounce(100, () => {
-    console.log('actually I am being calledß');
     this.setState({ hoverLoc: null, activePoint: null, mocLoc: null });
   });
 
