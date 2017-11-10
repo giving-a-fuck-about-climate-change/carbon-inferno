@@ -11,6 +11,7 @@
     "react-dom": "^15.6.1",
     "react-google-analytics": "^0.2.0",
     "react-router-dom": "^4.2.2",
+    "throttle-debounce": "^1.0.1",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
@@ -36,6 +37,9 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "src/*.{js,json,css}": ["eslint", "git add"]
+    "src/*.{js,json,css}": [
+      "eslint",
+      "git add"
+    ]
   }
 }

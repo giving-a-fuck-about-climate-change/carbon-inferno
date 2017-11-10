@@ -63,11 +63,13 @@ class Svg extends Component {
   };
 
   handleMouseMove = (event) => {
+    event.persist();
     const { svgData } = this.state;
     this.props.onMouseMove(svgData, event);
   };
 
   handleMouseLeave = (event) => {
+    event.persist();
     const { getSvgX, getSvgY } = this;
     this.props.onMouseLeave({ getSvgX, getSvgY }, event);
   };

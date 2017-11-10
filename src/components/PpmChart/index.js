@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { throttle, debounce } from 'throttle-debounce';
 
 import ToolTip from '../ToolTip';
 import Svg from '../Svg';
@@ -27,7 +28,8 @@ class PpmChart extends Component {
   };
 
   // FIND CLOSEST POINT TO MOUSE
-  getCoords = (svgData, e) => {
+  getCoords = throttle(100, (svgData, e) => {
+    console.log('I am being called ');
     const { yLabelSize, documentDependency } = this.props;
     // http://www.codedread.com/blog/archives/2005/12/21/how-to-enable-dragging-in-svg/
     const svgElement = documentDependency.getElementsByClassName(
@@ -56,16 +58,16 @@ class PpmChart extends Component {
         mouseLoc: e.clientX,
       });
     }
-  };
+  });
 
   // STOP HOVER
-  stopHover = () => {
+  stopHover = debounce(100, () => {
+    console.log('actually I am being calledß');
     this.setState({ hoverLoc: null, activePoint: null, mocLoc: null });
-  };
+  });
 
   render() {
     const { data, rangeType } = this.props;
-    console.log(this.props);
     return (
       <div>
         <div className="graph-container">
