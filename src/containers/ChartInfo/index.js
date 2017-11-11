@@ -176,11 +176,8 @@ class ChartInfo extends Component {
          ? getEndpointForAll(this.state)
          : dateRangQuery(rangeType);
        try {
-         console.log('going to make request');
          const { results } = await fetchData(endpoint);
-         console.log('request made');
          this.setState(setStateWithApiResult(rangeType, results));
-         console.log('set state');
        } catch (err) {
          this.setState(setStateWithApiError(rangeType, err));
        }

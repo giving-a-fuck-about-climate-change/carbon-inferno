@@ -1,12 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const LoadingWrapper = ({ loading, renderLoading, renderDiv }) => {
-  if (loading) {
-    return renderLoading();
-  }
-  return renderDiv();
-};
+const LoadingWrapper = ({ loading, renderLoading, renderDiv }) =>
+  (loading ? renderLoading() : renderDiv());
 
 export const Loading = () => (
   <div>
@@ -17,7 +13,7 @@ export const Loading = () => (
 
 LoadingWrapper.propTypes = {
   loading: PropTypes.bool.isRequired,
-	renderLoading: PropTypes.func, //eslint-disable-line
-	renderDiv: PropTypes.func, //eslint-disable-line
+  renderLoading: PropTypes.func,
+  renderDiv: PropTypes.func,
 };
 export default LoadingWrapper;
