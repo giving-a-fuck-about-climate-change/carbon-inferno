@@ -1,16 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const loadingStyle = { opacity: '.5' };
-const LoadingWrapper = ({ loading, children }) => {
+const LoadingWrapper = ({ loading, renderLoading, renderDiv }) => {
   if (loading) {
-    return <div style={loadingStyle}>{children}</div>;
+    return renderLoading();
   }
-  return <div>{children}</div>;
+  return renderDiv();
 };
+
+export const Loading = () => (
+  <div>
+    <div className="loadingIcon" />
+    <div className="loadingText">Gathering Data</div>
+  </div>
+);
 
 LoadingWrapper.propTypes = {
   loading: PropTypes.bool.isRequired,
-  children: PropTypes.node, //eslint-disable-line
+	renderLoading: PropTypes.func, //eslint-disable-line
+	renderDiv: PropTypes.func, //eslint-disable-line
 };
 export default LoadingWrapper;
