@@ -6,11 +6,13 @@
     "chart.js": "^2.7.0",
     "moment": "2.18.0",
     "prop-types": "^15.5.10",
-    "react": "^15.6.1",
+    "react": "^16.1.0",
     "react-chartjs-2": "^2.6.2",
-    "react-dom": "^15.6.1",
+    "react-dom": "^16.1.0",
     "react-google-analytics": "^0.2.0",
     "react-router-dom": "^4.2.2",
+    "throttle-debounce": "^1.0.1",
+    "universal-ga": "^1.2.0",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {

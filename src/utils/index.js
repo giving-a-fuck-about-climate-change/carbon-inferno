@@ -20,7 +20,24 @@ export const calculatePercentageDiff = (previous, current) => {
   return numChecker(diff.toFixed(2));
 };
 
-export const createGraphData = (arr = []) =>
+const createGraphDataSubset = arr =>
+  arr.reduce((sum, item, idx) => {
+    if (idx % 2 === 0) {
+      const { date, ppm } = item;
+      return [
+        ...sum,
+        {
+          d: moment(date).format('MMM DD YYYY'),
+          p: parseInt(ppm, 10),
+          x: idx,
+          y: parseInt(ppm, 10),
+        },
+      ];
+    }
+    return sum;
+  }, []);
+
+const transformGraphData = arr =>
   arr.map((item, idx) => {
     const { date, ppm } = item;
     return {
@@ -30,6 +47,13 @@ export const createGraphData = (arr = []) =>
       y: parseInt(ppm, 10),
     };
   });
+
+export const createGraphData = (arr = [], rangeType = false) => {
+  if (rangeType) {
+    return createGraphDataSubset(arr);
+  }
+  return transformGraphData(arr);
+};
 
 export const todaysDate = () => moment().format('YYYY-MM-DD');
 

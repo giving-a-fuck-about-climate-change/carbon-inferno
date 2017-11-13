@@ -9,6 +9,7 @@ import {
   LoadingWrapper,
   TimeChoiceHeader,
   PpmChart,
+  Loading,
 } from '../../components';
 
 import {
@@ -97,12 +98,12 @@ const setStateWithApiResult = (rangeType, results) => (prevState) => {
     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
     rangeType,
-    data: createGraphData(results),
+    data: createGraphData(results, rangeType === ALL),
   };
 };
 
 const setStateWithInitialPpmReq = apiResponse => () => {
-  const { currentPPM, ppmsForMonth, totalPPMCount, rangeType } = apiResponse;
+  const { currentPPM, ppmsForMonth, totalPPMCount } = apiResponse;
   const average = calculateAverage(ppmsForMonth);
   return {
     loading: false,
@@ -111,7 +112,6 @@ const setStateWithInitialPpmReq = apiResponse => () => {
     average,
     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
-    rangeType,
     data: createGraphData(ppmsForMonth),
   };
 };
@@ -233,21 +233,26 @@ class ChartInfo extends Component {
             timeHeaderLinks={timeHeaderLinks.map(this.populateWithClickFuncs())}
           />
         </div>
-        <LoadingWrapper loading={loading}>
-          <div>
-            <InfoColumnHOC
-              rangeType={rangeType}
-              currentPPM={currentPPM}
-              ppmDiff={ppmDiff}
-              ppmPercentDiff={ppmPercentDiff}
-              diffPPMSubHeader={diffPPMSubHeader}
-              diffPercentSubHeader={diffPercentSubHeader}
+        <div>
+          <InfoColumnHOC
+            rangeType={rangeType}
+            currentPPM={currentPPM}
+            ppmDiff={ppmDiff}
+            ppmPercentDiff={ppmPercentDiff}
+            diffPPMSubHeader={diffPPMSubHeader}
+            diffPercentSubHeader={diffPercentSubHeader}
+          />
+          <div className="graph-container">
+            <LoadingWrapper
+              loading={loading}
+              renderLoading={() => <Loading />}
+              renderDiv={() =>
+                (data.length > 0 ? (
+                  <PpmChart data={data} rangeType={rangeType} />
+                ) : null)}
             />
-            <div className="graph-container">
-              {data.length > 0 ? <PpmChart data={data} /> : null}
-            </div>
           </div>
-        </LoadingWrapper>
+        </div>
       </div>
     );
   }
