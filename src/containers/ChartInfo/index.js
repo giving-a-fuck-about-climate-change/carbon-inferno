@@ -98,7 +98,7 @@ const setStateWithApiResult = (rangeType, results) => (prevState) => {
     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
     rangeType,
-    data: createGraphData(results),
+    data: createGraphData(results, rangeType === ALL),
   };
 };
 
@@ -124,66 +124,66 @@ const setStateWithApiError = (rangeType, apiError) => () => ({
 
 // Component
 class ChartInfo extends Component {
- state = {
-   loading: true,
-   currentPPM: 0,
-   ppms: [],
-   dates: [],
-   ppmDiff: '',
-   ppmPercentDiff: '',
-   error: '',
-   diffPPMSubHeader: initalSubHeader.ppmDiff,
-   diffPercentSubHeader: initalSubHeader.percentDiff,
-   count: 0, // total recorded ppms for 'all' query
-   rangeType: MONTH, // Intitial date range query
-   data: [],
-   hoverLoc: null,
-   activePoint: null,
- };
+  state = {
+    loading: true,
+    currentPPM: 0,
+    ppms: [],
+    dates: [],
+    ppmDiff: '',
+    ppmPercentDiff: '',
+    error: '',
+    diffPPMSubHeader: initalSubHeader.ppmDiff,
+    diffPercentSubHeader: initalSubHeader.percentDiff,
+    count: 0, // total recorded ppms for 'all' query
+    rangeType: MONTH, // Intitial date range query
+    data: [],
+    hoverLoc: null,
+    activePoint: null,
+  };
   /*
    When the component mounts we want to make two queries
     - Get the current ppm and total amount of ppms ever (used for the query to get all ppms).
     - The amount of ppms for this month
   */
- async componentDidMount() {
-   try {
-     const [currentPPM, ppmsForMonth] = await Promise.all([
-       fetchData(currentPpmEndpoint),
-       fetchData(monthEndpoint),
-     ]);
-     const totalPPMCount = currentPPM.count;
-     const { ppm } = currentPPM.results[0];
-     const { results } = ppmsForMonth;
-     this.setState(
-       setStateWithInitialPpmReq({
-         currentPPM: ppm,
-         ppmsForMonth: results,
-         totalPPMCount,
-       }),
-     );
-   } catch (err) {
-			this.setState(setStateWithApiError(MONTH, err)); // eslint-disable-line
-   }
- }
+  async componentDidMount() {
+    try {
+      const [currentPPM, ppmsForMonth] = await Promise.all([
+        fetchData(currentPpmEndpoint),
+        fetchData(monthEndpoint),
+      ]);
+      const totalPPMCount = currentPPM.count;
+      const { ppm } = currentPPM.results[0];
+      const { results } = ppmsForMonth;
+      this.setState(
+        setStateWithInitialPpmReq({
+          currentPPM: ppm,
+          ppmsForMonth: results,
+          totalPPMCount,
+        }),
+      );
+    } catch (err) {
+      this.setState(setStateWithApiError(MONTH, err)); // eslint-disable-line
+    }
+  }
 
- fetchPpmsForRange = rangeType => (event) => {
-   event.preventDefault();
-   if (rangeTypeHasChanged(rangeType, this.state.rangeType)) {
-     // only call api when the rangeType has changed.
-     this.setState(setStateWithLoading(rangeType), async () => {
-       const isReqForAll = rangeType === ALL;
-       const endpoint = isReqForAll
-         ? getEndpointForAll(this.state)
-         : dateRangQuery(rangeType);
-       try {
-         const { results } = await fetchData(endpoint);
-         this.setState(setStateWithApiResult(rangeType, results));
-       } catch (err) {
-         this.setState(setStateWithApiError(rangeType, err));
-       }
-     });
-   }
- };
+  fetchPpmsForRange = rangeType => (event) => {
+    event.preventDefault();
+    if (rangeTypeHasChanged(rangeType, this.state.rangeType)) {
+      // only call api when the rangeType has changed.
+      this.setState(setStateWithLoading(rangeType), async () => {
+        const isReqForAll = rangeType === ALL;
+        const endpoint = isReqForAll
+          ? getEndpointForAll(this.state)
+          : dateRangQuery(rangeType);
+        try {
+          const { results } = await fetchData(endpoint);
+          this.setState(setStateWithApiResult(rangeType, results));
+        } catch (err) {
+          this.setState(setStateWithApiError(rangeType, err));
+        }
+      });
+    }
+  };
   /*
    The api does not return all entries for a given date range,
    if we want all entries we need to sepcify a count, here we query
@@ -191,71 +191,71 @@ class ChartInfo extends Component {
    the specifying that we want all the entries for that date range by using
    the count param
   */
- fetchPpmsForRangeBasedOnCount = rangeType => (event) => {
-   event.preventDefault();
-   if (rangeTypeHasChanged(rangeType, this.state.rangeType)) {
-     // only call api when the rangeType has changed.
-     this.setState(setStateWithLoading(rangeType), async () => {
-       try {
-         const endpoint = dateRangQuery(rangeType);
-         const { count } = await fetchData(endpoint); // get total amount of ppms for specified date range
-         const { results } = await fetchData(`${endpoint}&limit=${count}`); // query for ppms limiting to count result
-         this.setState(setStateWithApiResult(rangeType, results));
-       } catch (err) {
-         this.setState(setStateWithApiError(rangeType, err));
-       }
-     });
-   }
- };
+  fetchPpmsForRangeBasedOnCount = rangeType => (event) => {
+    event.preventDefault();
+    if (rangeTypeHasChanged(rangeType, this.state.rangeType)) {
+      // only call api when the rangeType has changed.
+      this.setState(setStateWithLoading(rangeType), async () => {
+        try {
+          const endpoint = dateRangQuery(rangeType);
+          const { count } = await fetchData(endpoint); // get total amount of ppms for specified date range
+          const { results } = await fetchData(`${endpoint}&limit=${count}`); // query for ppms limiting to count result
+          this.setState(setStateWithApiResult(rangeType, results));
+        } catch (err) {
+          this.setState(setStateWithApiError(rangeType, err));
+        }
+      });
+    }
+  };
 
   // Decorate links with click functionality depending on link type : year, month etc
- populateWithClickFuncs = () =>
-   populateWithClicks(
-     this.fetchPpmsForRange,
-     this.fetchPpmsForRangeBasedOnCount,
-   );
+  populateWithClickFuncs = () =>
+    populateWithClicks(
+      this.fetchPpmsForRange,
+      this.fetchPpmsForRangeBasedOnCount,
+    );
 
- render() {
-   const {
-     currentPPM,
-     ppmDiff,
-     ppmPercentDiff,
-     diffPPMSubHeader,
-     diffPercentSubHeader,
-     rangeType,
-     loading,
-     data,
-   } = this.state;
-   return (
-     <div>
-       <div className="flex-grid-header">
-         <TimeChoiceHeader
-           timeHeaderLinks={timeHeaderLinks.map(this.populateWithClickFuncs())}
-         />
-       </div>
-       <div>
-         <InfoColumnHOC
-           rangeType={rangeType}
-           currentPPM={currentPPM}
-           ppmDiff={ppmDiff}
-           ppmPercentDiff={ppmPercentDiff}
-           diffPPMSubHeader={diffPPMSubHeader}
-           diffPercentSubHeader={diffPercentSubHeader}
-         />
-         <div className="graph-container">
-           <LoadingWrapper
-             loading={loading}
-             renderLoading={() => <Loading />}
-             renderDiv={() =>
-               (data.length > 0 ? (
-                 <PpmChart data={data} rangeType={rangeType} />
-               ) : null)}
-           />
-         </div>
-       </div>
-     </div>
-   );
- }
+  render() {
+    const {
+      currentPPM,
+      ppmDiff,
+      ppmPercentDiff,
+      diffPPMSubHeader,
+      diffPercentSubHeader,
+      rangeType,
+      loading,
+      data,
+    } = this.state;
+    return (
+      <div>
+        <div className="flex-grid-header">
+          <TimeChoiceHeader
+            timeHeaderLinks={timeHeaderLinks.map(this.populateWithClickFuncs())}
+          />
+        </div>
+        <div>
+          <InfoColumnHOC
+            rangeType={rangeType}
+            currentPPM={currentPPM}
+            ppmDiff={ppmDiff}
+            ppmPercentDiff={ppmPercentDiff}
+            diffPPMSubHeader={diffPPMSubHeader}
+            diffPercentSubHeader={diffPercentSubHeader}
+          />
+          <div className="graph-container">
+            <LoadingWrapper
+              loading={loading}
+              renderLoading={() => <Loading />}
+              renderDiv={() =>
+                (data.length > 0 ? (
+                  <PpmChart data={data} rangeType={rangeType} />
+                ) : null)}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default ChartInfo;
