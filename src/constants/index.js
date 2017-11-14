@@ -52,7 +52,7 @@ export const contributingLinks = [
 ];
 
 export const footerLinks = [
-  { href: '/', className: 'footer-header', text: 'Global CO₂ Levels' },
+  { href: '/', className: 'footer-header', text: 'Carbon Doomsday' },
 ];
 
 export const WEEK = 'week';

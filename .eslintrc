@@ -12,6 +12,7 @@
     ],
     "max-len": 0,
     "object-shorthand": 1,
+    "no-tabs": 1,
     "arrow-body-style": 1,
     "quote-props": 1,
     "react/prop-types": 1,
