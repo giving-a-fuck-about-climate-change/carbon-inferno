@@ -10,7 +10,6 @@ const Team = ({ items }) => (
   <div>
     <div className="page-background">
       <Header />
-      <div className="team-header">Team Carbon Doomsday</div>
       <div>
         <div className="team-grid">
           {items.map(item => <TeamItem {...item} />)}
@@ -22,7 +21,7 @@ const Team = ({ items }) => (
 );
 
 Team.propTypes = {
-  items: PropTypes.array, //eslint-disable-line
+	items: PropTypes.array, //eslint-disable-line
 };
 
 Team.defaultProps = {
