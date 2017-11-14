@@ -33,7 +33,7 @@ body {
 .header a:visited {
 	font-size: 30px;
 	text-transform: uppercase;
-	font-weight: 300;
+	font-weight: 500;
 	letter-spacing: 2px;
 	color: #ffffff;
 	padding-top: 20px;
@@ -103,10 +103,11 @@ body {
 	color: #46494e;
 	text-transform: uppercase;
 	text-decoration: none;
-	font-weight: normal;
+	font-weight: 500;
 }
 .footer-title {
 	color: #46494e;
+	font-weight: 500;
 	font-size: 12px;
 	text-transform: uppercase;
 }
