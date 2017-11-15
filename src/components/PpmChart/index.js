@@ -100,17 +100,14 @@ class PpmChart extends Component {
     return (
       <div>
         <div className="graph-container">
-          <div className="row">
-            <div className="popup">
-              {this.state.hoverLoc ? (
-                <ToolTip
-                  hoverLoc={this.state.mouseLoc}
-                  text={this.state.activePoint.p}
-                />
-              ) : null}
-            </div>
-          </div>
-          <div className="svg-inline" style={{ padding: 0 }}>
+          {this.state.hoverLoc ? (
+            <ToolTip
+              hoverLoc={this.state.mouseLoc}
+              text={this.state.activePoint.p}
+              style={{ marginTop: '-20px' }}
+            />
+          ) : null}
+          <div className="svg-inline">
             <Svg svgWidth={100} widthPercent="10%" data={data}>
               {({ cordFuncs, svgHeight }) => (
                 <g>
@@ -119,11 +116,11 @@ class PpmChart extends Component {
               )}
             </Svg>
             <Svg
-              svgWidth={1000}
+              svgWidth={800}
               data={data}
               onMouseMove={this.getCoords}
               onMouseLeave={this.stopHover}
-              widthPercent="100%"
+              widthPercent="80%"
             >
               {({ cordFuncs, svgHeight }) => (
                 <g>
@@ -149,17 +146,22 @@ class PpmChart extends Component {
                 </g>
               )}
             </Svg>
+            <Svg svgWidth={100} widthPercent="10%" data={data}>
+              {({ cordFuncs, svgHeight }) => (
+                <g>
+                  <AxisLabels svgHeight={svgHeight} getY={cordFuncs.getY} />
+                </g>
+              )}
+            </Svg>
           </div>
-          <div className="row">
-            <div className="popup">
-              {this.state.hoverLoc ? (
-                <ToolTip
-                  hoverLoc={this.state.mouseLoc}
-                  text={this.state.activePoint.d}
-                />
-              ) : null}
-            </div>
-          </div>
+          <div className="graph-filler" />
+          {this.state.hoverLoc ? (
+            <ToolTip
+              hoverLoc={this.state.mouseLoc}
+              text={this.state.activePoint.d}
+              style={{ marginTop: '-50px' }}
+            />
+          ) : null}
         </div>
       </div>
     );

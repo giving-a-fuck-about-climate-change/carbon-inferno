@@ -6,13 +6,16 @@ const AxisLabels = ({ svgHeight, xLabelSize, yLabelSize, getY, className }) => {
   return (
     <g className={className}>
       {/* Y AXIS LABELS */}
-      <text transform={`translate(${yLabelSize / 2}, 20)`} textAnchor="middle">
+      <text
+        className="axis-labels"
+        transform={`translate(${yLabelSize / 2}, 20)`}
+        textAnchor="middle"
+      >
         {`${getY().max} PPM`}
       </text>
       <text
-        transform={`translate(${yLabelSize / 2}, ${svgHeight -
-          xLabelSize -
-          padding})`}
+        className="axis-labels"
+        transform={`translate(${yLabelSize / 2}, ${350 - padding})`}
         textAnchor="middle"
       >
         {`${getY().min} PPM`}

@@ -274,7 +274,7 @@ body {
   text-transform: uppercase;
 }
 .graph-container {
-  height: 400px;
+  height: 380px;
   width: 100%;
 }
 .team-content {
@@ -379,7 +379,6 @@ body {
 }
 
 .popup {
-  min-height: 25px;
   vertical-align: top;
 }
 
@@ -410,4 +409,24 @@ body {
   to {
     transform: rotate(-360deg);
   }
+}
+
+.svg-inline {
+  display: flex;
+  flex-direction: row;
+  padding-top: 10px;
+}
+
+.axis-labels {
+  fill: #7a92a4;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.graph-filler {
+  height: 20px;
+  border-top: 2px dotted #dae1e9;
+  padding-top: 10px;
 }
