@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const AxisLabels = ({ svgHeight, xLabelSize, yLabelSize, getY, className }) => {
+  // TODO: Update positioning
   const padding = 5;
   return (
     <g className={className}>

@@ -78,6 +78,7 @@ class Svg extends Component {
     const { svgHeight, svgWidth, className, style, widthPercent } = this.props; // TODO: spread props here?
     return (
       <svg
+        preserveAspectRatio="none" // TODO: Spread props here.
         width={widthPercent}
         height={svgHeight}
         viewBox={`0 0 ${svgWidth} ${svgHeight}`} // TODO: Different props for this.

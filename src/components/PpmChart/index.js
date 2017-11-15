@@ -96,6 +96,7 @@ class PpmChart extends Component {
   });
 
   render() {
+    // Reduce number of <g> tags, improve render props. or react 16 support [] ????
     const { data, rangeType } = this.props;
     return (
       <div>
