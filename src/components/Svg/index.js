@@ -50,14 +50,14 @@ class Svg extends Component {
   };
   // GET SVG COORDINATES
   getSvgX = (x) => {
-    const { svgWidth, yLabelSize } = this.props;
-    return yLabelSize + x / this.getX().max * (svgWidth - yLabelSize); //eslint-disable-line
+    const { svgWidth } = this.props;
+    return x / this.getX().max * svgWidth; //eslint-disable-line
   };
   getSvgY = (y) => {
-    const { svgHeight, xLabelSize } = this.props;
+    const { svgHeight } = this.props;
     const gY = this.getY();
     return (
-      ((svgHeight - xLabelSize) * gY.max - (svgHeight - xLabelSize) * y) / //eslint-disable-line
+      (svgHeight * gY.max - svgHeight * y) / //eslint-disable-line
       (gY.max - gY.min)
     );
   };
@@ -86,7 +86,7 @@ class Svg extends Component {
         onMouseMove={this.handleMouseMove}
         onMouseLeave={this.handleMouseLeave}
       >
-        <g>
+        <g transform="scale(x, y)">
           {this.props.children({
             cordFuncs: {
               getX: this.getX,
@@ -113,21 +113,17 @@ Svg.propTypes = {
   children: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func,
   onMouseMove: PropTypes.func,
-  xLabelSize: PropTypes.number, // TODO: Understand and Investigate to remove from here.
-  yLabelSize: PropTypes.number, // TODO: Understand and Investigate to remove from here.
   style: PropTypes.object, //eslint-disable-line
   widthPercent: PropTypes.string,
 };
 // DEFAULT PROPS
 Svg.defaultProps = {
-  svgHeight: 300,
+  svgHeight: 350,
   svgWidth: 800,
   data: [],
   className: 'linechart',
   onMouseMove: () => {},
   onMouseLeave: () => {}, // TODO: Possible refactor so that this is never called ? (Look into spreading props top svg)
-  xLabelSize: 20,
-  yLabelSize: 80,
   style: { display: 'block' },
   widthPercent: '100%',
 };

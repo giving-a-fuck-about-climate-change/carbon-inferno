@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Axis from '../Axis';
-import AxisLabels from '../Axis/labels';
 import { Path, ShadedPath } from '../Path';
 
 class AreaChart extends Component {
@@ -14,11 +12,9 @@ class AreaChart extends Component {
   }
 
   render() {
-    const { cordFuncs, svgHeight, svgData } = this.props;
+    const { cordFuncs, svgData } = this.props;
     return (
       <g>
-        <Axis {...cordFuncs} />
-        <AxisLabels svgHeight={svgHeight} getY={cordFuncs.getY} />
         <ShadedPath {...cordFuncs} data={svgData} />
         <Path {...cordFuncs} data={svgData} />
       </g>
