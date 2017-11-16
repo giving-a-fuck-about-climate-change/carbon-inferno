@@ -2,6 +2,7 @@ body {
 	font-family: 'Avenir Next', -apple-system, BlinkMacSystemFont, 'Segoe UI',
 		'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
 		'Helvetica Neue', sans-serif;
+	-webkit-font-smoothing: antialiased;
 	letter-spacing: 1px;
 	margin: 0;
 }
@@ -49,20 +50,18 @@ body {
 .header-flex {
 	display: flex;
 	flex-direction: row;
+	align-items: center;
 }
 .logo {
-	width: 50px;
-	height: 50px;
-	border-radius: 100px;
-	border: 3px solid #ffffff;
+	height: 75px;
+	padding-right: 10px;
 }
 .footer {
 	display: flex;
 	flex-direction: row;
-	flex-wrap: wrap;
 	justify-content: space-around;
 	background-color: #ffffff;
-	padding: 20px 0 70px 0;
+	padding: 20px 0 20px 0;
 	line-height: 1.6;
 }
 @media (max-width: 640px) {
@@ -73,9 +72,13 @@ body {
 	}
 	.header {
 		text-align: center;
+		padding-top: 10px;
 	}
 	.heading-sub {
 		text-align: center;
+	}
+	.header-flex {
+		flex-direction: column;
 	}
 }
 .footer ul {
@@ -92,7 +95,7 @@ body {
 	font-size: 12px;
 }
 .footer a:hover {
-	color: #355c73;
+	color: #46494e;
 	font-weight: bold;
 }
 .footer-header,
@@ -107,7 +110,7 @@ body {
 }
 .footer-title {
 	color: #46494e;
-	font-weight: 500;
+	font-weight: bold;
 	font-size: 12px;
 	text-transform: uppercase;
 }
