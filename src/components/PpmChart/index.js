@@ -111,17 +111,16 @@ class PpmChart extends Component {
           <div className="svg-inline">
             <Svg svgWidth={100} widthPercent="10%" data={data}>
               {({ cordFuncs, svgHeight }) => (
-                <g>
-                  <AxisLabels svgHeight={svgHeight} getY={cordFuncs.getY} />
-                </g>
+                <AxisLabels svgHeight={svgHeight} getY={cordFuncs.getY} />
               )}
             </Svg>
             <Svg
-              svgWidth={800}
+              svgWidth={1000}
               data={data}
               onMouseMove={this.getCoords}
               onMouseLeave={this.stopHover}
               widthPercent="80%"
+              preserveAspectRatio="none"
             >
               {({ cordFuncs, svgHeight }) => (
                 <g>
@@ -149,9 +148,7 @@ class PpmChart extends Component {
             </Svg>
             <Svg svgWidth={100} widthPercent="10%" data={data}>
               {({ cordFuncs, svgHeight }) => (
-                <g>
-                  <AxisLabels svgHeight={svgHeight} getY={cordFuncs.getY} />
-                </g>
+                <AxisLabels svgHeight={svgHeight} getY={cordFuncs.getY} />
               )}
             </Svg>
           </div>
@@ -178,5 +175,5 @@ PpmChart.propTypes = {
 // DEFAULT PROPS
 PpmChart.defaultProps = {
   data: [],
-  documentDependency: document, // dependency injection (makes it easier to test)
+  documentDependency: document, // dependency injection (makes it easier to test) TODO: REMOVE
 };

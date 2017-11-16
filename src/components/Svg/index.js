@@ -17,7 +17,7 @@ class Svg extends Component {
       }, []),
     };
   }
-
+  // TODO INVESTIGATE THIS ONE
   componentDidUpdate(prevProps) {
     if (this.props.data.length !== prevProps.data.length) {
       const svgData = this.props.data.reduce((svgPointArr, point) => {
@@ -41,6 +41,7 @@ class Svg extends Component {
       max: data[data.length - 1].x,
     };
   };
+  // TODO: Refactor this !!!!!
   getY = () => {
     const { data } = this.props;
     return {
@@ -75,10 +76,17 @@ class Svg extends Component {
   };
 
   render() {
-    const { svgHeight, svgWidth, className, style, widthPercent } = this.props; // TODO: spread props here?
+    const {
+      svgHeight,
+      svgWidth,
+      className,
+      style,
+      widthPercent,
+      preserveAspectRatio,
+    } = this.props; // TODO: spread props here?
     return (
       <svg
-        preserveAspectRatio="none" // TODO: Spread props here.
+        preserveAspectRatio={preserveAspectRatio} // TODO: Spread props here.
         width={widthPercent}
         height={svgHeight}
         viewBox={`0 0 ${svgWidth} ${svgHeight}`} // TODO: Different props for this.
@@ -87,19 +95,17 @@ class Svg extends Component {
         onMouseMove={this.handleMouseMove}
         onMouseLeave={this.handleMouseLeave}
       >
-        <g transform="scale(x, y)">
-          {this.props.children({
-            cordFuncs: {
-              getX: this.getX,
-              getY: this.getY,
-              getSvgX: this.getSvgX,
-              getSvgY: this.getSvgY,
-            },
-            svgHeight,
-            svgWidth,
-            svgData: this.state.svgData,
-          })}
-        </g>
+        {this.props.children({
+          cordFuncs: {
+            getX: this.getX,
+            getY: this.getY,
+            getSvgX: this.getSvgX,
+            getSvgY: this.getSvgY,
+          },
+          svgHeight,
+          svgWidth,
+          svgData: this.state.svgData,
+        })}
       </svg>
     );
   }
@@ -116,6 +122,7 @@ Svg.propTypes = {
   onMouseMove: PropTypes.func,
   style: PropTypes.object, //eslint-disable-line
   widthPercent: PropTypes.string,
+  preserveAspectRatio: PropTypes.any, //eslint-disable-line
 };
 // DEFAULT PROPS
 Svg.defaultProps = {
@@ -127,4 +134,5 @@ Svg.defaultProps = {
   onMouseLeave: () => {}, // TODO: Possible refactor so that this is never called ? (Look into spreading props top svg)
   style: { display: 'block' },
   widthPercent: '100%',
+  preserveAspectRatio: '',
 };
