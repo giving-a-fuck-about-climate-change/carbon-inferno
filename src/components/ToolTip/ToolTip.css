@@ -2,14 +2,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
   position: absolute;
   padding: 5px;
   border-radius: 4px;
-  background-color: #1ba69c;
-  color: white;
+  border: 2px solid #1ba69c;
+  color: #7A92A4;
+  background-color: #ffffff;
 }
 
 .hover .ppm {
-  font-weight: 400;
+  font-size: 14px;
 }
