@@ -7,6 +7,6 @@ const TimeChoiceHeader = ({ timeHeaderLinks }) => (
   <ActiveListWrapper className="time-choice-header" items={timeHeaderLinks} />
 );
 TimeChoiceHeader.propTypes = {
-  timeHeaderLinks: PropTypes.array.isRequired, //eslint-disable-line
+	timeHeaderLinks: PropTypes.array.isRequired, //eslint-disable-line
 };
 export default TimeChoiceHeader;
