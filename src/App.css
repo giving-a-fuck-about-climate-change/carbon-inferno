@@ -218,7 +218,6 @@ body {
   margin: 30px auto;
   padding: 20px;
   border-radius: 5px;
-  width: 80%;
 }
 .flex-grid {
   display: flex;
@@ -267,8 +266,8 @@ body {
 }
 .sub-header {
   color: #7a92a4;
-  font-weight: 400;
-  font-size: 14px;
+  font-weight: 430;
+  font-size: 18px;
   letter-spacing: 2px;
   padding-top: 15px;
   text-transform: uppercase;
@@ -350,6 +349,7 @@ body {
 .linechart_path {
   stroke-width: 2;
   fill: none;
+  stroke: #f3acb1;
 }
 
 .linechart_axis {
@@ -420,7 +420,7 @@ body {
 .axis-labels {
   fill: #7a92a4;
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 430;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
