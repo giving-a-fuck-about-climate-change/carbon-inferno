@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+// TODO: Not needed for now but add to recipes
 const Axis = ({ getX, getY, getSvgX, getSvgY, className, strokeDasharray }) => {
   const x = getX();
   const y = getY();
