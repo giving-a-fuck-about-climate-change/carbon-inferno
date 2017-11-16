@@ -1,7 +1,9 @@
+@@font-face {
+	font-family: 'proxima-nova';
+	src:url('/Proxima-Nova');
+}
 body {
-	font-family: 'Avenir Next', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-		'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-		'Helvetica Neue', sans-serif;
+	font-family: proxima-nova, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	letter-spacing: 1px;
 	margin: 0;
@@ -13,19 +15,19 @@ body {
 		left bottom,
 		color-stop(35%, #46494e),
 		color-stop(36%, #46494e),
-		color-stop(100%, #008080)
+		color-stop(100%, #2B4D4C)
 	); /* safari4+,chrome */
 	background: -webkit-linear-gradient(
 		270deg,
 		#46494e 35%,
 		#46494e 36%,
-		#008080 100%
+		#2B4D4C 100%
 	); /* safari5.1+,chrome10+ */
 	background: -moz-linear-gradient(
 		270deg,
 		#46494e 35%,
 		#46494e 36%,
-		#008080 100%
+		#2B4D4C 100%
 	); /* ff3.6+ */
 	padding: 30px;
 }
@@ -34,14 +36,14 @@ body {
 .header a:visited {
 	font-size: 30px;
 	text-transform: uppercase;
-	font-weight: 500;
+	font-weight: 700;
 	letter-spacing: 2px;
-	color: #ffffff;
+	color: #FFFFFF;
 	padding-top: 20px;
 	text-decoration: none;
 }
 .heading-sub {
-	color: #ffffff;
+	color: #FFFFFF;
 	font-weight: 300;
 	font-size: 14px;
 	letter-spacing: 2px;
@@ -60,7 +62,7 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
-	background-color: #ffffff;
+	background-color: #F9F9F9;
 	padding: 20px 0 20px 0;
 	line-height: 1.6;
 }
@@ -106,7 +108,7 @@ body {
 	color: #46494e;
 	text-transform: uppercase;
 	text-decoration: none;
-	font-weight: 500;
+	font-weight: 700;
 }
 .footer-title {
 	color: #46494e;
@@ -211,7 +213,7 @@ body {
 	border-bottom: 1px solid #1ba69c;
 }
 .App {
-	background-color: #ffffff;
+	background-color: #FFFFFF;
 	text-align: center;
 	margin: 30px auto;
 	padding: 20px;
@@ -248,8 +250,9 @@ body {
 	margin: 0 auto;
 }
 .stat-info {
-	font-size: 48px;
-	font-weight: 400;
+	font-size: 36px;
+	font-weight: 600;
+	letter-spacing: 3px;
 }
 @media (max-width: 1110px) {
 	.info-col:last-child,
@@ -267,7 +270,7 @@ body {
 	font-weight: 400;
 	font-size: 14px;
 	letter-spacing: 2px;
-	padding-top: 10px;
+	padding-top: 15px;
 	text-transform: uppercase;
 }
 .graph-container {
@@ -387,8 +390,8 @@ body {
 }
 
 .loadingText {
-	padding-top: 200px;
-	color: #d9d9d9;
+	padding-top: 160px;
+	color: #bdc3c7;
 	font-weight: 400;
 	font-size: 14px;
 	letter-spacing: 2px;
@@ -396,40 +399,16 @@ body {
 }
 .loadingIcon {
 	position: relative;
-	top: 175px;
-	width: 35px;
-	height: 35px;
-	border-radius: 100px;
-	box-shadow: 0px 0px 5px #d9d9d9;
+	top: 150px;
+	height: 60px;
 	margin: 0 auto 0 auto;
-	animation: rotating 4s linear infinite;
-}
-.loadingIcon::before {
-	content: '';
-	position: absolute;
-	width: 20px;
-	height: 20px;
-	border-radius: 100px;
-	background-color: #d9d9d9;
-	left: 34px;
-}
-.loadingIcon::after {
-	content: '';
-	position: absolute;
-	width: 20px;
-	height: 20px;
-	border-radius: 100px;
-	background-color: #d9d9d9;
-	right: 34px;
-	top: 15px;
+	animation: rotating 5s linear infinite;
 }
 @keyframes rotating {
 	from {
 		transform: rotate(0);
-		background: #1ba69c;
 	}
 	to {
 		transform: rotate(-360deg);
-		background: #355c73;
 	}
 }

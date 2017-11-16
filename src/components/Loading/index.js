@@ -6,7 +6,7 @@ const LoadingWrapper = ({ loading, renderLoading, renderDiv }) =>
 
 export const Loading = () => (
   <div>
-    <div className="loadingIcon" />
+    <img className="loadingIcon" src="/skull-grey.png" alt="Loading" />
     <div className="loadingText">Gathering Data</div>
   </div>
 );

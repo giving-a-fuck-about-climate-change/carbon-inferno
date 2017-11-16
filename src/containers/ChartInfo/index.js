@@ -98,50 +98,50 @@ const setStateWithApiError = apiError => () => ({
 });
 
 class ChartInfo extends Component {
-  state = {
-    loading: true,
-    currentPPM: 0,
-    ppmDiff: '', // difference in numbers for ppm
-    ppmPercentDiff: '', // difference in % for ppm
-    error: '',
-    diffPPMSubHeader: '', // string used for subHeader, eg: 'since last year'
-    diffPercentSubHeader: '', // string used for subHeader, eg: 'since last month'
-    count: 0, // total recorded ppms for 'all' query
-    rangeType: ALL, // Intitial date range query type
-    data: [],
-  };
-  componentDidMount() {
-    this.fetchInitialData();
-  }
+ state = {
+   loading: true,
+   currentPPM: 0,
+   ppmDiff: '', // difference in numbers for ppm
+   ppmPercentDiff: '', // difference in % for ppm
+   error: '',
+   diffPPMSubHeader: '', // string used for subHeader, eg: 'since last year'
+   diffPercentSubHeader: '', // string used for subHeader, eg: 'since last month'
+   count: 0, // total recorded ppms for 'all' query
+   rangeType: ALL, // Intitial date range query type
+   data: [],
+ };
+ componentDidMount() {
+   this.fetchInitialData();
+ }
   /*
    When the component mounts we want to make two queries
     - Req1: Returns the current ppm and total amount of ppms ever recorded (used for the query to get all ppms).
     - Req2: Returns ALL ppms ever recorded.
   */
-  async fetchInitialData() {
-    try {
-      const currentPPM = await fetchData(currentPpmEndpoint);
-      const { count, results } = currentPPM;
-      const { ppm } = results[0];
-      this.setState({ currentPPM: ppm, count }, this.fetchPpms);
-    } catch (err) {
-      this.setState(setStateWithApiError(err));
-    }
-  }
+ async fetchInitialData() {
+   try {
+     const currentPPM = await fetchData(currentPpmEndpoint);
+     const { count, results } = currentPPM;
+     const { ppm } = results[0];
+     this.setState({ currentPPM: ppm, count }, this.fetchPpms);
+   } catch (err) {
+     this.setState(setStateWithApiError(err));
+   }
+ }
 
-  fetchPpms = async () => {
-    const { rangeType, count } = this.state;
-    const isReqForAll = rangeType === ALL;
-    const endpoint = isReqForAll
-      ? getEndpointForAll(count)
-      : dateRangQuery(rangeType); // endpoint differs between All and others
-    try {
-      const { results } = await fetchData(endpoint);
-      this.setState(setStateWithApiResult(results));
-    } catch (err) {
-      this.setState(setStateWithApiError(err));
-    }
-  };
+ fetchPpms = async () => {
+   const { rangeType, count } = this.state;
+   const isReqForAll = rangeType === ALL;
+   const endpoint = isReqForAll
+     ? getEndpointForAll(count)
+     : dateRangQuery(rangeType); // endpoint differs between All and others
+   try {
+     const { results } = await fetchData(endpoint);
+     this.setState(setStateWithApiResult(results));
+   } catch (err) {
+     this.setState(setStateWithApiError(err));
+   }
+ };
 
   /*
    The api does not return all entries for a given time period,
@@ -150,73 +150,73 @@ class ChartInfo extends Component {
    specifying that we want all the entries for that date range by using
    the count param.
   */
-  fetchPpmsForRangeBasedOnCount = async () => {
-    // only call api when the rangeType has changed.
-    const { rangeType } = this.state;
-    try {
-      const endpoint = dateRangQuery(rangeType);
-      const { count } = await fetchData(endpoint); // get total amount of ppms for specified date range
-      const { results } = await fetchData(`${endpoint}&limit=${count}`); // query for ppms limiting to count result
-      this.setState(setStateWithApiResult(results));
-    } catch (err) {
-      this.setState(setStateWithApiError(err));
-    }
-  };
+ fetchPpmsForRangeBasedOnCount = async () => {
+   // only call api when the rangeType has changed.
+   const { rangeType } = this.state;
+   try {
+     const endpoint = dateRangQuery(rangeType);
+     const { count } = await fetchData(endpoint); // get total amount of ppms for specified date range
+     const { results } = await fetchData(`${endpoint}&limit=${count}`); // query for ppms limiting to count result
+     this.setState(setStateWithApiResult(results));
+   } catch (err) {
+     this.setState(setStateWithApiError(err));
+   }
+ };
 
-  handlePpmClick = (rangeType, basedOnCount = false) => (event) => {
-    event.preventDefault();
-    if (rangeType !== this.state.rangeType) {
-      // only call api when the rangeType has changed.
-      this.setState(
-        setStateWithLoading(rangeType),
-        basedOnCount ? this.fetchPpmsForRangeBasedOnCount : this.fetchPpms,
-      );
-    }
-  };
+ handlePpmClick = (rangeType, basedOnCount = false) => (event) => {
+   event.preventDefault();
+   if (rangeType !== this.state.rangeType) {
+     // only call api when the rangeType has changed.
+     this.setState(
+       setStateWithLoading(rangeType),
+       basedOnCount ? this.fetchPpmsForRangeBasedOnCount : this.fetchPpms,
+     );
+   }
+ };
 
-  render() {
-    const {
-      currentPPM,
-      ppmDiff,
-      ppmPercentDiff,
-      diffPPMSubHeader,
-      diffPercentSubHeader,
-      rangeType,
-      loading,
-      data,
-    } = this.state;
-    return (
-      <div>
-        <div className="flex-grid-header">
-          <TimeChoiceHeader
-            timeHeaderLinks={timeHeaderLinks.map(
-              addClickFunctionality(this.handlePpmClick),
-            )}
-          />
-        </div>
-        <div>
-          <InfoColumnHOC
-            rangeType={rangeType}
-            currentPPM={currentPPM}
-            ppmDiff={ppmDiff}
-            ppmPercentDiff={ppmPercentDiff}
-            diffPPMSubHeader={diffPPMSubHeader}
-            diffPercentSubHeader={diffPercentSubHeader}
-          />
-          <div className="graph-container">
-            <LoadingWrapper
-              loading={loading}
-              renderLoading={() => <Loading />}
-              renderDiv={() =>
-                (data.length > 0 ? (
-                  <PpmChart data={data} rangeType={rangeType} />
-                ) : null)}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
+ render() {
+   const {
+     currentPPM,
+     ppmDiff,
+     ppmPercentDiff,
+     diffPPMSubHeader,
+     diffPercentSubHeader,
+     rangeType,
+     loading,
+     data,
+   } = this.state;
+   return (
+     <div>
+       <div className="flex-grid-header">
+         <TimeChoiceHeader
+           timeHeaderLinks={timeHeaderLinks.map(
+             addClickFunctionality(this.handlePpmClick),
+           )}
+         />
+       </div>
+       <div>
+         <InfoColumnHOC
+           rangeType={rangeType}
+           currentPPM={currentPPM}
+           ppmDiff={ppmDiff}
+           ppmPercentDiff={ppmPercentDiff}
+           diffPPMSubHeader={diffPPMSubHeader}
+           diffPercentSubHeader={diffPercentSubHeader}
+         />
+         <div className="graph-container">
+           <LoadingWrapper
+             loading={loading}
+             renderLoading={() => <Loading />}
+             renderDiv={() =>
+               (data.length > 0 ? (
+                 <PpmChart data={data} rangeType={rangeType} />
+               ) : null)}
+           />
+         </div>
+       </div>
+     </div>
+   );
+ }
 }
 
 export default ChartInfo;
