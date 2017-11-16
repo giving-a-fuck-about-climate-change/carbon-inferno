@@ -205,7 +205,7 @@ class ChartInfo extends Component {
          />
          <div className="graph-container">
            <LoadingWrapper
-             loading
+             loading={loading}
              renderLoading={() => <Loading />}
              renderDiv={() =>
                (data.length > 0 ? (

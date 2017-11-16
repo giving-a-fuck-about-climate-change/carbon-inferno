@@ -1,3 +1,7 @@
+@@font-face {
+	font-family: 'proxima-nova';
+	src:url('/Proxima-Nova');
+}
 body {
 	font-family: proxima-nova, sans-serif;
 	-webkit-font-smoothing: antialiased;
