@@ -36,7 +36,8 @@ const dateRangQuery = timePeriod =>
 
 const currentPpmEndpoint = `${ppmEndpoint}/?ordering=-date?&limit=1`;
 
-const getEndpointForAll = count => `${ppmEndpoint}/?ordering=+date&limit=100`;
+const getEndpointForAll = count =>
+  `${ppmEndpoint}/?ordering=+date&limit=${count}`;
 
 // ----- EXTENDED COMPONENT FUNCTIONALITY HELPERS -----
 
