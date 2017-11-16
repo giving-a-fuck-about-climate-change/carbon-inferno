@@ -23,7 +23,7 @@
     "eslint-plugin-react": "^7.3.0",
     "husky": "^0.14.3",
     "lint-staged": "^4.2.1",
-    "prettier-eslint": "^8.1.0",
+    "prettier-eslint": "^8.2.2",
     "react-scripts": "1.0.7"
   },
   "scripts": {
@@ -35,6 +35,9 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "src/*.{js,json,css}": ["eslint", "git add"]
+    "src/*.{js,json,css}": [
+      "eslint",
+      "git add"
+    ]
   }
 }
