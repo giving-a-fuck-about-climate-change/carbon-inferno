@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const AxisLabels = ({ svgHeight, xLabelSize, yLabelSize, getY, className }) => {
+const AxisLabels = ({ yLabelSize, getY, className }) => {
   // TODO: Update positioning
   const padding = 5;
   return (
@@ -26,8 +26,6 @@ const AxisLabels = ({ svgHeight, xLabelSize, yLabelSize, getY, className }) => {
 };
 AxisLabels.propTypes = {
   getY: PropTypes.func.isRequired,
-  svgHeight: PropTypes.number.isRequired,
-  xLabelSize: PropTypes.number.isRequired,
   yLabelSize: PropTypes.number.isRequired,
   data: PropTypes.array, //eslint-disable-line
   className: PropTypes.string,
