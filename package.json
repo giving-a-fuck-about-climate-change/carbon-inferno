@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "moment": "2.18.0",
+    "prettier-eslint-cli": "^4.4.0",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
@@ -23,7 +24,7 @@
     "eslint-plugin-react": "^7.3.0",
     "husky": "^0.14.3",
     "lint-staged": "^4.2.1",
-    "prettier-eslint": "^8.2.2",
+    "prettier": "^1.8.2",
     "react-scripts": "1.0.7"
   },
   "scripts": {
@@ -35,6 +36,7 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "src/*.{js,json}": ["eslint", "git add"]
+    "src/*.{js,json}": ["eslint", "git add"],
+    "*.{css}": ["prettier --write", "git add"]
   }
 }
