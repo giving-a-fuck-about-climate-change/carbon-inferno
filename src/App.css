@@ -82,6 +82,12 @@ body {
   .header-flex {
     flex-direction: column;
   }
+  .svg-inline {
+    height: 250px !important;
+  }
+  .graph-container {
+    height: 270px !important;
+  }
 }
 .footer ul {
   padding: 0;
@@ -195,22 +201,22 @@ body {
   margin-left: 20px;
 }
 .selected {
-  color: #365C73;
+  color: #365c73;
   font-weight: bold;
   border-bottom: 1px solid #1ba69c;
   padding-bottom: 11px;
 }
 .selected a {
-  color: #365C73 !important;
+  color: #365c73 !important;
 }
 .time-choice-header a:link,
 .time-choice-header a:visited {
-  color: #BCC8D1;
+  color: #bcc8d1;
   text-decoration: none;
   padding-bottom: 11px;
 }
 .time-choice-header a:hover {
-  color: #365C73;
+  color: #365c73;
   font-weight: bold;
   border-bottom: 1px solid #1ba69c;
 }
@@ -225,13 +231,13 @@ body {
   display: flex;
   color: #365c73;
   padding: 30px 0;
-  border-bottom: 1px dashed #7A92A4;
+  border-bottom: 1px dashed #7a92a4;
   padding-bottom: 20px;
 }
 .flex-grid-header {
   display: flex;
   color: #365c73;
-  border-bottom: 1px solid #D0D0D5;
+  border-bottom: 1px solid #d0d0d5;
 }
 .info-col {
   flex: 1 1 auto;
@@ -240,8 +246,8 @@ body {
   height: 140px;
   padding: 20px;
   box-sizing: border-box;
-  border-left: 1px solid #D0D0D5;
-  border-right: 1px solid #D0D0D5;
+  border-left: 1px solid #d0d0d5;
+  border-right: 1px solid #d0d0d5;
 }
 .info-col:first-child,
 .info-col:last-child {
@@ -341,7 +347,7 @@ body {
   border-bottom: 1px solid #1ba69c;
 }
 .text-page a:hover {
-  color: #365C73;
+  color: #365c73;
   font-weight: bold;
 }
 
@@ -371,7 +377,7 @@ body {
 }
 
 .linechart_label {
-  fill: #365C73;
+  fill: #365c73;
   font-weight: 400;
 }
 
@@ -391,7 +397,7 @@ body {
 
 .loadingText {
   padding-top: 160px;
-  color: #D0D0D5;
+  color: #d0d0d5;
   font-weight: 400;
   font-size: 14px;
   letter-spacing: 2px;
@@ -417,6 +423,7 @@ body {
   display: flex;
   flex-direction: row;
   padding-top: 10px;
+  height: 360px;
 }
 
 .axis-labels {
@@ -429,6 +436,6 @@ body {
 
 .graph-filler {
   height: 20px;
-  border-top: 1px dashed #7A92A4;
+  border-top: 1px dashed #7a92a4;
   padding-top: 10px;
 }

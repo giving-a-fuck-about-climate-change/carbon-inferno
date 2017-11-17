@@ -71,72 +71,70 @@ class PpmChart extends Component {
     const { data, rangeType } = this.props;
     return (
       <div>
-        <div className="graph-container">
-          {this.state.hoverLoc ? (
-            <ToolTip
-              hoverLoc={this.state.mouseLoc}
-              text={`${this.state.activePoint.p} PPM`}
-              style={{
-                marginTop: '-20px',
-                backgroundColor: '#1ba69c',
-                color: '#ffffff',
-                fontWeight: 'bold',
-              }}
-            />
-          ) : null}
-          <div className="svg-inline">
-            <Svg svgWidth={100} widthPercent="10%" data={data}>
-              {({ cordFuncs, svgHeight }) => (
-                <AxisLabels svgHeight={svgHeight} getY={cordFuncs.getY} />
-              )}
-            </Svg>
-            <Svg
-              svgWidth={1000}
-              data={data}
-              onMouseMove={this.getCoords}
-              onMouseLeave={this.stopHover}
-              widthPercent="80%"
-              preserveAspectRatio="none"
-            >
-              {({ cordFuncs, svgHeight }) => (
-                <g>
-                  <AreaChart
-                    svgData={data}
-                    cordFuncs={cordFuncs}
-                    svgHeight={svgHeight}
+        {this.state.hoverLoc ? (
+          <ToolTip
+            hoverLoc={this.state.mouseLoc}
+            text={`${this.state.activePoint.p} PPM`}
+            style={{
+              marginTop: '-20px',
+              backgroundColor: '#1ba69c',
+              color: '#ffffff',
+              fontWeight: 'bold',
+            }}
+          />
+        ) : null}
+        <div className="svg-inline">
+          <Svg svgWidth={100} widthPercent="10%" data={data}>
+            {({ cordFuncs, svgHeight }) => (
+              <AxisLabels svgHeight={svgHeight} getY={cordFuncs.getY} />
+            )}
+          </Svg>
+          <Svg
+            svgWidth={1000}
+            data={data}
+            onMouseMove={this.getCoords}
+            onMouseLeave={this.stopHover}
+            widthPercent="80%"
+            preserveAspectRatio="none"
+          >
+            {({ cordFuncs, svgHeight }) => (
+              <g>
+                <AreaChart
+                  svgData={data}
+                  cordFuncs={cordFuncs}
+                  svgHeight={svgHeight}
+                />
+                {this.state.hoverLoc ? (
+                  <HoverLine
+                    x1={this.state.hoverLoc}
+                    y1={-2} // TODO: Understand Why -8 ???
+                    x2={this.state.hoverLoc}
+                    y2={svgHeight}
                   />
-                  {this.state.hoverLoc ? (
-                    <HoverLine
-                      x1={this.state.hoverLoc}
-                      y1={-2} // TODO: Understand Why -8 ???
-                      x2={this.state.hoverLoc}
-                      y2={svgHeight}
-                    />
-                  ) : null}
-                  {shouldShowActivePoint(this.state.hoverLoc, rangeType) ? (
-                    <ActivePoint
-                      xCoord={this.state.activePoint.svgX}
-                      yCoord={this.state.activePoint.svgY}
-                    />
-                  ) : null}
-                </g>
-              )}
-            </Svg>
-            <Svg svgWidth={100} widthPercent="10%" data={data}>
-              {({ cordFuncs, svgHeight }) => (
-                <AxisLabels svgHeight={svgHeight} getY={cordFuncs.getY} />
-              )}
-            </Svg>
-          </div>
-          <div className="graph-filler" />
-          {this.state.hoverLoc ? (
-            <ToolTip
-              hoverLoc={this.state.mouseLoc}
-              text={this.state.activePoint.d}
-              style={{ marginTop: '-50px' }}
-            />
-          ) : null}
+                ) : null}
+                {shouldShowActivePoint(this.state.hoverLoc, rangeType) ? (
+                  <ActivePoint
+                    xCoord={this.state.activePoint.svgX}
+                    yCoord={this.state.activePoint.svgY}
+                  />
+                ) : null}
+              </g>
+            )}
+          </Svg>
+          <Svg svgWidth={100} widthPercent="10%" data={data}>
+            {({ cordFuncs, svgHeight }) => (
+              <AxisLabels svgHeight={svgHeight} getY={cordFuncs.getY} />
+            )}
+          </Svg>
         </div>
+        <div className="graph-filler" />
+        {this.state.hoverLoc ? (
+          <ToolTip
+            hoverLoc={this.state.mouseLoc}
+            text={this.state.activePoint.d}
+            style={{ marginTop: '-50px' }}
+          />
+        ) : null}
       </div>
     );
   }
