@@ -21,6 +21,6 @@ ToolTip.propTypes = {
   style: PropTypes.object, //eslint-disable-line
 };
 ToolTip.defaultProps = {
-  width: 150,
+  width: 125,
 };
 export default ToolTip;

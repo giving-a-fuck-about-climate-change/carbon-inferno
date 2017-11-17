@@ -77,8 +77,13 @@ class PpmChart extends Component {
           {this.state.hoverLoc ? (
             <ToolTip
               hoverLoc={this.state.mouseLoc}
-              text={this.state.activePoint.p}
-              style={{ marginTop: '-20px' }}
+              text={`${this.state.activePoint.p} PPM`}
+              style={{
+                marginTop: '-20px',
+                backgroundColor: '#1ba69c',
+                color: '#ffffff',
+                fontWeight: 'bold',
+              }}
             />
           ) : null}
           <div className="svg-inline">

@@ -203,15 +203,16 @@ class ChartInfo extends Component {
             diffPPMSubHeader={diffPPMSubHeader}
             diffPercentSubHeader={diffPercentSubHeader}
           />
-          <LoadingWrapper
-            loading={loading}
-            renderLoading={() => <Loading />}
-            renderDiv={() =>
-              (data.length > 0 ? (
-                <PpmChart data={data} rangeType={rangeType} />
-              ) : null)
-            }
-          />
+          <div className="graph-container">
+            <LoadingWrapper
+              loading={loading}
+              renderLoading={() => <Loading />}
+              renderDiv={() =>
+                (data.length > 0 ? (
+                  <PpmChart data={data} rangeType={rangeType} />
+                ) : null)}
+            />
+          </div>
         </div>
       </div>
     );

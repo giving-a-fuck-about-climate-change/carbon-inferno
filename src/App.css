@@ -1,4 +1,4 @@
-@@font-face {
+@font-face {
   font-family: 'proxima-nova';
   src: url('/Proxima-Nova');
 }
@@ -152,7 +152,6 @@ body {
   font-weight: 200;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-
   color: #ffffff;
   padding-bottom: 10px;
   border-bottom: 1px solid #ffffff;
@@ -196,19 +195,22 @@ body {
   margin-left: 20px;
 }
 .selected {
-  color: #355c73;
+  color: #365C73;
   font-weight: bold;
   border-bottom: 1px solid #1ba69c;
   padding-bottom: 11px;
 }
+.selected a {
+  color: #365C73 !important;
+}
 .time-choice-header a:link,
 .time-choice-header a:visited {
-  color: #355c73;
+  color: #BCC8D1;
   text-decoration: none;
   padding-bottom: 11px;
 }
 .time-choice-header a:hover {
-  color: #355c73;
+  color: #365C73;
   font-weight: bold;
   border-bottom: 1px solid #1ba69c;
 }
@@ -223,13 +225,13 @@ body {
   display: flex;
   color: #365c73;
   padding: 30px 0;
-  border-bottom: 2px dotted #dae1e9;
+  border-bottom: 1px dashed #7A92A4;
   padding-bottom: 20px;
 }
 .flex-grid-header {
   display: flex;
   color: #365c73;
-  border-bottom: 1px solid #dae1e9;
+  border-bottom: 1px solid #D0D0D5;
 }
 .info-col {
   flex: 1 1 auto;
@@ -238,8 +240,8 @@ body {
   height: 140px;
   padding: 20px;
   box-sizing: border-box;
-  border-left: 1px solid #dae1e9;
-  border-right: 1px solid #dae1e9;
+  border-left: 1px solid #D0D0D5;
+  border-right: 1px solid #D0D0D5;
 }
 .info-col:first-child,
 .info-col:last-child {
@@ -266,8 +268,8 @@ body {
 }
 .sub-header {
   color: #7a92a4;
-  font-weight: 430;
-  font-size: 18px;
+  font-weight: 400;
+  font-size: 14px;
   letter-spacing: 2px;
   padding-top: 15px;
   text-transform: uppercase;
@@ -339,7 +341,7 @@ body {
   border-bottom: 1px solid #1ba69c;
 }
 .text-page a:hover {
-  color: #355c73;
+  color: #365C73;
   font-weight: bold;
 }
 
@@ -369,7 +371,7 @@ body {
 }
 
 .linechart_label {
-  fill: #355c73;
+  fill: #365C73;
   font-weight: 400;
 }
 
@@ -389,7 +391,7 @@ body {
 
 .loadingText {
   padding-top: 160px;
-  color: #bdc3c7;
+  color: #D0D0D5;
   font-weight: 400;
   font-size: 14px;
   letter-spacing: 2px;
@@ -419,14 +421,14 @@ body {
 
 .axis-labels {
   fill: #7a92a4;
-  font-size: 18px;
-  font-weight: 430;
+  font-size: 14px;
+  font-weight: 400;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
 
 .graph-filler {
   height: 20px;
-  border-top: 2px dotted #dae1e9;
+  border-top: 1px dashed #7A92A4;
   padding-top: 10px;
 }
