@@ -5,7 +5,7 @@ import './ToolTip.css';
 const ToolTip = ({ hoverLoc, text, width, style }) => {
   const placementStyles = {
     width: `${width}px`,
-		left: hoverLoc - width / 2, //eslint-disable-line
+    left: hoverLoc - width / 2, //eslint-disable-line
   };
 
   return (
@@ -18,7 +18,7 @@ ToolTip.propTypes = {
   hoverLoc: PropTypes.number.isRequired,
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   width: PropTypes.number,
-	style: PropTypes.object, //eslint-disable-line
+  style: PropTypes.object, //eslint-disable-line
 };
 ToolTip.defaultProps = {
   width: 125,
