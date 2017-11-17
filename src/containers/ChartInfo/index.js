@@ -210,7 +210,8 @@ class ChartInfo extends Component {
               renderDiv={() =>
                 (data.length > 0 ? (
                   <PpmChart data={data} rangeType={rangeType} />
-                ) : null)}
+                ) : null)
+              }
             />
           </div>
         </div>

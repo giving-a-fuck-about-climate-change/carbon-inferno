@@ -83,17 +83,18 @@ class Svg extends Component {
       style,
       widthPercent,
       preserveAspectRatio,
+      onMouseMove,
+      onMouseLeave,
     } = this.props; // TODO: spread props here?
     return (
       <svg
         preserveAspectRatio={preserveAspectRatio} // TODO: Spread props here.
         width={widthPercent}
-        height={svgHeight}
         viewBox={`0 0 ${svgWidth} ${svgHeight}`} // TODO: Different props for this.
         style={style}
         className={className}
-        onMouseMove={this.handleMouseMove}
-        onMouseLeave={this.handleMouseLeave}
+        onMouseMove={onMouseMove ? this.handleMouseMove : null}
+        onMouseLeave={onMouseLeave ? this.handleMouseLeave : null}
       >
         {this.props.children({
           cordFuncs: {
