@@ -83,10 +83,10 @@ body {
     flex-direction: column;
   }
   .svg-inline {
-    height: 250px !important;
+    height: 200px !important;
   }
   .graph-container {
-    height: 270px !important;
+    height: 230px !important;
   }
 }
 .footer ul {
@@ -262,8 +262,8 @@ body {
   letter-spacing: 3px;
 }
 @media (max-width: 1110px) {
-  .info-col:last-child,
-  .info-col:nth-child(even) {
+  .info-col:nth-child(2),
+  .info-col:nth-child(3) {
     display: none;
   }
 }
