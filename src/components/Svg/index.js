@@ -93,7 +93,6 @@ class Svg extends Component {
         className={className}
         onMouseMove={this.handleMouseMove}
         onMouseLeave={this.handleMouseLeave}
-        height="auto"
       >
         {this.props.children({
           cordFuncs: {
