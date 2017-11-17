@@ -29,26 +29,12 @@ class PpmChart extends Component {
     mocLoc: null,
   };
 
-  setSvgCords = () => {
-    const { documentDependency } = this.props;
-    const svgElement = documentDependency.getElementsByClassName(
-      'linechart',
-    )[1]; // TODO: Refactor selector, can be easily broken
-    const svgCoords = svgElement.getScreenCTM();
-    const svgPoint = svgElement.createSVGPoint();
-    // http://www.codedread.com/blog/archives/2005/12/21/how-to-enable-dragging-in-svg/
-    this.setState({
-      svgCoords,
-      svgPoint,
-    });
-  };
-
   // FIND CLOSEST POINT TO MOUSE
   getCoords = throttle(60, (svgData, e) => {
+    // http://www.codedread.com/blog/archives/2005/12/21/how-to-enable-dragging-in-svg/
     const svgElement = document.getElementsByClassName('linechart')[1];
     const svgCoords = svgElement.getScreenCTM();
     const svgPoint = svgElement.createSVGPoint();
-    // http://www.codedread.com/blog/archives/2005/12/21/how-to-enable-dragging-in-svg/
     svgPoint.x = e.clientX; // set x coord to x coord pos of the mouse
     // http://wesbos.com/destructuring-renaming/
     const { x: hoverLoc } = svgPoint.matrixTransform(svgCoords.inverse());
@@ -67,7 +53,6 @@ class PpmChart extends Component {
   });
 
   render() {
-    // Reduce number of <g> tags, improve render props. or react 16 support [] ????
     const { data, rangeType } = this.props;
     return (
       <div>
