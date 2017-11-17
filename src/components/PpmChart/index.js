@@ -29,18 +29,14 @@ class PpmChart extends Component {
     mocLoc: null,
   };
 
-  componentDidMount() {
-    this.setSvgCords();
-  }
-
   setSvgCords = () => {
     const { documentDependency } = this.props;
-    // http://www.codedread.com/blog/archives/2005/12/21/how-to-enable-dragging-in-svg/
     const svgElement = documentDependency.getElementsByClassName(
       'linechart',
-    )[1];
+    )[1]; // TODO: Refactor selector, can be easily broken
     const svgCoords = svgElement.getScreenCTM();
     const svgPoint = svgElement.createSVGPoint();
+    // http://www.codedread.com/blog/archives/2005/12/21/how-to-enable-dragging-in-svg/
     this.setState({
       svgCoords,
       svgPoint,
@@ -49,7 +45,9 @@ class PpmChart extends Component {
 
   // FIND CLOSEST POINT TO MOUSE
   getCoords = throttle(60, (svgData, e) => {
-    const { svgPoint, svgCoords } = this.state;
+    const svgElement = document.getElementsByClassName('linechart')[1];
+    const svgCoords = svgElement.getScreenCTM();
+    const svgPoint = svgElement.createSVGPoint();
     // http://www.codedread.com/blog/archives/2005/12/21/how-to-enable-dragging-in-svg/
     svgPoint.x = e.clientX; // set x coord to x coord pos of the mouse
     // http://wesbos.com/destructuring-renaming/
