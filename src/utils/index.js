@@ -30,7 +30,7 @@ export const calculatePercentageDiff = (previous, current) => {
 
 const createGraphDataSubset = arr =>
   arr.reduce((sum, item, idx) => {
-    if (idx % 2 === 0) {
+    if (idx % 10 === 0) {
       const { date, ppm } = item;
       return [
         ...sum,
