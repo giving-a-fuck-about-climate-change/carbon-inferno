@@ -35,9 +35,6 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "src/*.{js,json,css}": [
-      "eslint",
-      "git add"
-    ]
+    "src/*.{js,json}": ["eslint", "git add"]
   }
 }
