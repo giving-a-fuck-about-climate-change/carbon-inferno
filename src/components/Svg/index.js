@@ -17,22 +17,7 @@ class Svg extends Component {
       }, []),
     };
   }
-  // TODO INVESTIGATE THIS ONE
-  componentDidUpdate(prevProps) {
-    if (this.props.data.length !== prevProps.data.length) {
-      const svgData = this.props.data.reduce((svgPointArr, point) => {
-        const currCord = {
-          svgX: this.getSvgX(point.x),
-          svgY: this.getSvgY(point.y),
-          d: point.d,
-          p: point.p,
-        };
-        return [currCord, ...svgPointArr];
-      }, []);
 
-      this.setState({ svgData }); //eslint-disable-line
-    }
-  }
   // GET X & Y || MAX & MIN
   getX = () => {
     const { data } = this.props;
@@ -52,7 +37,8 @@ class Svg extends Component {
   // GET SVG COORDINATES
   getSvgX = (x) => {
     const { svgWidth } = this.props;
-    return x / this.getX().max * svgWidth; //eslint-disable-line
+    const xPoint = x / this.getX().max;
+    return xPoint * svgWidth;
   };
   getSvgY = (y) => {
     const { svgHeight } = this.props;
@@ -63,16 +49,23 @@ class Svg extends Component {
     );
   };
 
-  handleMouseMove = (event) => {
-    event.persist();
-    const { svgData } = this.state;
-    this.props.onMouseMove(svgData, event);
+  cordFuncs = {
+    getX: this.getX,
+    getY: this.getY,
+    getSvgX: this.getSvgX,
+    getSvgY: this.getSvgY,
   };
 
-  handleMouseLeave = (event) => {
-    event.persist();
-    const { getSvgX, getSvgY } = this;
-    this.props.onMouseLeave({ getSvgX, getSvgY }, event);
+  handleEvent = eventHandler => (event) => {
+    if (eventHandler) {
+      if (this.props.persistEvent) {
+        event.persist();
+      }
+      eventHandler(event, {
+        cordFuncs: this.cordFuncs,
+        data: this.state.svgData,
+      });
+    }
   };
 
   render() {
@@ -80,21 +73,19 @@ class Svg extends Component {
       svgHeight,
       svgWidth,
       className,
-      style,
       widthPercent,
       preserveAspectRatio,
       onMouseMove,
       onMouseLeave,
-    } = this.props; // TODO: spread props here?
+    } = this.props;
     return (
       <svg
-        preserveAspectRatio={preserveAspectRatio} // TODO: Spread props here.
+        preserveAspectRatio={preserveAspectRatio}
         width={widthPercent}
-        viewBox={`0 0 ${svgWidth} ${svgHeight}`} // TODO: Different props for this.
-        style={style}
+        viewBox={`0 0 ${svgWidth} ${svgHeight}`}
         className={className}
-        onMouseMove={onMouseMove ? this.handleMouseMove : null}
-        onMouseLeave={onMouseLeave ? this.handleMouseLeave : null}
+        onMouseMove={this.handleEvent(onMouseMove)}
+        onMouseLeave={this.handleEvent(onMouseLeave)}
       >
         {this.props.children({
           cordFuncs: {
@@ -103,9 +94,7 @@ class Svg extends Component {
             getSvgX: this.getSvgX,
             getSvgY: this.getSvgY,
           },
-          svgHeight,
-          svgWidth,
-          svgData: this.state.svgData,
+          data: this.state.svgData,
         })}
       </svg>
     );
@@ -124,6 +113,7 @@ Svg.propTypes = {
   style: PropTypes.object, //eslint-disable-line
   widthPercent: PropTypes.string,
   preserveAspectRatio: PropTypes.any, //eslint-disable-line
+  persistEvent: PropTypes.bool,
 };
 // DEFAULT PROPS
 Svg.defaultProps = {
@@ -132,8 +122,9 @@ Svg.defaultProps = {
   data: [],
   className: 'linechart',
   onMouseMove: () => {},
-  onMouseLeave: () => {}, // TODO: Possible refactor so that this is never called ? (Look into spreading props top svg)
+  onMouseLeave: () => {},
   style: { display: 'block' },
   widthPercent: '100%',
   preserveAspectRatio: '',
+  persistEvent: false,
 };
