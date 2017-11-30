@@ -43,18 +43,28 @@ class PpmChart extends Component {
     const svgCoords = svgElement.getScreenCTM();
     const svgPoint = svgElement.createSVGPoint();
     svgPoint.x = e.clientX; // set x coord to x coord pos of the mouse
+    svgPoint.y = e.clientY; // set y coord to y coord pos of the mouse
     // http://wesbos.com/destructuring-renaming/
-    const { x: hoverLoc } = svgPoint.matrixTransform(svgCoords.inverse());
-    const closestPoint = binarySearch(data, hoverLoc);
-
-    this.setState({
-      hoverLoc,
-      activePoint: closestPoint,
-      mouseLoc: e.clientX,
-    });
+    const { x: hoverXLoc, y: hoverYLoc } = svgPoint.matrixTransform(
+      svgCoords.inverse(),
+    );
+    // Only set the hover state if the y location is not overlapping our hover divs
+    if (hoverYLoc > 2 && hoverYLoc < 332) {
+      const closestPoint = binarySearch(data, hoverXLoc);
+      this.setState({
+        hoverLoc: hoverXLoc,
+        activePoint: closestPoint,
+        mouseLoc: e.clientX,
+      });
+    }
   };
 
-  // STOP HOVER
+  /*
+  * Because we throttle the mouseMove we could end up in a situation where
+  * the mouseMove gets called after stopHover.
+  * Adding a debounce to stopHover ensures that the stop event is delayed
+  * and always called after mouseMove.
+  */
   stopHover = () => {
     this.setState({ hoverLoc: null, activePoint: null, mocLoc: null });
   };
