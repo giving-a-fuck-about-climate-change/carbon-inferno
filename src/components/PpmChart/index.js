@@ -11,6 +11,8 @@ import AxisLabels from '../../components/Axis/labels';
 import { WEEK, MONTH } from '../../constants';
 import { binarySearch } from '../../utils';
 
+const svgHeight = 350;
+
 const shouldShowActivePoint = (hoverState, type) => {
   if (hoverState) {
     if (type === WEEK || type === MONTH) {
@@ -23,14 +25,19 @@ const shouldShowActivePoint = (hoverState, type) => {
 
 // Component
 class PpmChart extends Component {
-  state = {
-    hoverLoc: null,
-    activePoint: null,
-    mocLoc: null,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      hoverLoc: null,
+      activePoint: null,
+      mocLoc: null,
+    };
+    this.getCoords = throttle(60, this.getCoords);
+    this.stopHover = debounce(60, this.stopHover);
+  }
 
   // FIND CLOSEST POINT TO MOUSE
-  getCoords = throttle(60, (svgData, e) => {
+  getCoords = (e, { data }) => {
     // http://www.codedread.com/blog/archives/2005/12/21/how-to-enable-dragging-in-svg/
     const svgElement = document.getElementsByClassName('linechart')[1];
     const svgCoords = svgElement.getScreenCTM();
@@ -38,19 +45,19 @@ class PpmChart extends Component {
     svgPoint.x = e.clientX; // set x coord to x coord pos of the mouse
     // http://wesbos.com/destructuring-renaming/
     const { x: hoverLoc } = svgPoint.matrixTransform(svgCoords.inverse());
-    const closestPoint = binarySearch(svgData, hoverLoc);
+    const closestPoint = binarySearch(data, hoverLoc);
 
     this.setState({
       hoverLoc,
       activePoint: closestPoint,
       mouseLoc: e.clientX,
     });
-  });
+  };
 
   // STOP HOVER
-  stopHover = debounce(100, () => {
+  stopHover = () => {
     this.setState({ hoverLoc: null, activePoint: null, mocLoc: null });
-  });
+  };
 
   render() {
     const { data, rangeType } = this.props;
@@ -70,19 +77,21 @@ class PpmChart extends Component {
         ) : null}
         <div className="svg-inline">
           <Svg svgWidth={100} widthPercent="10%" data={data}>
-            {({ cordFuncs, svgHeight }) => (
+            {({ cordFuncs }) => (
               <AxisLabels svgHeight={svgHeight} getY={cordFuncs.getY} />
             )}
           </Svg>
           <Svg
             svgWidth={1000}
+            viewBox="0 0 350 800"
             data={data}
             onMouseMove={this.getCoords}
             onMouseLeave={this.stopHover}
             widthPercent="80%"
             preserveAspectRatio="none"
+            persistEvent
           >
-            {({ cordFuncs, svgHeight }) => (
+            {({ cordFuncs }) => (
               <g>
                 <AreaChart
                   svgData={data}
@@ -92,7 +101,6 @@ class PpmChart extends Component {
                 {this.state.hoverLoc ? (
                   <HoverLine
                     x1={this.state.hoverLoc}
-                    y1={-2} // TODO: Understand Why -8 ???
                     x2={this.state.hoverLoc}
                     y2={svgHeight}
                   />
@@ -107,7 +115,7 @@ class PpmChart extends Component {
             )}
           </Svg>
           <Svg svgWidth={100} widthPercent="10%" data={data}>
-            {({ cordFuncs, svgHeight }) => (
+            {({ cordFuncs }) => (
               <AxisLabels svgHeight={svgHeight} getY={cordFuncs.getY} />
             )}
           </Svg>
@@ -128,11 +136,9 @@ class PpmChart extends Component {
 export default PpmChart;
 PpmChart.propTypes = {
   data: PropTypes.array, //eslint-disable-line
-  documentDependency: PropTypes.object, //eslint-disable-line
   rangeType: PropTypes.string.isRequired,
 };
 // DEFAULT PROPS
 PpmChart.defaultProps = {
   data: [],
-  documentDependency: document, // dependency injection (makes it easier to test) TODO: REMOVE
 };
