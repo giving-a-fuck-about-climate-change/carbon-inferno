@@ -3,12 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "history": "^4.7.2",
     "moment": "2.18.0",
     "prettier-eslint-cli": "^4.4.0",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
+    "react-router-redux": "next",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "throttle-debounce": "^1.0.1",
     "universal-ga": "^1.2.0",
     "whatwg-fetch": "^2.0.3"
@@ -36,7 +41,13 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "src/*.{js,json}": ["eslint", "git add"],
-    "*.{css}": ["prettier --write", "git add"]
+    "src/*.{js,json}": [
+      "eslint",
+      "git add"
+    ],
+    "*.{css}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
