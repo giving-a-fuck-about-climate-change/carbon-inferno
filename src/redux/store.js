@@ -5,12 +5,18 @@ import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory';
 
 import rootReducer from './reducers';
+import config from '../config';
+
+const { apiEndpoint } = config;
 
 export const history = createHistory();
 
 const initialState = {};
 const enhancers = [];
-const middleware = [thunk, routerMiddleware(history)];
+const middleware = [
+  thunk.withExtraArgument(`${apiEndpoint}/api/co2`),
+  routerMiddleware(history),
+];
 
 if (process.env.NODE_ENV === 'development') {
   const devToolsExtension = window.devToolsExtension;

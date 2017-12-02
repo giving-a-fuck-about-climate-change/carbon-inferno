@@ -42,7 +42,7 @@ const transformItem = (item, count) => {
  * so we want to show every item until then.
  * After that we sample the data weekly ( every 7th item)
  */
-const createGraphDataSubset = (arr = []) => {
+export const createGraphDataSubset = (arr = []) => {
   let count = 0;
   return arr.reduce((sum, item, idx) => {
     if (idx < 790) {
@@ -57,14 +57,7 @@ const createGraphDataSubset = (arr = []) => {
   }, []);
 };
 
-const transformGraphData = (arr = []) => arr.map(transformItem);
-
-export const createGraphData = (arr = [], rangeType = false) => {
-  if (rangeType) {
-    return createGraphDataSubset(arr);
-  }
-  return transformGraphData(arr);
-};
+export const transformGraphData = (arr = []) => arr.map(transformItem);
 
 export const todaysDate = () => moment().format('YYYY-MM-DD');
 
