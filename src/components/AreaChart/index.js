@@ -24,9 +24,37 @@ export const getLinePath = (getSvgX, getSvgY, data = [{}], markerTo = '') =>
   );
 
 class AreaChart extends Component {
-  constructor(props) {
-    super(props);
-    const { cordFuncs: { getSvgX, getSvgY, getX, getY }, svgData } = props;
+  // constructor(props) {
+  //   super(props);
+  //   const { cordFuncs: { getSvgX, getSvgY, getX, getY }, svgData } = props;
+  //   // Where the line of the graph will start from
+  //   const markerTo = getMarkerTo(getSvgX, getSvgY, svgData);
+  //   // The actual line of the graph
+  //   const linePath = getLinePath(getSvgX, getSvgY, svgData, markerTo);
+  //   // We need to draw another path which which we can fill for the shaded area
+  //   const x = getX();
+  //   const y = getY();
+  //   let shadedPath = linePath;
+  //   shadedPath +=
+  //     `L ${getSvgX(x.max)} ${getSvgY(y.min)} ` +
+  //     `L ${getSvgX(x.min)} ${getSvgY(y.min)} `;
+  //   this.state = {
+  //     markerTo,
+  //     linePath,
+  //     shadedPath,
+  //   };
+  // }
+
+  // When we render 'all' its very expensive, so only render when the chart changes
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.svgData.length !== this.props.svgData.length) {
+      return true;
+    }
+    return false;
+  }
+
+  render() {
+    const { cordFuncs: { getSvgX, getSvgY, getX, getY }, svgData } = this.props;
     // Where the line of the graph will start from
     const markerTo = getMarkerTo(getSvgX, getSvgY, svgData);
     // The actual line of the graph
@@ -38,22 +66,6 @@ class AreaChart extends Component {
     shadedPath +=
       `L ${getSvgX(x.max)} ${getSvgY(y.min)} ` +
       `L ${getSvgX(x.min)} ${getSvgY(y.min)} `;
-    this.state = {
-      markerTo,
-      linePath,
-      shadedPath,
-    };
-  }
-  // When we render 'all' its very expensive, so only render when the chart changes
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.svgData.length !== this.props.svgData.length) {
-      return true;
-    }
-    return false;
-  }
-
-  render() {
-    const { linePath, shadedPath } = this.state;
     return (
       <g>
         <Path linePath={shadedPath} className="linechart_area" />

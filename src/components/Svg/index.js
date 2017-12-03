@@ -18,6 +18,21 @@ class Svg extends Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.data.length !== prevProps.data.length) {
+      const svgData = this.props.data.reduce((svgPointArr, point) => {
+        const currCord = {
+          svgX: this.getSvgX(point.x),
+          svgY: this.getSvgY(point.y),
+          d: point.d,
+          p: point.p,
+        };
+        return [currCord, ...svgPointArr];
+      }, []);
+      this.setState({ svgData });
+    }
+  }
+
   // GET X & Y || MAX & MIN
   getX = () => {
     const { data } = this.props;

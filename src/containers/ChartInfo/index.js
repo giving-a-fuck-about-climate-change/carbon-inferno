@@ -94,18 +94,20 @@ class ChartInfo extends Component {
   queryApi = () => {
     const { rangeType } = this.state;
     if (rangeType === WEEK || rangeType === MONTH) {
-      return this.props.fetchMonthWeekPpms({
+      this.props.fetchMonthWeekPpms({
         endpoint: dateRangQuery(rangeType),
         rangeType,
       });
     }
     if (rangeType === YEAR || rangeType === FIVE_YEAR) {
-      return this.props.fetchYearPpms({
+      this.props.fetchYearPpms({
         endpoint: dateRangQuery(rangeType),
         rangeType,
       });
     }
-    return this.props.fetchAllPpms();
+    if (this.props[ALL].length <= 0) {
+      this.props.fetchAllPpms();
+    }
   };
 
   handlePpmClick = rangeType => (event) => {
