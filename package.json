@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "flow-bin": "^0.60.1",
     "history": "^4.7.2",
     "moment": "2.18.0",
     "prop-types": "^15.6.0",
@@ -39,16 +40,11 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint -c .eslintrc src",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "flow": "flow"
   },
   "lint-staged": {
-    "src/*.{js,json}": [
-      "eslint",
-      "git add"
-    ],
-    "*.{css}": [
-      "prettier --write",
-      "git add"
-    ]
+    "src/*.{js,json}": ["eslint", "git add"],
+    "*.{css}": ["prettier --write", "git add"]
   }
 }
