@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { globalSubHeader } from '../../constants';
 
-import {
-  calculateAverage,
-  calculatePercentageDiff,
-  calculateDiff,
-} from '../../utils';
+import { calculatePercentageDiff, calculateDiff } from '../../utils';
 
 const calculateSubHeader = (rangeType) => {
   const formatStr = str => str.replace('_', ' ');
@@ -49,17 +45,17 @@ class InfoColumnHOC extends Component {
     }
   }
 
-  updatePpmDiffInfo = (data, rangeType) => {
-    const average = calculateAverage(data);
+  updatePpmDiffInfo = (data = [], rangeType) => {
+    const previous = data[0] ? data[0].p : 0;
     const { currentPpm } = this.props;
     const { diffPPMSubHeader, diffPercentSubHeader } = calculateSubHeader(
       rangeType,
     );
     this.setState({
-      ppmDiff: `${calculateDiff(average, currentPpm)} PPM`,
+      ppmDiff: `${calculateDiff(previous, previous ? currentPpm : 0)} PPM`,
       ppmPercentDiff: `${calculatePercentageDiff(
-        average,
-        this.props.currentPpm,
+        previous,
+        previous ? currentPpm : 0,
       )} %`,
       diffPPMSubHeader,
       diffPercentSubHeader,

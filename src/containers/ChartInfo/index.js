@@ -14,8 +14,14 @@ import { queryApi } from './redux/actions';
 
 import { ppmInfoAllSelector, ppmInfoSelector } from './redux/selectors';
 
-import { timeHeaderLinks } from '../../constants';
-import { WEEK, MONTH, YEAR, FIVE_YEAR, ALL } from './constants';
+import {
+  timeHeaderLinks,
+  WEEK,
+  MONTH,
+  YEAR,
+  FIVE_YEAR,
+  ALL,
+} from '../../constants';
 
 const addClickFunctionality = clickFunc => (item) => {
   const { type } = item;

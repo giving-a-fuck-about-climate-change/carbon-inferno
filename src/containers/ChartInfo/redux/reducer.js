@@ -7,7 +7,7 @@ import {
   YEARS_PPM_SUCCESS,
 } from './commands';
 
-import { WEEK, MONTH, YEAR, FIVE_YEAR, ALL } from '../constants';
+import { WEEK, MONTH, YEAR, FIVE_YEAR, ALL } from '../../../constants';
 
 const initialState = {
   loading: true,
