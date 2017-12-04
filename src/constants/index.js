@@ -58,12 +58,14 @@ export const footerLinks = [
 export const WEEK = 'week';
 export const MONTH = 'month';
 export const YEAR = 'year';
+export const FIVE_YEAR = 'five_years';
 export const ALL = 'all';
 
 export const timeHeaderLinks = [
   { href: '#TODO', className: '', text: '1 Week', type: WEEK },
   { href: '#TODO', className: '', text: '1 Month', type: MONTH },
   { href: '#TODO', className: '', text: '1 Year', type: YEAR },
+  { href: '#TODO', className: '', text: '5 Years', type: FIVE_YEAR },
   { href: '#TODO', className: '', text: 'All', type: ALL },
 ];
 
