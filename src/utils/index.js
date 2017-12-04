@@ -2,7 +2,7 @@ import moment from 'moment';
 
 export const calculateAverage = (arr = []) => {
   const totalAmount = arr.reduce(
-    (total, item) => total + parseInt(item.ppm, 10),
+    (total, item) => total + parseInt(item.p, 10),
     0,
   );
   return totalAmount / arr.length;
@@ -61,9 +61,9 @@ export const transformGraphData = (arr = []) => arr.map(transformItem);
 
 export const todaysDate = () => moment().format('YYYY-MM-DD');
 
-export const subDate = range =>
+export const subDate = (range, amount = 1) =>
   moment()
-    .subtract(1, range)
+    .subtract(amount, range)
     .format('YYYY-MM-DD');
 
 export const reverseArray = (arr = []) => arr.reverse();

@@ -12,13 +12,7 @@ import {
   Loading,
 } from '../../components';
 
-import {
-  calculateAverage,
-  calculateDiff,
-  calculatePercentageDiff,
-  todaysDate,
-  subDate,
-} from '../../utils';
+import { todaysDate, subDate } from '../../utils';
 
 import {
   fetchAllPpms,
@@ -37,96 +31,88 @@ const { apiEndpoint } = config;
 
 const ppmEndpoint = `${apiEndpoint}/api/co2`;
 
-const dateRangQuery = timePeriod =>
+const dateRangQuery = (timePeriod, amount) =>
   `${ppmEndpoint}/?ordering=+date&date__range=${subDate(
     timePeriod,
+    amount,
   )},${todaysDate()}`;
-
-// ----- EXTENDED COMPONENT FUNCTIONALITY HELPERS -----
-
-// const calculateSubHeader = (rangeType) => {
-//   const getHeader = range => ({
-//     ppmDiff: `SINCE LAST ${range}`,
-//     percentDiff: `SINCE LAST ${range} (%)`,
-//   });
-//   switch (rangeType) {
-//     case WEEK:
-//       return getHeader(WEEK);
-//     case MONTH:
-//       return getHeader(MONTH);
-//     case YEAR:
-//       return getHeader(YEAR);
-//     default:
-//       return { ppmDiff: '', percentDiff: '' };
-//   }
-// };
-//
-// const setStateWithApiResult = results => (prevState) => {
-//   const { currentPPM, rangeType } = prevState;
-//   const average = calculateAverage(results);
-//   return {
-//     loading: false,
-//     average,
-//     ppmDiff: `${calculateDiff(average, currentPPM)} PPM`,
-//     ppmPercentDiff: `${calculatePercentageDiff(average, currentPPM)} %`,
-//   };
-// };
-//
-// const setStateWithApiError = apiError => () => ({
-//   loading: false,
-//   error: apiError,
-// });
 
 const addClickFunctionality = clickFunc => (item) => {
   const { type } = item;
   return { ...item, onClick: clickFunc(type) };
 };
 
+const shouldQuery = (currentType, newType, data = []) =>
+  !!(currentType === newType && data.length <= 0);
+
 class ChartInfo extends Component {
   state = {
     rangeType: ALL, // Intitial date range query type
   };
+
   componentDidMount() {
     this.props.fetchAllPpms();
-    // this.fetchInitialData();
   }
 
   queryApi = () => {
+    // TODO: Maybe do this in thunk or switch
     const { rangeType } = this.state;
-    if (rangeType === WEEK || rangeType === MONTH) {
-      this.props.fetchMonthWeekPpms({
-        endpoint: dateRangQuery(rangeType),
-        rangeType,
-      });
-    }
-    if (rangeType === YEAR || rangeType === FIVE_YEAR) {
-      this.props.fetchYearPpms({
-        endpoint: dateRangQuery(rangeType),
-        rangeType,
-      });
-    }
-    if (this.props[ALL].length <= 0) {
-      this.props.fetchAllPpms();
+    switch (rangeType) {
+      case WEEK: {
+        if (shouldQuery(WEEK, rangeType, this.props[WEEK])) {
+          this.props.fetchMonthWeekPpms({
+            endpoint: dateRangQuery(rangeType),
+            rangeType,
+          });
+        }
+        break;
+      }
+      case MONTH: {
+        if (shouldQuery(MONTH, rangeType, this.props[MONTH])) {
+          this.props.fetchMonthWeekPpms({
+            endpoint: dateRangQuery(rangeType),
+            rangeType,
+          });
+        }
+        break;
+      }
+      case YEAR: {
+        if (shouldQuery(YEAR, rangeType, this.props[YEAR])) {
+          this.props.fetchYearPpms({
+            endpoint: dateRangQuery('year', 1),
+            rangeType,
+          });
+        }
+        break;
+      }
+      case FIVE_YEAR: {
+        if (shouldQuery(FIVE_YEAR, rangeType, this.props[FIVE_YEAR])) {
+          this.props.fetchYearPpms({
+            endpoint: dateRangQuery('year', 5),
+            rangeType,
+          });
+        }
+        break;
+      }
+      default: {
+        if (this.props[ALL].length <= 0) {
+          this.props.fetchAllPpms();
+        }
+        break;
+      }
     }
   };
 
   handlePpmClick = rangeType => (event) => {
     event.preventDefault();
+    // only call api when the rangeType has changed.
     if (rangeType !== this.state.rangeType) {
-      // only call api when the rangeType has changed.
       this.setState({ rangeType }, this.queryApi);
     }
   };
   // TODO: get rid of clickFunctionality
   render() {
-    const {
-      currentPpm,
-      ppmDiff,
-      ppmPercentDiff,
-      diffPPMSubHeader,
-      diffPercentSubHeader,
-      loading,
-    } = this.props;
+    const { currentPpm, loading } = this.props;
     const { rangeType } = this.state;
     return (
       <div>
@@ -139,12 +125,9 @@ class ChartInfo extends Component {
         </div>
         <div>
           <InfoColumnHOC
+            data={this.props[rangeType]}
             rangeType={rangeType}
-            currentPPM={currentPpm}
-            ppmDiff={ppmDiff}
-            ppmPercentDiff={ppmPercentDiff}
-            diffPPMSubHeader={diffPPMSubHeader}
-            diffPercentSubHeader={diffPercentSubHeader}
+            currentPpm={currentPpm}
           />
           <div className="graph-container">
             <LoadingWrapper
@@ -175,10 +158,6 @@ const mapStateToProps = state => ({
   [FIVE_YEAR]: ppmInfoSelector(state, FIVE_YEAR),
   [ALL]: ppmInfoAllSelector(state, ALL),
   currentPpm: state.ppmInfo.currentPpm,
-  ppmDiff: '', // difference in numbers for ppm
-  ppmPercentDiff: '', // difference in % for ppm
-  diffPPMSubHeader: '', // string used for subHeader, eg: 'since last year'
-  diffPercentSubHeader: '', // string used for subHeader, eg: 'since last month'
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
