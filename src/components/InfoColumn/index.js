@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { globalSubHeader } from '../../constants';
 
-import { calculatePercentageDiff, calculateDiff } from '../../utils';
+import { calculatePercentageDiff, calculateDiff } from './utils';
 
 const calculateSubHeader = (rangeType) => {
   const formatStr = str => str.replace('_', ' ');

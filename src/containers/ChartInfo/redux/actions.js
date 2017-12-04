@@ -1,5 +1,5 @@
 import fetchData from '../../../utils/request';
-import { todaysDate, subDate } from '../../../utils';
+import { dateRangQuery } from '../utils';
 
 import { WEEK, MONTH, YEAR, FIVE_YEAR } from '../../../constants';
 import {
@@ -10,10 +10,6 @@ import {
   YEARS_PPM_SUCCESS,
   WEEK_MONTH_PPM_SUCCESS,
 } from './commands';
-
-// TODO: Move this stuff
-const dateRangQuery = (timePeriod, amount) =>
-  `?ordering=+date&date__range=${subDate(timePeriod, amount)},${todaysDate()}`;
 
 export const failedPpmFetch = error => ({
   error,

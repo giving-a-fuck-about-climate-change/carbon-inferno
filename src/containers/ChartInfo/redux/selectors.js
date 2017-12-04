@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { createGraphDataSubset, transformGraphData } from '../../../utils';
+import { createGraphDataSubset, transformGraphData } from '../utils';
 
 const ppmInfoAllSelected = (state, type) => state.ppmInfo[type];
 const ppmInfoSelected = (state, type) => state.ppmInfo[type];

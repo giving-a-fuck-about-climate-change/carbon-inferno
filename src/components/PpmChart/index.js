@@ -9,7 +9,7 @@ import { Line as HoverLine } from '../Line';
 import AreaChart from '../../components/AreaChart';
 import AxisLabels from '../../components/Axis/labels';
 import { WEEK, MONTH } from '../../constants';
-import { binarySearch } from '../../utils';
+import binarySearch from './utils';
 
 const svgHeight = 350;
 
