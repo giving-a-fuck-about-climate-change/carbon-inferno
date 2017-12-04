@@ -1,5 +1,7 @@
 import fetchData from '../../../utils/request';
+import { todaysDate, subDate } from '../../../utils';
 
+import { WEEK, MONTH, YEAR, FIVE_YEAR } from '../constants';
 import {
   PPM_LOAD_ITEMS,
   CURRENT_PPM_SUCCESS,
@@ -8,6 +10,10 @@ import {
   YEARS_PPM_SUCCESS,
   WEEK_MONTH_PPM_SUCCESS,
 } from './commands';
+
+// TODO: Move this stuff
+const dateRangQuery = (timePeriod, amount) =>
+  `?ordering=+date&date__range=${subDate(timePeriod, amount)},${todaysDate()}`;
 
 export const failedPpmFetch = error => ({
   error,
@@ -39,12 +45,8 @@ export const yearsPpmsSuccess = ({ results, rangeType }) => ({
   results,
   rangeType,
 });
-// TODO: Update this limit =
-export const fetchAllPpms = (endpoint = '/?ordering=-date?&limit=1') => async (
-  dispatch,
-  getState,
-  api,
-) => {
+
+export const fetchAllPpms = endpoint => async (dispatch, getState, api) => {
   try {
     dispatch(loadingPpms());
     const currentPpmResponse = await fetchData(`${api}${endpoint}`);
@@ -60,13 +62,14 @@ export const fetchAllPpms = (endpoint = '/?ordering=-date?&limit=1') => async (
   return {};
 };
 
-export const fetchMonthWeekPpms = ({
-  endpoint,
-  rangeType,
-}) => async (dispatch) => {
+export const fetchMonthWeekPpms = ({ endpoint, rangeType }) => async (
+  dispatch,
+  getState,
+  api,
+) => {
   try {
     dispatch(loadingPpms());
-    const { results } = await fetchData(`${endpoint}`);
+    const { results } = await fetchData(`${api}/${endpoint}`);
     dispatch(weekMonthPpmsSuccess({ results, rangeType }));
   } catch (err) {
     dispatch(failedPpmFetch(err));
@@ -81,8 +84,12 @@ export const fetchMonthWeekPpms = ({
  specifying that we want all the entries for that date range by using
  the count param.
 */
-export const fetchYearPpms = ({ endpoint, rangeType }) => async (dispatch) => {
-  const url = `${endpoint}`;
+export const fetchYearPpms = ({ endpoint, rangeType }) => async (
+  dispatch,
+  getState,
+  api,
+) => {
+  const url = `${api}/${endpoint}`;
   try {
     dispatch(loadingPpms());
     const { count } = await fetchData(`${url}`);
@@ -92,4 +99,44 @@ export const fetchYearPpms = ({ endpoint, rangeType }) => async (dispatch) => {
     dispatch(failedPpmFetch(err));
   }
   return {};
+};
+
+export const queryApi = rangeType => async (dispatch, getState, api) => {
+  const { ppmInfo } = getState();
+  const shouldUpdate = ppmInfo[rangeType].length <= 0;
+  switch (rangeType) {
+    case WEEK: {
+      if (shouldUpdate) {
+        const endpoint = dateRangQuery(WEEK, 1);
+        fetchMonthWeekPpms({ rangeType, endpoint })(dispatch, getState, api);
+      }
+      break;
+    }
+    case MONTH: {
+      if (shouldUpdate) {
+        const endpoint = dateRangQuery(MONTH, 1);
+        fetchMonthWeekPpms({ rangeType, endpoint })(dispatch, getState, api);
+      }
+      break;
+    }
+    case YEAR: {
+      if (shouldUpdate) {
+        const endpoint = dateRangQuery(YEAR, 1);
+        fetchYearPpms({ rangeType, endpoint })(dispatch, getState, api);
+      }
+      break;
+    }
+    case FIVE_YEAR: {
+      if (shouldUpdate) {
+        const endpoint = dateRangQuery(YEAR, 5);
+        fetchYearPpms({ rangeType, endpoint })(dispatch, getState, api);
+      }
+      break;
+    }
+    default: {
+      if (shouldUpdate) {
+        fetchAllPpms('/?ordering=-date?&limit=1')(dispatch, getState, api);
+      }
+    }
+  }
 };
