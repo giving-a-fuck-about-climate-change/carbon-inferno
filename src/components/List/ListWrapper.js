@@ -22,67 +22,60 @@ ListWrapper.defaultProps = {
   items: [],
 };
 ListWrapper.propTypes = {
-	className: PropTypes.string, //eslint-disable-line
-	items: PropTypes.array, //eslint-disable-line
+  className: PropTypes.string, //eslint-disable-line
+  items: PropTypes.array, //eslint-disable-line
 };
-// create defaultSelected prop
-// alue of defaultSelected prop = "ALL"
-// in constructor map over items update className for item if type = all
+
+const updateItem = (currentType, items = []) =>
+  items.map(item => (item.type === currentType
+    ? { ...item, className: 'selected' }
+    : { ...item, className: '' }));
 
 export class ActiveListWrapper extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: props.items.map((item) => {
-        if (item.type === props.defaultSelected) {
-          item.className = 'selected';
-          return item;
-        }
-        return item;
-      }),
+      items: updateItem(props.defaultSelected, props.items),
     };
   }
 
- updateItem = (type, submitClick) => (event) => {
-   event.preventDefault();
-   this.state.items.map((item) => {
-     if (item.type === type) {
-       item.className = 'selected';
-       return item;
-     }
-     item.className = '';
-     return item;
-   });
-   submitClick(event);
- };
+  updateItem = type => (event) => {
+    event.preventDefault();
+    const { items } = this.state;
+    this.setState({ items: updateItem(type, items) }, () =>
+      this.props.onClick(type),
+    );
+  };
 
- render() {
-   return (
-     <div className={this.props.className}>
-       <ul>
-         {this.state.items.map((item, index) => (
-           <ListItem
-             key={`item.text-${index}`}
-             className={item.className}
-             href={item.href}
-             text={item.text}
-             onClick={this.updateItem(item.type, item.onClick)}
-           />
-         ))}
-       </ul>
-     </div>
-   );
- }
+  render() {
+    return (
+      <div className={this.props.className}>
+        <ul>
+          {this.state.items.map((item, index) => (
+            <ListItem
+              key={`item.text-${index}`}
+              className={item.className}
+              href={item.href}
+              text={item.text}
+              onClick={this.updateItem(item.type)}
+            />
+          ))}
+        </ul>
+      </div>
+    );
+  }
 }
 
 ActiveListWrapper.propTypes = {
   className: PropTypes.string.isRequired,
-	items: PropTypes.array, //eslint-disable-line
+  items: PropTypes.array, //eslint-disable-line
+  onClick: PropTypes.func,
 };
 
 ActiveListWrapper.defaultProps = {
   items: [],
   defaultSelected: ALL,
+  onClick: () => {},
 };
 
 export default ListWrapper;
