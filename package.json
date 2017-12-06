@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "flow-bin": "^0.60.1",
+    "flow-typed": "^2.2.3",
     "history": "^4.7.2",
     "moment": "2.18.0",
     "prop-types": "^15.6.0",
@@ -44,7 +45,13 @@
     "flow": "flow"
   },
   "lint-staged": {
-    "src/*.{js,json}": ["eslint", "git add"],
-    "*.{css}": ["prettier --write", "git add"]
+    "src/*.{js,json}": [
+      "eslint",
+      "git add"
+    ],
+    "*.{css}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

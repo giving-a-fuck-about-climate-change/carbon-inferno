@@ -1,6 +1,9 @@
+// @flow
 import moment from 'moment';
 
-const transformItem = (item, count) => {
+import type { PpmPoint, PpmItem } from '../types';
+
+const transformItem = (item, count: number): PpmPoint => {
   const { date, ppm } = item;
   return {
     d: moment(date).format('MMM DD YYYY'),
@@ -14,7 +17,9 @@ const transformItem = (item, count) => {
  * so we want to show every item until then.
  * After that we sample the data weekly ( every 7th item)
  */
-export const createGraphDataSubset = (arr = []) => {
+export const createGraphDataSubset = (
+  arr: Array<PpmItem> = [],
+): Array<PpmPoint> => {
   let count = 0;
   return arr.reduce((sum, item, idx) => {
     if (idx < 790) {
@@ -28,15 +33,15 @@ export const createGraphDataSubset = (arr = []) => {
     return sum;
   }, []);
 };
+export const transformGraphData = (arr: Array<PpmItem> = []): Array<PpmPoint> =>
+  arr.map(transformItem);
 
-export const transformGraphData = (arr = []) => arr.map(transformItem);
+const todaysDate = (): string => moment().format('YYYY-MM-DD');
 
-const todaysDate = () => moment().format('YYYY-MM-DD');
-
-const subDate = (range, amount = 1) =>
+const subDate = (range: string, amount: number = 1): string =>
   moment()
     .subtract(amount, range)
     .format('YYYY-MM-DD');
 
-export const dateRangQuery = (timePeriod, amount) =>
+export const dateRangQuery = (timePeriod: string, amount: number): string =>
   `?ordering=+date&date__range=${subDate(timePeriod, amount)},${todaysDate()}`;
