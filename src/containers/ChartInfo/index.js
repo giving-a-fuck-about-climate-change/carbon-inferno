@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import {
   InfoColumnHOC,
   LoadingWrapper,
-  TimeChoiceHeader,
   PpmChart,
   Loading,
+  ActiveListWrapper,
 } from '../../components';
 
 import { queryApi } from './redux/actions';
@@ -23,11 +23,6 @@ import {
   ALL,
 } from '../../constants';
 
-const addClickFunctionality = clickFunc => (item) => {
-  const { type } = item;
-  return { ...item, onClick: clickFunc(type) };
-};
-
 class ChartInfo extends Component {
   state = {
     rangeType: ALL, // Intitial date range query type
@@ -37,8 +32,7 @@ class ChartInfo extends Component {
     this.props.queryApi(this.state.rangeType);
   }
 
-  handlePpmClick = rangeType => (event) => {
-    event.preventDefault();
+  handlePpmClick = (rangeType) => {
     // only call api when the rangeType has changed.
     if (rangeType !== this.state.rangeType) {
       this.setState({ rangeType }, () => {
@@ -46,17 +40,17 @@ class ChartInfo extends Component {
       });
     }
   };
-  // TODO: get rid of clickFunctionality
+
   render() {
     const { currentPpm, loading } = this.props;
     const { rangeType } = this.state;
     return (
       <div>
         <div className="flex-grid-header">
-          <TimeChoiceHeader
-            timeHeaderLinks={timeHeaderLinks.map(
-              addClickFunctionality(this.handlePpmClick),
-            )}
+          <ActiveListWrapper
+            className="time-choice-header"
+            items={timeHeaderLinks}
+            onClick={this.handlePpmClick}
           />
         </div>
         <div>
