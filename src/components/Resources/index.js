@@ -5,6 +5,7 @@ import {
   resourcesLearnLinks,
   resourcesTakeActionLinks,
 } from '../../constants';
+import './resources.css';
 
 const Resources = () => (
   <div className="resources-container">

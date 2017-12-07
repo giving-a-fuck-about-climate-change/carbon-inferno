@@ -87,14 +87,14 @@ export const teamItems = [
   {
     src: 'https://i.imgur.com/v5WOyPs.jpg',
     name: "Martin O'Grady",
-    location: 'Berlin, Germany',
+    location: 'Dublin, Ireland',
     position: 'Frontend Developer',
     alt: 'Martin OGrady',
   },
   {
     src: 'https://i.imgur.com/GbF4PWV.jpg',
     name: 'Stephanie Tassone',
-    location: 'Berlin, Germany',
+    location: 'Melbourne, Australia',
     position: 'Frontend Developer',
     alt: 'Stephanie Tassone',
   },

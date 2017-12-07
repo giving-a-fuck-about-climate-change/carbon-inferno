@@ -1,5 +1,6 @@
 import React from 'react';
 import { ROOT } from '../../routes';
+import './header.css';
 
 const Header = () => (
   <div className="header-flex">
@@ -8,7 +9,7 @@ const Header = () => (
       <div className="header">
         <a href={ROOT}>Carbon Doomsday</a>
       </div>
-      <div className="heading-sub">tracking CO&#8322; since 1958</div>
+      <div className="header-sub">tracking CO&#8322; since 1958</div>
     </div>
   </div>
 );

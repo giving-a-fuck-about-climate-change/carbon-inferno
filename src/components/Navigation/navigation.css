@@ -1,0 +1,15 @@
+@media (min-width: 480px) {
+  .menu-small {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-large ul {
+    display: none;
+  }
+}
+
+.menu-small-links a {
+  display: block;
+}

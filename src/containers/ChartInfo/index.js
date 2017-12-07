@@ -8,6 +8,7 @@ import {
   PpmChart,
   Loading,
   ActiveListWrapper,
+  Navigation,
 } from '../../components';
 
 import { queryApi } from './redux/actions';
@@ -46,11 +47,15 @@ class ChartInfo extends Component {
     const { rangeType } = this.state;
     return (
       <div>
-        <div className="flex-grid-header">
-          <ActiveListWrapper
-            className="time-choice-header"
-            items={timeHeaderLinks}
-            onClick={this.handlePpmClick}
+        <div className="menu-container">
+          <Navigation
+            menu={
+              <ActiveListWrapper
+                className="time-choice-header"
+                items={timeHeaderLinks}
+                onClick={this.handlePpmClick}
+              />
+            }
           />
         </div>
         <div>
