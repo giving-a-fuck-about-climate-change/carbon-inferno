@@ -2,144 +2,120 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // Component (TODO: Make it possible to also be a HOC )
+
 class Svg extends Component {
   constructor(props) {
     super(props);
     this.state = {
       svgData: props.data.reduce((svgPointArr, point) => {
+        const { x, y, ...rest } = point;
         const currCord = {
-          svgX: this.getSvgX(point.x),
-          svgY: this.getSvgY(point.y),
-          d: point.d,
-          p: point.p,
+          svgX: this.getSvgX(x),
+          svgY: this.getSvgY(y),
+          ...rest,
         };
         return [currCord, ...svgPointArr];
       }, []),
     };
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.data.length !== prevProps.data.length) {
-      const svgData = this.props.data.reduce((svgPointArr, point) => {
-        const currCord = {
-          svgX: this.getSvgX(point.x),
-          svgY: this.getSvgY(point.y),
-          d: point.d,
-          p: point.p,
-        };
-        return [currCord, ...svgPointArr];
-      }, []);
-      this.setState({ svgData });
-    }
-  }
+  getMinX = () => {
+    const { data } = this.props;
+    return data.length > 0 ? data[0].x : 0;
+  };
 
-  // GET X & Y || MAX & MIN
-  getX = () => {
+  getMaxX = () => {
     const { data } = this.props;
-    return {
-      min: data[0].x,
-      max: data[data.length - 1].x,
-    };
+    return data.length > 0 ? data[data.length - 1].x : 0;
   };
-  // TODO: Refactor this !!!!!
-  getY = () => {
+
+  getMinY = () => {
     const { data } = this.props;
-    return {
-      min: data.reduce((min, p) => (p.y < min ? p.y : min), data[0].y),
-      max: data.reduce((max, p) => (p.y > max ? p.y : max), data[0].y),
-    };
+    return data.reduce((min, p) => (p.y < min ? p.y : min), data[0].y);
   };
+
+  getMaxY = () => {
+    const { data } = this.props;
+    return data.reduce((max, p) => (p.y > max ? p.y : max), data[0].y);
+  };
+
   // GET SVG COORDINATES
   getSvgX = (x) => {
-    const { svgWidth } = this.props;
-    const xPoint = x / this.getX().max;
-    return xPoint * svgWidth;
+    const { viewBoxWidth } = this.props;
+    const xPoint = x / this.getMaxX();
+    return xPoint * viewBoxWidth;
   };
+
   getSvgY = (y) => {
-    const { svgHeight } = this.props;
-    const gY = this.getY();
+    const { viewBoxHeigth } = this.props;
+    const minY = this.getMinY();
+    const maxY = this.getMaxY();
     return (
-      (svgHeight * gY.max - svgHeight * y) / //eslint-disable-line
-      (gY.max - gY.min)
+      (viewBoxHeigth * maxY - viewBoxHeigth * y) / //eslint-disable-line
+      (maxY - minY)
     );
   };
 
-  cordFuncs = {
-    getX: this.getX,
-    getY: this.getY,
-    getSvgX: this.getSvgX,
-    getSvgY: this.getSvgY,
-  };
+  getChartHelpers = () => ({
+    coordFuncs: {
+      getMinX: this.getMinX,
+      getMaxX: this.getMaxX,
+      getMinY: this.getMinY,
+      getMaxY: this.getMaxY,
+      getSvgX: this.getSvgX,
+      getSvgY: this.getSvgY,
+    },
+    svgData: this.state.svgData,
+  });
 
-  handleEvent = eventHandler => (event) => {
+  // partially apply event handler func's with data and coordFuncs
+  handleEvent = (eventHandler) => {
     if (eventHandler) {
-      if (this.props.persistEvent) {
-        event.persist();
-      }
-      eventHandler(event, {
-        cordFuncs: this.cordFuncs,
-        data: this.state.svgData,
-      });
+      return eventHandler(this.getChartHelpers());
     }
+    return () => {};
   };
 
   render() {
     const {
-      svgHeight,
-      svgWidth,
-      className,
-      widthPercent,
-      preserveAspectRatio,
+      viewBoxWidth,
+      viewBoxHeigth,
       onMouseMove,
       onMouseLeave,
+      onClick,
+      children,
+      data,
+      ...nativeSvgProps
     } = this.props;
     return (
       <svg
-        preserveAspectRatio={preserveAspectRatio}
-        width={widthPercent}
-        viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-        className={className}
+        {...nativeSvgProps}
+        viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeigth}`}
+        onClick={this.handleEvent(onClick)}
         onMouseMove={this.handleEvent(onMouseMove)}
         onMouseLeave={this.handleEvent(onMouseLeave)}
       >
-        {this.props.children({
-          cordFuncs: {
-            getX: this.getX,
-            getY: this.getY,
-            getSvgX: this.getSvgX,
-            getSvgY: this.getSvgY,
-          },
-          data: this.state.svgData,
-        })}
+        {children(this.getChartHelpers())}
       </svg>
     );
   }
 }
-
-export default Svg;
 Svg.propTypes = {
-  className: PropTypes.string,
-  svgHeight: PropTypes.number,
-  svgWidth: PropTypes.number,
+  viewBoxWidth: PropTypes.number,
+  viewBoxHeigth: PropTypes.number,
   data: PropTypes.array, //eslint-disable-line
   children: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func,
   onMouseMove: PropTypes.func,
-  style: PropTypes.object, //eslint-disable-line
-  widthPercent: PropTypes.string,
-  preserveAspectRatio: PropTypes.any, //eslint-disable-line
-  persistEvent: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 // DEFAULT PROPS
 Svg.defaultProps = {
-  svgHeight: 350,
-  svgWidth: 800,
+  viewBoxWidth: 0,
+  viewBoxHeigth: 0,
   data: [],
-  className: 'linechart',
   onMouseMove: () => {},
   onMouseLeave: () => {},
-  style: { display: 'block' },
-  widthPercent: '100%',
-  preserveAspectRatio: '',
-  persistEvent: false,
+  onClick: () => {},
 };
+export default Svg;
