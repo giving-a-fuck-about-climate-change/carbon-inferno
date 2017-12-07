@@ -9,11 +9,13 @@ import {
 import './footer.css';
 
 const Footer = () => (
-  <div className="footer">
-    <ListWrapper items={footerLinks} />
-    <ListWrapper items={aboutProjectLinks} />
-    <ListWrapper items={socialLinks} />
-    <ListWrapper items={contributingLinks} />
+  <div className="footer-container">
+    <div className="footer">
+      <ListWrapper items={footerLinks} />
+      <ListWrapper items={aboutProjectLinks} />
+      <ListWrapper items={socialLinks} />
+      <ListWrapper items={contributingLinks} />
+    </div>
   </div>
 );
 
