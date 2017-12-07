@@ -1,0 +1,23 @@
+.loadingText {
+  padding-top: 160px;
+  color: #d0d0d5;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.loadingIcon {
+  position: relative;
+  top: 150px;
+  height: 60px;
+  margin: 0 auto 0 auto;
+  animation: rotating 5s linear infinite;
+}
+@keyframes rotating {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}

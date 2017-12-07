@@ -11,3 +11,5 @@ export { default as Svg } from './Svg';
 export { default as Point } from './Point';
 export { default as Line } from './Line';
 export { ActiveListWrapper } from './List/ListWrapper';
+export { default as Navigation } from './Navigation';
+export { default as MenuIcon } from './MenuIcon';

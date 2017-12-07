@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { globalSubHeader } from '../../constants';
+import './infoColumn.css';
 
 import { calculatePercentageDiff, calculateDiff } from './utils';
 

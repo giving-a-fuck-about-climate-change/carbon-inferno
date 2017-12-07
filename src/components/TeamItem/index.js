@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './team.css';
 
 const TeamItem = ({ name, location, position, src, alt }) => (
   <div>
