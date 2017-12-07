@@ -3,10 +3,10 @@ import moment from 'moment';
 const transformItem = (item, count) => {
   const { date, ppm } = item;
   return {
-    d: moment(date).format('MMM DD YYYY'),
-    p: parseInt(ppm, 10),
-    x: count,
-    y: parseInt(ppm, 10),
+    date: moment(date).format('MMM DD YYYY'),
+    ppm: parseInt(ppm, 10),
+    x: count, // where to appear on x axis.
+    y: parseInt(ppm, 10), // where to appear on y axis.
   };
 };
 /*

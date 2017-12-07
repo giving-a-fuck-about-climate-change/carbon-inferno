@@ -26,7 +26,7 @@ export const getLinePath = (getSvgX, getSvgY, data = [{}], markerTo = '') =>
 class AreaChart extends Component {
   // constructor(props) {
   //   super(props);
-  //   const { cordFuncs: { getSvgX, getSvgY, getX, getY }, svgData } = props;
+  //   const { coordFuncs: { getSvgX, getSvgY, getX, getY }, svgData } = props;
   //   // Where the line of the graph will start from
   //   const markerTo = getMarkerTo(getSvgX, getSvgY, svgData);
   //   // The actual line of the graph
@@ -54,18 +54,19 @@ class AreaChart extends Component {
   }
 
   render() {
-    const { cordFuncs: { getSvgX, getSvgY, getX, getY }, svgData } = this.props;
+    const {
+      coordFuncs: { getSvgX, getSvgY, getMaxX, getMinX, getMinY },
+      svgData,
+    } = this.props;
     // Where the line of the graph will start from
     const markerTo = getMarkerTo(getSvgX, getSvgY, svgData);
     // The actual line of the graph
     const linePath = getLinePath(getSvgX, getSvgY, svgData, markerTo);
     // We need to draw another path which which we can fill for the shaded area
-    const x = getX();
-    const y = getY();
     let shadedPath = linePath;
     shadedPath +=
-      `L ${getSvgX(x.max)} ${getSvgY(y.min)} ` +
-      `L ${getSvgX(x.min)} ${getSvgY(y.min)} `;
+      `L ${getSvgX(getMaxX())} ${getSvgY(getMinY())} ` +
+      `L ${getSvgX(getMinX())} ${getSvgY(getMinY())} `;
     return (
       <g>
         <Path linePath={shadedPath} className="linechart_area" />
@@ -75,12 +76,12 @@ class AreaChart extends Component {
   }
 }
 AreaChart.propTypes = {
-  cordFuncs: PropTypes.object, // eslint-disable-line
+  coordFuncs: PropTypes.object, // eslint-disable-line
   svgData: PropTypes.array, // eslint-disable-line
 };
 
 AreaChart.defaultProps = {
-  cordFuncs: {},
+  coordFuncs: {},
   svgData: [{}],
 };
 

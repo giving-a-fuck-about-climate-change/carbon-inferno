@@ -46,7 +46,7 @@ class InfoColumnHOC extends Component {
   }
 
   updatePpmDiffInfo = (data = [], rangeType) => {
-    const previous = data[0] ? data[0].p : 0;
+    const previous = data[0] ? data[0].ppm : 0;
     const { currentPpm } = this.props;
     const { diffPPMSubHeader, diffPercentSubHeader } = calculateSubHeader(
       rangeType,
