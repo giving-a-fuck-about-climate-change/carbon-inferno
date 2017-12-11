@@ -23,8 +23,6 @@ export const getLinePath = (getSvgX, getSvgY, data = [{}], markerTo = '') =>
     markerTo,
   );
 
-const Aux = props => props.children;
-
 class AreaChart extends Component {
   // When we render 'all' its very expensive, so only render when the chart changes
   shouldComponentUpdate(nextProps) {
