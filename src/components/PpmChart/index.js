@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { throttle, debounce } from 'throttle-debounce';
 
-import { SvgCoords } from 'react-svg-coordfuncs'; // eslint-disable-line
+import { SvgCoords } from 'react-svg-coordfuncs';
 
 import './PpmChart.css';
 import ToolTip from '../ToolTip';
-// import SvgEnhanced from '../Svg';
-import { Point as ActivePoint } from '../Point';
-import { Line } from '../Line';
-import AreaChart from '../../components/AreaChart';
 import AxisLabels from '../../components/Axis/labels';
+import ShouldShow from '../../components/ShouldShow';
+import HoverChart from './hoverChart';
 import { WEEK, MONTH } from '../../constants';
 import binarySearch from './utils';
 
@@ -40,14 +38,7 @@ SvgAxis.propTypes = {
   getMaxY: PropTypes.func.isRequired,
 };
 
-const shouldShowDiv = Comp => (props) => {
-  const { shouldShow, children, ...rest } = props;
-  return shouldShow ? <Comp {...rest} /> : null;
-};
-
-const HoverToolTip = shouldShowDiv(ToolTip);
-const HoverActivePoint = shouldShowDiv(ActivePoint);
-const HoverLine = shouldShowDiv(Line);
+const HoverToolTip = ShouldShow(ToolTip);
 
 // Component
 class PpmChart extends Component {
@@ -61,8 +52,8 @@ class PpmChart extends Component {
     activePoint: {
       ppm: 0,
       date: '',
-      mouseLoc: 0,
     },
+    mouseLoc: 0,
   });
 
   // FIND CLOSEST POINT TO MOUSE
@@ -100,11 +91,10 @@ class PpmChart extends Component {
   * Adding a debounce to stopHover ensures that the stop event is delayed
   * and always called after mouseMove.
   */
-  stopHover = () =>
-    debounce(60, (e) => {
-      e.persist();
-      this.setState(this.getInitialState());
-    });
+  stopHover = debounce(60, (e) => {
+    e.persist();
+    this.setState(this.getInitialState());
+  });
 
   render() {
     const { data, rangeType } = this.props;
@@ -121,40 +111,21 @@ class PpmChart extends Component {
           viewBoxWidth={1000}
           viewBoxHeigth={svgHeight}
           data={data}
-          render={({ coordFuncs, svgData }) => (
+          render={({ coordFuncs }) => (
             <div className="svg-inline">
               <div className="axis-wrapper">
                 <SvgAxis {...coordFuncs} />
               </div>
               <div className="chart-wrapper">
-                <svg
-                  onMouseMove={this.getCoords(svgData)}
-                  onMouseLeave={this.stopHover()}
-                  className="linechart"
-                  width="100%"
-                  viewBox={`0 0 ${1000} ${svgHeight}`}
-                  data-ident="ident-ppm-chart"
-                  preserveAspectRatio="none"
-                >
-                  <g>
-                    <AreaChart
-                      svgData={data}
-                      coordFuncs={coordFuncs}
-                      svgHeight={svgHeight}
-                    />
-                    <HoverLine
-                      shouldShow={hoverLoc}
-                      x1={hoverLoc}
-                      x2={hoverLoc}
-                      y2={svgHeight}
-                    />
-                    <HoverActivePoint
-                      shouldShow={shouldShowActivePoint(hoverLoc, rangeType)}
-                      xCoord={activePoint.svgX}
-                      yCoord={activePoint.svgY}
-                    />
-                  </g>
-                </svg>
+                <HoverChart
+                  data={data}
+                  coordFuncs={coordFuncs}
+                  onMouseMove={this.getCoords}
+                  onMouseLeave={this.stopHover}
+                  hoverLoc={hoverLoc}
+                  activePoint={activePoint}
+                  shouldShowPoint={shouldShowActivePoint(hoverLoc, rangeType)}
+                />
               </div>
               <div className="axis-wrapper">
                 <SvgAxis {...coordFuncs} />
