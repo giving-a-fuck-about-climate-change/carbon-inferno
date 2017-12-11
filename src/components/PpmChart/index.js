@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { throttle, debounce } from 'throttle-debounce';
 
+import { SvgCoords } from 'react-svg-coordfuncs'; // eslint-disable-line
+
+import './PpmChart.css';
 import ToolTip from '../ToolTip';
-import Svg from '../Svg';
+// import SvgEnhanced from '../Svg';
 import { Point as ActivePoint } from '../Point';
-import { Line as HoverLine } from '../Line';
+import { Line } from '../Line';
 import AreaChart from '../../components/AreaChart';
 import AxisLabels from '../../components/Axis/labels';
 import { WEEK, MONTH } from '../../constants';
 import binarySearch from './utils';
 
 const svgHeight = 350;
-
 const shouldShowActivePoint = (hoverState, type) => {
   if (hoverState) {
     if (type === WEEK || type === MONTH) {
@@ -23,16 +25,45 @@ const shouldShowActivePoint = (hoverState, type) => {
   return false;
 };
 
+const SvgAxis = ({ getMinY, getMaxY }) => (
+  <svg className="linechart" width="100%" viewBox={`0 0 ${100} ${svgHeight}`}>
+    <AxisLabels
+      viewBox={`0 0 ${100} ${svgHeight}`}
+      svgHeight={svgHeight}
+      getMinY={getMinY}
+      getMaxY={getMaxY}
+    />
+  </svg>
+);
+SvgAxis.propTypes = {
+  getMinY: PropTypes.func.isRequired,
+  getMaxY: PropTypes.func.isRequired,
+};
+
+const shouldShowDiv = Comp => (props) => {
+  const { shouldShow, children, ...rest } = props;
+  return shouldShow ? <Comp {...rest} /> : null;
+};
+
+const HoverToolTip = shouldShowDiv(ToolTip);
+const HoverActivePoint = shouldShowDiv(ActivePoint);
+const HoverLine = shouldShowDiv(Line);
+
 // Component
 class PpmChart extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      hoverLoc: null,
-      activePoint: null,
-      mocLoc: null,
-    };
+    this.state = this.getInitialState();
   }
+
+  getInitialState = () => ({
+    hoverLoc: null,
+    activePoint: {
+      ppm: 0,
+      date: '',
+      mouseLoc: 0,
+    },
+  });
 
   // FIND CLOSEST POINT TO MOUSE
   getCoords = ({ svgData }) =>
@@ -59,7 +90,7 @@ class PpmChart extends Component {
           mouseLoc: e.clientX,
         });
       } else {
-        this.setState({ hoverLoc: null, activePoint: null, mocLoc: null });
+        this.setState(this.getInitialState());
       }
     });
 
@@ -72,105 +103,72 @@ class PpmChart extends Component {
   stopHover = () =>
     debounce(60, (e) => {
       e.persist();
-      this.setState({ hoverLoc: null, activePoint: null, mocLoc: null });
+      this.setState(this.getInitialState());
     });
 
   render() {
     const { data, rangeType } = this.props;
+    const { hoverLoc, mouseLoc, activePoint } = this.state;
     return (
       <div>
-        {this.state.hoverLoc ? (
-          <ToolTip
-            hoverLoc={this.state.mouseLoc}
-            text={`${this.state.activePoint.ppm} PPM`}
-            style={{
-              marginTop: '-20px',
-              backgroundColor: '#1ba69c',
-              color: '#ffffff',
-              fontWeight: 'bold',
-            }}
-          />
-        ) : null}
-        <div className="svg-inline">
-          <div style={{ width: '10%', display: 'flex' }}>
-            <Svg
-              className="linechart"
-              viewBoxWidth={100}
-              viewBoxHeigth={svgHeight}
-              width="100%"
-              data={data}
-            >
-              {({ coordFuncs: { getMinY, getMaxY } }) => (
-                <AxisLabels
-                  svgHeight={svgHeight}
-                  getMinY={getMinY}
-                  getMaxY={getMaxY}
-                />
-              )}
-            </Svg>
-          </div>
-          <div style={{ width: '80%', display: 'flex' }}>
-            <Svg
-              className="linechart"
-              width="100%"
-              viewBoxWidth={1000}
-              viewBoxHeigth={svgHeight}
-              data={data}
-              data-ident="ident-ppm-chart"
-              onMouseMove={this.getCoords}
-              onMouseLeave={this.stopHover}
-              preserveAspectRatio="none"
-            >
-              {({ coordFuncs }) => (
-                <g>
-                  <AreaChart
-                    svgData={data}
-                    coordFuncs={coordFuncs}
-                    svgHeight={svgHeight}
-                  />
-                  {this.state.hoverLoc ? (
+        <HoverToolTip
+          hoverLoc={mouseLoc}
+          text={`${activePoint.ppm} PPM`}
+          className="top-tooltip "
+          shouldShow={hoverLoc}
+        />
+        <SvgCoords
+          viewBoxWidth={1000}
+          viewBoxHeigth={svgHeight}
+          data={data}
+          render={({ coordFuncs, svgData }) => (
+            <div className="svg-inline">
+              <div className="axis-wrapper">
+                <SvgAxis {...coordFuncs} />
+              </div>
+              <div className="chart-wrapper">
+                <svg
+                  onMouseMove={this.getCoords({ svgData })}
+                  onMouseLeave={this.stopHover()}
+                  className="linechart"
+                  width="100%"
+                  viewBox={`0 0 ${1000} ${svgHeight}`}
+                  data-ident="ident-ppm-chart"
+                  preserveAspectRatio="none"
+                >
+                  <g>
+                    <AreaChart
+                      svgData={data}
+                      coordFuncs={coordFuncs}
+                      svgHeight={svgHeight}
+                    />
                     <HoverLine
-                      x1={this.state.hoverLoc}
-                      x2={this.state.hoverLoc}
+                      shouldShow={hoverLoc}
+                      x1={hoverLoc}
+                      x2={hoverLoc}
                       y2={svgHeight}
                     />
-                  ) : null}
-                  {shouldShowActivePoint(this.state.hoverLoc, rangeType) ? (
-                    <ActivePoint
-                      xCoord={this.state.activePoint.svgX}
-                      yCoord={this.state.activePoint.svgY}
+                    <HoverActivePoint
+                      shouldShow={shouldShowActivePoint(hoverLoc, rangeType)}
+                      xCoord={activePoint.svgX}
+                      yCoord={activePoint.svgY}
                     />
-                  ) : null}
-                </g>
-              )}
-            </Svg>
-          </div>
-          <div style={{ width: '10%', display: 'flex' }}>
-            <Svg
-              className="linechart"
-              width="100%"
-              viewBoxWidth={100}
-              viewBoxHeigth={svgHeight}
-              data={data}
-            >
-              {({ coordFuncs: { getMinY, getMaxY } }) => (
-                <AxisLabels
-                  svgHeight={svgHeight}
-                  getMinY={getMinY}
-                  getMaxY={getMaxY}
-                />
-              )}
-            </Svg>
-          </div>
-        </div>
+                  </g>
+                </svg>
+              </div>
+              <div className="axis-wrapper">
+                <SvgAxis {...coordFuncs} />
+              </div>
+            </div>
+          )}
+        />
         <div className="graph-filler" />
-        {this.state.hoverLoc ? (
-          <ToolTip
-            hoverLoc={this.state.mouseLoc}
-            text={this.state.activePoint.date}
-            style={{ marginTop: '-50px' }}
-          />
-        ) : null}
+        <HoverToolTip
+          shouldShow={hoverLoc}
+          hoverLoc={mouseLoc}
+          text={activePoint.date}
+          className="bottom-tooltip"
+        />
       </div>
     );
   }
