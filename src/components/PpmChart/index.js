@@ -66,7 +66,7 @@ class PpmChart extends Component {
   });
 
   // FIND CLOSEST POINT TO MOUSE
-  getCoords = ({ svgData }) =>
+  getCoords = svgData =>
     throttle(250, (e) => {
       e.persist();
       // http://www.codedread.com/blog/archives/2005/12/21/how-to-enable-dragging-in-svg/
@@ -128,7 +128,7 @@ class PpmChart extends Component {
               </div>
               <div className="chart-wrapper">
                 <svg
-                  onMouseMove={this.getCoords({ svgData })}
+                  onMouseMove={this.getCoords(svgData)}
                   onMouseLeave={this.stopHover()}
                   className="linechart"
                   width="100%"
