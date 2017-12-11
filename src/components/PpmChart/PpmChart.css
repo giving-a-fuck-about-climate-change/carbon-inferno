@@ -1,0 +1,9 @@
+.axis-wrapper {
+  width: 10%;
+  display: flex;
+}
+
+.chart-wrapper {
+  width: 80%;
+  display: flex;
+}

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 const AxisLabels = ({ yLabelSize, getMinY, getMaxY, className, padding }) => (
   <g className={className}>
-    {/* Y AXIS LABELS */}
     <text
       className="axis-labels"
       transform={`translate(${yLabelSize / 2}, 20)`}
