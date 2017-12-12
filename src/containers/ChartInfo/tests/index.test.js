@@ -31,6 +31,7 @@ describe('ChartInfo', () => {
       expect(comp.state().rangeType).toEqual(FIVE_YEAR);
       expect(queryApiMock.mock.calls.length).toBe(2);
     });
-    // TODO: Add tets for loading
+    // TODO: Add tests for loading
+    // TODO: Add tests error handling
   });
 });

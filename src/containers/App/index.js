@@ -5,7 +5,7 @@ import Team from '../Team';
 import About from '../About';
 import Contribute from '../Contribute';
 import DataSources from '../DataSources';
-import ChartInfo from '../ChartInfo';
+import ChartInfo from '../ChartInfo'; // TODO: Update this
 
 import {
   ROOT,
