@@ -1,5 +1,6 @@
+import moment from 'moment';
 import fetchData from '../../../utils/request';
-import { dateRangQuery } from '../utils';
+import { queryDateRange } from '../utils';
 
 import { WEEK, MONTH, YEAR, FIVE_YEAR } from '../../../constants';
 import {
@@ -10,6 +11,8 @@ import {
   YEARS_PPM_SUCCESS,
   WEEK_MONTH_PPM_SUCCESS,
 } from './commands';
+
+const todaysDate = moment().format('YYYY-MM-DD');
 
 export const failedPpmFetch = error => ({
   error,
@@ -103,28 +106,28 @@ export const queryApi = rangeType => async (dispatch, getState, api) => {
   switch (rangeType) {
     case WEEK: {
       if (shouldUpdate) {
-        const endpoint = dateRangQuery(WEEK, 1);
+        const endpoint = queryDateRange(todaysDate, WEEK, 1);
         fetchMonthWeekPpms({ rangeType, endpoint })(dispatch, getState, api);
       }
       break;
     }
     case MONTH: {
       if (shouldUpdate) {
-        const endpoint = dateRangQuery(MONTH, 1);
+        const endpoint = queryDateRange(todaysDate, MONTH, 1);
         fetchMonthWeekPpms({ rangeType, endpoint })(dispatch, getState, api);
       }
       break;
     }
     case YEAR: {
       if (shouldUpdate) {
-        const endpoint = dateRangQuery(YEAR, 1);
+        const endpoint = queryDateRange(todaysDate, YEAR, 1);
         fetchYearPpms({ rangeType, endpoint })(dispatch, getState, api);
       }
       break;
     }
     case FIVE_YEAR: {
       if (shouldUpdate) {
-        const endpoint = dateRangQuery(YEAR, 5);
+        const endpoint = queryDateRange(todaysDate, YEAR, 5);
         fetchYearPpms({ rangeType, endpoint })(dispatch, getState, api);
       }
       break;

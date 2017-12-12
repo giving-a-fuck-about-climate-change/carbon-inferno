@@ -9,7 +9,7 @@ import {
 
 import { WEEK, MONTH, YEAR, FIVE_YEAR, ALL } from '../../../constants';
 
-const initialState = {
+export const initialState = {
   loading: true,
   error: '',
   [WEEK]: [],
@@ -19,8 +19,8 @@ const initialState = {
   [ALL]: [],
   currentPpm: 0,
 };
-
-function ppmReducer(state = initialState, action) {
+// TODO: Update consitant naming (action.result , action.results) choose one!
+function ppmReducer(state = initialState, action = {}) {
   switch (action.type) {
     case PPM_LOAD_ITEMS: {
       return {
