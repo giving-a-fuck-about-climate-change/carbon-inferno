@@ -1,27 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // TODO Pass values not functions
-const AxisLabels = ({ yLabelSize, getMinY, getMaxY, className, padding }) => (
+const AxisLabels = ({ yLabelSize, minY, maxY, className, padding }) => (
   <g className={className}>
     <text
       className="axis-labels"
       transform={`translate(${yLabelSize / 2}, 20)`}
       textAnchor="middle"
     >
-      {`${getMaxY()} PPM`}
+      {`${maxY} PPM`}
     </text>
     <text
       className="axis-labels"
       transform={`translate(${yLabelSize / 2}, ${350 - padding})`}
       textAnchor="middle"
     >
-      {`${getMinY()} PPM`}
+      {`${minY} PPM`}
     </text>
   </g>
 );
 AxisLabels.propTypes = {
-  getMinY: PropTypes.func.isRequired,
-  getMaxY: PropTypes.func.isRequired,
+  minY: PropTypes.number.isRequired,
+  maxY: PropTypes.number.isRequired,
   yLabelSize: PropTypes.number.isRequired,
   data: PropTypes.array, //eslint-disable-line
   className: PropTypes.string,

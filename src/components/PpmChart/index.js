@@ -23,19 +23,19 @@ const shouldShowActivePoint = (hoverState, type) => {
   return false;
 };
 
-const SvgAxis = ({ getMinY, getMaxY }) => (
+const SvgAxis = ({ minY, maxY }) => (
   <svg className="linechart" width="100%" viewBox={`0 0 ${100} ${svgHeight}`}>
     <AxisLabels
       viewBox={`0 0 ${100} ${svgHeight}`}
       svgHeight={svgHeight}
-      getMinY={getMinY}
-      getMaxY={getMaxY}
+      minY={minY}
+      maxY={maxY}
     />
   </svg>
 );
 SvgAxis.propTypes = {
-  getMinY: PropTypes.func.isRequired,
-  getMaxY: PropTypes.func.isRequired,
+  minY: PropTypes.number.isRequired,
+  maxY: PropTypes.number.isRequired,
 };
 
 const HoverToolTip = ShouldShow(ToolTip);
@@ -114,7 +114,10 @@ class PpmChart extends Component {
           render={({ coordFuncs }) => (
             <div className="svg-inline">
               <div className="axis-wrapper">
-                <SvgAxis {...coordFuncs} />
+                <SvgAxis
+                  minY={coordFuncs.getMinY()}
+                  maxY={coordFuncs.getMaxY()}
+                />
               </div>
               <div className="chart-wrapper">
                 <HoverChart
@@ -128,7 +131,10 @@ class PpmChart extends Component {
                 />
               </div>
               <div className="axis-wrapper">
-                <SvgAxis {...coordFuncs} />
+                <SvgAxis
+                  minY={coordFuncs.getMinY()}
+                  maxY={coordFuncs.getMaxY()}
+                />
               </div>
             </div>
           )}
