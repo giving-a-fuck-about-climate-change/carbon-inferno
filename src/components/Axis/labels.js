@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+// TODO Pass values not functions
 const AxisLabels = ({ yLabelSize, getMinY, getMaxY, className, padding }) => (
   <g className={className}>
     <text

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { globalSubHeader } from '../../constants';
+import { globalSubHeader, ALL } from '../../constants';
 import './infoColumn.css';
 
 import { calculatePercentageDiff, calculateDiff } from './utils';
 
-const calculateSubHeader = (rangeType) => {
+const calculateSubHeader = (rangeType = '') => {
   const formatStr = str => str.replace('_', ' ');
   return {
     diffPPMSubHeader: `SINCE LAST ${rangeType ? formatStr(rangeType) : ''}`,
@@ -15,7 +15,7 @@ const calculateSubHeader = (rangeType) => {
   };
 };
 
-const InfoColDiv = ({ statInfo, subHeader }) => (
+export const InfoColDiv = ({ statInfo, subHeader }) => (
   <div className="info-col">
     <div className="info-wrapper">
       <div className="stat-info"> {statInfo} </div>
@@ -27,7 +27,7 @@ InfoColDiv.propTypes = {
   statInfo: PropTypes.any.isRequired, //eslint-disable-line
   subHeader: PropTypes.any.isRequired, //eslint-disable-line
 };
-
+// TODO: Should we be passing data or just first item ????
 class InfoColumnHOC extends Component {
   constructor(props) {
     super(props);
@@ -41,7 +41,7 @@ class InfoColumnHOC extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.rangeType !== 'all') {
+    if (nextProps.rangeType !== ALL) {
       this.updatePpmDiffInfo(nextProps.data, nextProps.rangeType);
     }
   }
@@ -71,7 +71,7 @@ class InfoColumnHOC extends Component {
       ppmPercentDiff,
       diffPercentSubHeader,
     } = this.state;
-    if (rangeType !== 'all') {
+    if (rangeType !== ALL) {
       return (
         <div className="flex-grid">
           <InfoColDiv

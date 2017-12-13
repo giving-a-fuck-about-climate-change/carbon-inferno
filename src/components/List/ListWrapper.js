@@ -26,10 +26,13 @@ ListWrapper.propTypes = {
   items: PropTypes.array, //eslint-disable-line
 };
 
-const updateItem = (currentType, items = []) =>
-  items.map(item => (item.type === currentType
-    ? { ...item, className: 'selected' }
-    : { ...item, className: '' }));
+export const updateItem = (currentType, items = []) =>
+  items.map(
+    item =>
+      (item.type === currentType
+        ? { ...item, className: 'selected' }
+        : { ...item, className: '' }),
+  );
 
 export class ActiveListWrapper extends Component {
   constructor(props) {
@@ -39,7 +42,7 @@ export class ActiveListWrapper extends Component {
     };
   }
 
-  updateItem = type => (event) => {
+  setSelected = type => (event) => {
     event.preventDefault();
     const { items } = this.state;
     this.setState({ items: updateItem(type, items) }, () =>
@@ -57,7 +60,7 @@ export class ActiveListWrapper extends Component {
               className={item.className}
               href={item.href}
               text={item.text}
-              onClick={this.updateItem(item.type)}
+              onClick={this.setSelected(item.type)}
             />
           ))}
         </ul>
@@ -67,7 +70,7 @@ export class ActiveListWrapper extends Component {
 }
 
 ActiveListWrapper.propTypes = {
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
   items: PropTypes.array, //eslint-disable-line
   onClick: PropTypes.func,
 };
@@ -76,6 +79,7 @@ ActiveListWrapper.defaultProps = {
   items: [],
   defaultSelected: ALL,
   onClick: () => {},
+  className: '',
 };
 
 export default ListWrapper;

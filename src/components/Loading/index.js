@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './loading.css';
 
-const LoadingWrapper = ({ loading, renderLoading, renderDiv }) =>
+export const LoadingWrapper = ({ loading, renderLoading, renderDiv }) =>
   (loading ? renderLoading() : renderDiv());
 
 export const Loading = () => (
