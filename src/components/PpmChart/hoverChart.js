@@ -88,11 +88,21 @@ class HoverChart extends Component {
 export default HoverChart;
 HoverChart.propTypes = {
   data: PropTypes.array, //eslint-disable-line
-  coordFuncs: PropTypes.object, //eslint-disable-line
-  onMouseMove: PropTypes.func, //eslint-disable-line
+  coordFuncs: PropTypes.shape({
+    getSvgX: PropTypes.func,
+    getSvgY: PropTypes.func,
+    getMinX: PropTypes.func,
+    getMaxX: PropTypes.func,
+    getMinY: PropTypes.func,
+    getMaxY: PropTypes.func,
+  }),
+  onMouseMove: PropTypes.func,
   onMouseLeave: PropTypes.func,
   hoverLoc: PropTypes.number,
-  activePoint: PropTypes.object, //eslint-disable-line
+  activePoint: PropTypes.shape({
+    ppm: PropTypes.number,
+    date: PropTypes.string,
+  }),
   shouldShowPoint: PropTypes.bool,
 };
 // DEFAULT PROPS
@@ -102,6 +112,6 @@ HoverChart.defaultProps = {
   onMouseMove: () => {},
   onMouseLeave: () => {},
   hoverLoc: null,
-  activePoint: {},
+  activePoint: { ppm: 0, date: '' },
   shouldShowPoint: false,
 };

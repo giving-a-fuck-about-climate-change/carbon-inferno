@@ -20,10 +20,11 @@ const ListWrapper = ({ className, items }) => (
 );
 ListWrapper.defaultProps = {
   items: [],
+  className: '',
 };
 ListWrapper.propTypes = {
-  className: PropTypes.string, //eslint-disable-line
-  items: PropTypes.array, //eslint-disable-line
+  className: PropTypes.string,
+  items: PropTypes.arrayof(PropTypes.any),
 };
 
 export const updateItem = (currentType, items = []) =>
@@ -71,7 +72,7 @@ export class ActiveListWrapper extends Component {
 
 ActiveListWrapper.propTypes = {
   className: PropTypes.string,
-  items: PropTypes.array, //eslint-disable-line
+  items: PropTypes.arrayOf(PropTypes.any),
   onClick: PropTypes.func,
 };
 

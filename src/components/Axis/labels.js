@@ -23,7 +23,6 @@ AxisLabels.propTypes = {
   minY: PropTypes.number.isRequired,
   maxY: PropTypes.number.isRequired,
   yLabelSize: PropTypes.number.isRequired,
-  data: PropTypes.array, //eslint-disable-line
   className: PropTypes.string,
   padding: PropTypes.number,
 };

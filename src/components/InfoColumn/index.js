@@ -24,8 +24,12 @@ export const InfoColDiv = ({ statInfo, subHeader }) => (
   </div>
 );
 InfoColDiv.propTypes = {
-  statInfo: PropTypes.any.isRequired, //eslint-disable-line
-  subHeader: PropTypes.any.isRequired, //eslint-disable-line
+  statInfo: PropTypes.string.isRequired,
+  subHeader: PropTypes.string.isRequired,
+};
+InfoColDiv.defaultProps = {
+  statInfo: '',
+  subHeader: '',
 };
 // TODO: Should we be passing data or just first item ????
 class InfoColumnHOC extends Component {
@@ -97,7 +101,8 @@ class InfoColumnHOC extends Component {
   }
 }
 InfoColumnHOC.propTypes = {
-  rangeType: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), //eslint-disable-line
+  rangeType: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
   currentPpm: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
     .isRequired,
 };

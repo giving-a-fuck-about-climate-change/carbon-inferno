@@ -55,7 +55,14 @@ class AreaChart extends Component {
   }
 }
 AreaChart.propTypes = {
-  coordFuncs: PropTypes.object, // eslint-disable-line
+  coordFuncs: PropTypes.shape({
+    getSvgX: PropTypes.func,
+    getSvgY: PropTypes.func,
+    getMinX: PropTypes.func,
+    getMaxX: PropTypes.func,
+    getMinY: PropTypes.func,
+    getMaxY: PropTypes.func,
+  }),
   svgData: PropTypes.array, // eslint-disable-line
 };
 
