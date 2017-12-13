@@ -24,7 +24,7 @@ ListWrapper.defaultProps = {
 };
 ListWrapper.propTypes = {
   className: PropTypes.string,
-  items: PropTypes.arrayof(PropTypes.any),
+  items: PropTypes.arrayOf(PropTypes.any),
 };
 
 export const updateItem = (currentType, items = []) =>
@@ -74,6 +74,7 @@ ActiveListWrapper.propTypes = {
   className: PropTypes.string,
   items: PropTypes.arrayOf(PropTypes.any),
   onClick: PropTypes.func,
+  defaultSelected: PropTypes.string,
 };
 
 ActiveListWrapper.defaultProps = {

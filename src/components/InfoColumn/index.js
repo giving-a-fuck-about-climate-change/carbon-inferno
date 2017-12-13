@@ -24,8 +24,10 @@ export const InfoColDiv = ({ statInfo, subHeader }) => (
   </div>
 );
 InfoColDiv.propTypes = {
-  statInfo: PropTypes.string.isRequired,
-  subHeader: PropTypes.string.isRequired,
+  statInfo: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
+  subHeader: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
 };
 InfoColDiv.defaultProps = {
   statInfo: '',
