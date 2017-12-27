@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -24,7 +25,7 @@ import {
   ALL,
 } from '../../constants';
 
-class ChartInfo extends Component {
+export class ChartInfo extends Component {
   state = {
     rangeType: ALL, // Intitial date range query type
   };
@@ -87,7 +88,7 @@ class ChartInfo extends Component {
 const mapStateToProps = state => ({
   loading: state.ppmInfo.loading,
   error: state.ppmInfo.error,
-  [WEEK]: ppmInfoSelector(state, WEEK),
+  [WEEK]: ppmInfoSelector(state, WEEK), // TODO: Investigate how to do dynamic prop types
   [MONTH]: ppmInfoSelector(state, MONTH),
   [YEAR]: ppmInfoSelector(state, YEAR),
   [FIVE_YEAR]: ppmInfoSelector(state, FIVE_YEAR),
@@ -102,3 +103,15 @@ const mapDispatchToProps = dispatch =>
     dispatch,
   );
 export default connect(mapStateToProps, mapDispatchToProps)(ChartInfo);
+ChartInfo.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  currentPpm: PropTypes.number.isRequired,
+  queryApi: PropTypes.func.isRequired,
+  error: PropTypes.string, // eslint-disable-line
+}; // TODO: Update the above create error handling issue
+ChartInfo.defaultProps = {
+  error: '',
+  loading: true,
+  currentPpm: 0,
+  queryApi: () => {},
+};

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const ListItem = ({ className, href, text, onClick }) => (
   <li className={className}>
     {href ? (
-      <a onClick={onClick} href={href}>
+      <a className="item-class" onClick={onClick} href={href}>
         {text}
       </a>
     ) : (
@@ -13,9 +13,15 @@ const ListItem = ({ className, href, text, onClick }) => (
   </li>
 );
 ListItem.propTypes = {
-  className: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  href: PropTypes.string.isRequired,
-  onClick: PropTypes.func, //eslint-disable-line
+  className: PropTypes.string,
+  text: PropTypes.string,
+  href: PropTypes.string,
+  onClick: PropTypes.func,
+};
+ListItem.defaultProps = {
+  className: '',
+  text: '',
+  href: '',
+  onClick: () => {},
 };
 export default ListItem;

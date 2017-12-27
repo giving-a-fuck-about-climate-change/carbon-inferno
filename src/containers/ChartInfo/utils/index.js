@@ -1,42 +1,44 @@
 import moment from 'moment';
 
-const transformItem = (item, count) => {
-  const { date, ppm } = item;
+export const transformItem = (item = {}, count = 0) => {
+  const { date = '', ppm = 0 } = item;
   return {
-    date: moment(date).format('MMM DD YYYY'),
+    date: date ? moment(date).format('MMM DD YYYY') : date,
     ppm: parseInt(ppm, 10),
     x: count, // where to appear on x axis.
     y: parseInt(ppm, 10), // where to appear on y axis.
   };
 };
 /*
- * Upto 1974 (790th item) we only have weekly results
+ * Upto 1974 we only have weekly results
  * so we want to show every item until then.
  * After that we sample the data weekly ( every 7th item)
+ * Our thershold is 790 (weekly data upto 1974)
  */
-export const createGraphDataSubset = (arr = []) => {
+export const createGraphDataSubset = (transformer, threshold = 0) => (
+  arr = [],
+) => {
   let count = 0;
   return arr.reduce((sum, item, idx) => {
-    if (idx < 790) {
+    if (threshold && idx < threshold) {
       count += 1;
-      return [...sum, transformItem(item, count)];
+      return [...sum, transformer(item, count)];
     }
     if (idx % 7 === 0) {
       count += 1;
-      return [...sum, transformItem(item, count)];
+      return [...sum, transformer(item, count)];
     }
     return sum;
   }, []);
 };
 
-export const transformGraphData = (arr = []) => arr.map(transformItem);
-
-const todaysDate = () => moment().format('YYYY-MM-DD');
+export const transformGraphData = transformer => (arr = []) =>
+  arr.map(transformer);
 
 const subDate = (range, amount = 1) =>
   moment()
     .subtract(amount, range)
     .format('YYYY-MM-DD');
-
-export const dateRangQuery = (timePeriod, amount) =>
-  `?ordering=+date&date__range=${subDate(timePeriod, amount)},${todaysDate()}`;
+// TODO: Fix subDate
+export const queryDateRange = (to, period, amount) =>
+  `?ordering=+date&date__range=${subDate(period, amount)},${to}`;
