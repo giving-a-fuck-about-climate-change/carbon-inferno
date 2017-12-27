@@ -3,6 +3,7 @@ import fetchData from '../../../utils/request';
 import { queryDateRange } from '../utils';
 
 import { WEEK, MONTH, YEAR, FIVE_YEAR } from '../../../constants';
+
 import {
   PPM_LOAD_ITEMS,
   CURRENT_PPM_SUCCESS,

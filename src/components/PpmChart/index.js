@@ -111,18 +111,29 @@ class PpmChart extends Component {
           viewBoxWidth={1000}
           viewBoxHeigth={svgHeight}
           data={data}
-          render={({ coordFuncs }) => (
+          render={({
+            getMinX,
+            getMaxX,
+            getMinY,
+            getMaxY,
+            getSvgX,
+            getSvgY,
+          }) => (
             <div className="svg-inline">
               <div className="axis-wrapper">
-                <SvgAxis
-                  minY={coordFuncs.getMinY()}
-                  maxY={coordFuncs.getMaxY()}
-                />
+                <SvgAxis minY={getMinY().y} maxY={getMaxY().y} />
               </div>
               <div className="chart-wrapper">
                 <HoverChart
                   data={data}
-                  coordFuncs={coordFuncs}
+                  coordFuncs={{
+                    getMinX,
+                    getMaxX,
+                    getMinY,
+                    getMaxY,
+                    getSvgX,
+                    getSvgY,
+                  }}
                   onMouseMove={this.getCoords}
                   onMouseLeave={this.stopHover}
                   hoverLoc={hoverLoc}
@@ -131,10 +142,7 @@ class PpmChart extends Component {
                 />
               </div>
               <div className="axis-wrapper">
-                <SvgAxis
-                  minY={coordFuncs.getMinY()}
-                  maxY={coordFuncs.getMaxY()}
-                />
+                <SvgAxis minY={getMinY().y} maxY={getMaxY().y} />
               </div>
             </div>
           )}

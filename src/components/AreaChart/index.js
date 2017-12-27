@@ -44,8 +44,8 @@ class AreaChart extends Component {
     // We need to draw another path which which we can fill for the shaded area
     let shadedPath = linePath;
     shadedPath +=
-      `L ${getSvgX(getMaxX())} ${getSvgY(getMinY())} ` +
-      `L ${getSvgX(getMinX())} ${getSvgY(getMinY())} `;
+      `L ${getSvgX(getMaxX().x)} ${getSvgY(getMinY().y)} ` +
+      `L ${getSvgX(getMinX().x)} ${getSvgY(getMinY().y)} `;
     return (
       <React.Fragment>
         <Path linePath={shadedPath} className="linechart_area" />
