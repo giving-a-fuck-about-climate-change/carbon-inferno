@@ -31,7 +31,6 @@ function ppmReducer(state = initialState, action = {}) {
     case CURRENT_PPM_SUCCESS: {
       return {
         ...state,
-        loading: false,
         error: '',
         currentPpm: action.result,
       };
