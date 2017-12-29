@@ -18,8 +18,9 @@ export const initialState = {
   [FIVE_YEAR]: [],
   [ALL]: [],
   currentPpm: 0,
+  totalPpmCount: 0,
 };
-// TODO: Update consitant naming (action.result , action.results) choose one!
+
 function ppmReducer(state = initialState, action = {}) {
   switch (action.type) {
     case PPM_LOAD_ITEMS: {
@@ -29,10 +30,12 @@ function ppmReducer(state = initialState, action = {}) {
       };
     }
     case CURRENT_PPM_SUCCESS: {
+      const { currentPpm, totalPpmCount } = action.results;
       return {
         ...state,
         error: '',
-        currentPpm: action.result,
+        currentPpm,
+        totalPpmCount,
       };
     }
     case WEEK_MONTH_PPM_SUCCESS: {
@@ -54,11 +57,12 @@ function ppmReducer(state = initialState, action = {}) {
       };
     }
     case ALL_PPM_SUCCESS: {
+      const { results } = action;
       return {
         ...state,
         loading: false,
         error: '',
-        [ALL]: action.result,
+        [ALL]: results,
       };
     }
     case PPM_LOAD_ITEMS_FAILURE: {
