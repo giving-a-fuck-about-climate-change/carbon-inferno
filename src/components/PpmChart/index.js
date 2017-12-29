@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { throttle, debounce } from 'throttle-debounce';
-
 import { SvgCoords } from 'react-svg-coordfuncs';
 
 import './PpmChart.css';
 import ToolTip from '../ToolTip';
+import XAxis from '../../components/Axis/xAxis';
 import AxisLabels from '../../components/Axis/labels';
 import ShouldShow from '../../components/ShouldShow';
 import HoverChart from './hoverChart';
@@ -119,40 +119,47 @@ class PpmChart extends Component {
             getSvgX,
             getSvgY,
           }) => (
-            <div className="svg-inline">
-              <div className="axis-wrapper">
-                <SvgAxis minY={getMinY().y} maxY={getMaxY().y} />
+            <div>
+              <div className="svg-inline">
+                <div className="axis-wrapper">
+                  <SvgAxis minY={getMinY().y} maxY={getMaxY().y} />
+                </div>
+                <div className="chart-wrapper">
+                  <HoverChart
+                    data={data}
+                    coordFuncs={{
+                      getMinX,
+                      getMaxX,
+                      getMinY,
+                      getMaxY,
+                      getSvgX,
+                      getSvgY,
+                    }}
+                    onMouseMove={this.getCoords}
+                    onMouseLeave={this.stopHover}
+                    hoverLoc={hoverLoc}
+                    activePoint={activePoint}
+                    shouldShowPoint={shouldShowActivePoint(hoverLoc, rangeType)}
+                  />
+                </div>
+                <div className="axis-wrapper">
+                  <SvgAxis minY={getMinY().y} maxY={getMaxY().y} />
+                </div>
               </div>
-              <div className="chart-wrapper">
-                <HoverChart
-                  data={data}
-                  coordFuncs={{
-                    getMinX,
-                    getMaxX,
-                    getMinY,
-                    getMaxY,
-                    getSvgX,
-                    getSvgY,
-                  }}
-                  onMouseMove={this.getCoords}
-                  onMouseLeave={this.stopHover}
-                  hoverLoc={hoverLoc}
-                  activePoint={activePoint}
-                  shouldShowPoint={shouldShowActivePoint(hoverLoc, rangeType)}
-                />
-              </div>
-              <div className="axis-wrapper">
-                <SvgAxis minY={getMinY().y} maxY={getMaxY().y} />
+              <HoverToolTip
+                shouldShow={hoverLoc}
+                hoverLoc={mouseLoc}
+                text={activePoint.date}
+                className="bottom-tooltip"
+              />
+              <div className="graph-filler" />
+              <div className="x-axis-wrapper">
+                <div className="x-axis-container">
+                  <XAxis data={data} getSvgX={getSvgX} rangeType={rangeType} />
+                </div>
               </div>
             </div>
           )}
-        />
-        <div className="graph-filler" />
-        <HoverToolTip
-          shouldShow={hoverLoc}
-          hoverLoc={mouseLoc}
-          text={activePoint.date}
-          className="bottom-tooltip"
         />
       </div>
     );
