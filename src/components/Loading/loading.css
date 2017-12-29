@@ -21,3 +21,20 @@
     transform: rotate(-360deg);
   }
 }
+
+@media (max-width: 640px) {
+  .loadingIcon {
+    top: 50px !important;
+  }
+  .loadingText {
+    padding-top: 80px !important;
+  }
+}
+@media (max-width: 900px) {
+  .loadingIcon {
+    top: 100px;
+  }
+  .loadingText {
+    padding-top: 140px;
+  }
+}
