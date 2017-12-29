@@ -55,12 +55,21 @@ body {
   padding: 20px;
   border-radius: 5px;
 }
+
 @media (max-width: 640px) {
   .svg-inline {
-    height: 200px !important;
+    height: 100px !important;
   }
   .graph-container {
-    height: 230px !important;
+    height: 150px !important;
+  }
+}
+@media screen and (min-width: 640px) and (max-width: 900px) {
+  .svg-inline {
+    height: 150px !important;
+  }
+  .graph-container {
+    height: 200px !important;
   }
 }
 .time-choice-header {
