@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import {
   InfoColumnHOC,
@@ -12,7 +13,14 @@ import {
   Navigation,
 } from '../../components';
 
-import { queryApi } from './redux/actions';
+import { queryDateRange } from './utils';
+
+import {
+  fetchCurrentPpms,
+  fetchMonthWeekPpms,
+  fetchYearPpms,
+  fetchAllPpms,
+} from './redux/actions';
 
 import { ppmInfoAllSelector, ppmInfoSelector } from './redux/selectors';
 
@@ -25,20 +33,66 @@ import {
   ALL,
 } from '../../constants';
 
+const todaysDate = moment().format('YYYY-MM-DD');
+
 export class ChartInfo extends Component {
   state = {
-    rangeType: ALL, // Intitial date range query type
+    rangeType: FIVE_YEAR, // Intitial date range query type
   };
 
   componentDidMount() {
-    this.props.queryApi(this.state.rangeType);
+    // query for current ppm
+    this.props.fetchCurrentPpms();
+    // Query for five years
+    this.queryApi(this.state.rangeType);
   }
+
+  queryApi = (rangeType) => {
+    // Need to check if data exists
+    const shouldUpdate = this.props[rangeType].length <= 0;
+    // Only get query the api if no data exists
+    switch (rangeType) {
+      case WEEK: {
+        if (shouldUpdate) {
+          const endpoint = queryDateRange(todaysDate, WEEK, 1);
+          this.props.fetchMonthWeekPpms({ rangeType, endpoint });
+        }
+        break;
+      }
+      case MONTH: {
+        if (shouldUpdate) {
+          const endpoint = queryDateRange(todaysDate, MONTH, 1);
+          this.props.fetchMonthWeekPpms({ rangeType, endpoint });
+        }
+        break;
+      }
+      case YEAR: {
+        if (shouldUpdate) {
+          const endpoint = queryDateRange(todaysDate, YEAR, 1);
+          this.props.fetchYearPpms({ rangeType, endpoint });
+        }
+        break;
+      }
+      case FIVE_YEAR: {
+        if (shouldUpdate) {
+          const endpoint = queryDateRange(todaysDate, YEAR, 5);
+          this.props.fetchYearPpms({ rangeType, endpoint });
+        }
+        break;
+      }
+      default: {
+        if (shouldUpdate) {
+          this.props.fetchAllPpms();
+        }
+      }
+    }
+  };
 
   handlePpmClick = (rangeType) => {
     // only call api when the rangeType has changed.
     if (rangeType !== this.state.rangeType) {
       this.setState({ rangeType }, () => {
-        this.props.queryApi(this.state.rangeType);
+        this.queryApi(this.state.rangeType);
       });
     }
   };
@@ -88,7 +142,7 @@ export class ChartInfo extends Component {
 const mapStateToProps = state => ({
   loading: state.ppmInfo.loading,
   error: state.ppmInfo.error,
-  [WEEK]: ppmInfoSelector(state, WEEK), // TODO: Investigate how to do dynamic prop types
+  [WEEK]: ppmInfoSelector(state, WEEK),
   [MONTH]: ppmInfoSelector(state, MONTH),
   [YEAR]: ppmInfoSelector(state, YEAR),
   [FIVE_YEAR]: ppmInfoSelector(state, FIVE_YEAR),
@@ -98,20 +152,35 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      queryApi,
+      fetchCurrentPpms,
+      fetchMonthWeekPpms,
+      fetchYearPpms,
+      fetchAllPpms,
     },
     dispatch,
   );
 export default connect(mapStateToProps, mapDispatchToProps)(ChartInfo);
 ChartInfo.propTypes = {
   loading: PropTypes.bool.isRequired,
-  currentPpm: PropTypes.number.isRequired,
-  queryApi: PropTypes.func.isRequired,
+  currentPpm: PropTypes.string.isRequired,
+  fetchCurrentPpms: PropTypes.func.isRequired,
+  fetchMonthWeekPpms: PropTypes.func.isRequired,
+  fetchYearPpms: PropTypes.func.isRequired,
+  fetchAllPpms: PropTypes.func.isRequired,
   error: PropTypes.string, // eslint-disable-line
 }; // TODO: Update the above create error handling issue
 ChartInfo.defaultProps = {
   error: '',
   loading: true,
-  currentPpm: 0,
+  currentPpm: '0',
+  [WEEK]: [],
+  [MONTH]: [],
+  [YEAR]: [],
+  [FIVE_YEAR]: [],
+  [ALL]: [],
   queryApi: () => {},
+  fetchCurrentPpms: () => {},
+  fetchMonthWeekPpms: () => {},
+  fetchYearPpms: () => {},
+  fetchAllPpms: () => {},
 };

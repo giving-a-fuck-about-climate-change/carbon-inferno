@@ -20,8 +20,11 @@ describe('ppmReducer', () => {
   });
   test('ppmReducer with CURRENT_PPM_SUCCESS action should update correct state', () => {
     expect(
-      ppmReducer(initialState, { type: CURRENT_PPM_SUCCESS, result: 2 }),
-    ).toEqual({ ...initialState, error: '', currentPpm: 2 });
+      ppmReducer(initialState, {
+        type: CURRENT_PPM_SUCCESS,
+        results: { currentPpm: 2, totalPpmCount: 10 },
+      }),
+    ).toEqual({ ...initialState, error: '', currentPpm: 2, totalPpmCount: 10 });
   });
   test('ppmReducer with WEEK_MONTH_PPM_SUCCESS action should update week results if type is WEEK', () => {
     expect(
@@ -68,7 +71,7 @@ describe('ppmReducer', () => {
     expect(
       ppmReducer(initialState, {
         type: ALL_PPM_SUCCESS,
-        result: [1, 2],
+        results: [1, 2],
         rangeType: ALL,
       }),
     ).toEqual({

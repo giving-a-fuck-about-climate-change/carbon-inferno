@@ -5,7 +5,7 @@ import Team from '../Team';
 import About from '../About';
 import Contribute from '../Contribute';
 import DataSources from '../DataSources';
-import ChartInfo from '../ChartInfo'; // TODO: Update this
+import ChartInfoDiv from '../ChartInfo';
 
 import {
   ROOT,
@@ -26,7 +26,7 @@ const AppComponent = () => (
       <div className="App">
         <BrowserRouter>
           <Switch>
-            <Route exact path={ROOT} component={ChartInfo} />
+            <Route exact path={ROOT} component={ChartInfoDiv} />
             <Route path={TEAM_PAGE} component={Team} />
             <Route path={ABOUT_PAGE} component={About} />
             <Route path={CONTRIBUTE_PAGE} component={Contribute} />

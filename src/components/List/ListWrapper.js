@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import ListItem from './ListItem';
-import { ALL } from '../../constants';
+import { FIVE_YEAR } from '../../constants';
 
 const ListWrapper = ({ className, items }) => (
   <div className={className}>
@@ -79,7 +79,7 @@ ActiveListWrapper.propTypes = {
 
 ActiveListWrapper.defaultProps = {
   items: [],
-  defaultSelected: ALL,
+  defaultSelected: FIVE_YEAR,
   onClick: () => {},
   className: '',
 };
