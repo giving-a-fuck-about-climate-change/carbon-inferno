@@ -1,23 +1,4 @@
-.axis-wrapper {
-  width: 10%;
-  display: flex;
-}
-
 .chart-wrapper {
   width: 80%;
   display: flex;
-}
-
-@media screen and (max-width: 640px) {
-  .chart-wrapper,
-  .axis-wrapper {
-    height: 100px !important;
-  }
-}
-
-@media screen and (min-width: 640px) and (max-width: 900px) {
-  .chart-wrapper,
-  .axis-wrapper {
-    height: 150px !important;
-  }
 }

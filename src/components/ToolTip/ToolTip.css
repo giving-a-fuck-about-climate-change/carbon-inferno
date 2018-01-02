@@ -24,3 +24,15 @@
 .bottom-tooltip {
   margin-top: -20px;
 }
+
+@media only screen and (max-width: 560px) {
+  .hover .ppm {
+    font-size: 6px;
+  }
+  .top-tooltip {
+    margin-top: -10px;
+  }
+  .bottom-tooltip {
+    margin-top: -10px;
+  }
+}

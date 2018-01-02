@@ -1,51 +1,105 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// TODO: Not needed for now but add to recipes
-const Axis = ({ getX, getY, getSvgX, getSvgY, className, strokeDasharray }) => {
-  const x = getX();
-  const y = getY();
+import moment from 'moment';
 
-  const topLineXBeginPos = getSvgX(x.min);
-  const topLineYBeginPos = getSvgY(y.min);
-  const topLineXEndPos = getSvgX(x.max);
-  const topLineYEndPos = getSvgY(y.min);
+import './Axis.css';
+/**
+ Our axis will have 6 labels.
+ Which are:
+ - 1st items
+ - last item
+ - every quarter item
+ - only sample data if its greater than 6 in length
+* */
+export const createLabels = (items = []) => {
+  // we only want 6 labels so only sample when its greater than 6
+  if (items.length > 0 && items.length >= 6) {
+    const sampleRate = Math.round(items.length / 4);
+    let rate = sampleRate;
+    const res = [items[0]];
+    for (let i = 0; i <= 4; i++) {
+      const item = items[rate];
+      if (item) {
+        res.push(items[rate]);
+      }
+      rate += sampleRate;
+    }
+    res.push(items[items.length - 1]);
+    return res;
+  }
+  return items;
+};
 
-  const bottomLineXBeginPos = getSvgX(x.min);
-  const bottomLineYBeginPos = getSvgY(y.max);
-  const bottomLineXEndPos = getSvgX(x.max);
-  const bottomLineYEndPos = getSvgY(y.max);
+export const formatLabel = (label, rangeType) => {
+  const dateLabel = new Date(label);
+  if (rangeType === 'week') {
+    return moment(dateLabel).format('DD/MM/YY');
+  }
+  if (rangeType === 'month') {
+    return moment(dateLabel).format('MMM DD');
+  }
+  return moment(dateLabel).format('MMMM YYYY');
+};
 
+export const XAxis = ({ getSvgX, data, rangeType, viewBoxWidth }) => {
+  const labels = createLabels(data, rangeType);
   return (
-    <g className={className}>
-      <line
-        x1={topLineXBeginPos}
-        y1={topLineYBeginPos}
-        x2={topLineXEndPos}
-        y2={topLineYEndPos}
-        strokeDasharray={strokeDasharray}
-      />
-      <line
-        x1={bottomLineXBeginPos}
-        y1={bottomLineYBeginPos}
-        x2={bottomLineXEndPos}
-        y2={bottomLineYEndPos}
-        strokeDasharray={strokeDasharray}
-      />
-    </g>
+    <div className="x-axis-container">
+      <svg
+        className="x-axis"
+        width="80%"
+        height="100%"
+        viewBox={`0 0 ${viewBoxWidth} ${40}`}
+        preserveAspectRatio={`xMidYMax ${
+          viewBoxWidth < 1000 ? 'meet' : 'slice'
+        }`}
+        overflow="visible"
+      >
+        <g>
+          {labels.map(({ date, x }) => (
+            <text
+              key={`x-axis-${date}-${x}`}
+              transform={`translate(${getSvgX(x)}, 20)`}
+              textAnchor="middle"
+              className="x-axis-labels"
+            >
+              {formatLabel(date, rangeType)}
+            </text>
+          ))}
+        </g>
+      </svg>
+    </div>
   );
 };
-Axis.propTypes = {
-  getX: PropTypes.func.isRequired,
-  getY: PropTypes.func.isRequired,
-  getSvgY: PropTypes.func.isRequired,
-  getSvgX: PropTypes.func.isRequired,
-  strokeDasharray: PropTypes.number,
-  className: PropTypes.string,
+
+XAxis.propTypes = {
+  data: PropTypes.array, //eslint-disable-line
+  viewBoxWidth: PropTypes.number,
+  getSvgX: PropTypes.func,
+  rangeType: PropTypes.string,
 };
-Axis.defaultProps = {
-  className: 'linechart_axis',
-  strokeDasharray: 5,
-  yLabelSize: 80,
+XAxis.defaultProps = {
+  data: [],
+  viewBoxWidth: 1000,
+  getSvgX: () => {},
+  rangeType: '',
 };
 
-export default Axis;
+export const YAxis = ({ containerClass, labelClass, minLabel, maxLabel }) => (
+  <div className={containerClass}>
+    <div className={labelClass}>{minLabel} PPM</div>
+    <div className="y-labels">{maxLabel} PPM</div>
+  </div>
+);
+YAxis.defaultProps = {
+  containerClass: 'y-axis',
+  labelClass: 'y-labels',
+  minLabel: 0,
+  maxLabel: 0,
+};
+YAxis.propTypes = {
+  containerClass: PropTypes.string,
+  labelClass: PropTypes.string,
+  minLabel: PropTypes.number,
+  maxLabel: PropTypes.number,
+};

@@ -5,8 +5,7 @@ import { SvgCoords } from 'react-svg-coordfuncs';
 
 import './PpmChart.css';
 import ToolTip from '../ToolTip';
-import XAxis from '../../components/Axis/xAxis';
-import AxisLabels from '../../components/Axis/labels';
+import { XAxis, YAxis } from '../../components/Axis';
 import ShouldShow from '../../components/ShouldShow';
 import HoverChart from './hoverChart';
 import { WEEK, MONTH } from '../../constants';
@@ -23,31 +22,22 @@ const shouldShowActivePoint = (hoverState, type) => {
   return false;
 };
 
-const SvgAxis = ({ minY, maxY }) => (
-  <svg className="linechart" width="100%" viewBox={`0 0 ${100} ${svgHeight}`}>
-    <AxisLabels
-      viewBox={`0 0 ${100} ${svgHeight}`}
-      svgHeight={svgHeight}
-      minY={minY}
-      maxY={maxY}
-    />
-  </svg>
-);
-SvgAxis.propTypes = {
-  minY: PropTypes.number.isRequired,
-  maxY: PropTypes.number.isRequired,
-};
-
 const HoverToolTip = ShouldShow(ToolTip);
 
-// Component
 class PpmChart extends Component {
   constructor(props) {
     super(props);
-    this.state = this.getInitialState();
+    this.state = {
+      viewBoxWidth: 1000,
+      ...this.getInitialHoverState(),
+    };
   }
 
-  getInitialState = () => ({
+  componentWillReceiveProps(nextProps) {
+    this.determineViewPortSize(nextProps.windowWidth);
+  }
+
+  getInitialHoverState = () => ({
     hoverLoc: null,
     activePoint: {
       ppm: 0,
@@ -81,7 +71,7 @@ class PpmChart extends Component {
           mouseLoc: e.clientX,
         });
       } else {
-        this.setState(this.getInitialState());
+        this.setState(this.getInitialHoverState());
       }
     });
 
@@ -93,22 +83,34 @@ class PpmChart extends Component {
   */
   stopHover = debounce(60, (e) => {
     e.persist();
-    this.setState(this.getInitialState());
+    this.setState(this.getInitialHoverState());
   });
+
+  /**
+  We need to determine the window size so that
+  the x axis and tooltip can be respond to which ever size
+  the window may be
+  * */
+
+  determineViewPortSize = windowSize =>
+    this.setState({
+      viewBoxWidth: windowSize <= 1000 ? windowSize : 1000,
+    });
 
   render() {
     const { data, rangeType } = this.props;
-    const { hoverLoc, mouseLoc, activePoint } = this.state;
+    const { hoverLoc, mouseLoc, activePoint, viewBoxWidth } = this.state;
     return (
       <div>
         <HoverToolTip
+          viewBoxWidth={viewBoxWidth}
           hoverLoc={mouseLoc}
           text={`${activePoint.ppm} PPM`}
           className="top-tooltip "
           shouldShow={hoverLoc}
         />
         <SvgCoords
-          viewBoxWidth={1000}
+          viewBoxWidth={viewBoxWidth}
           viewBoxHeigth={svgHeight}
           data={data}
           render={({
@@ -121,9 +123,7 @@ class PpmChart extends Component {
           }) => (
             <div>
               <div className="svg-inline">
-                <div className="axis-wrapper">
-                  <SvgAxis minY={getMinY().y} maxY={getMaxY().y} />
-                </div>
+                <YAxis minLabel={getMaxY().y} maxLabel={getMaxY().y} />
                 <div className="chart-wrapper">
                   <HoverChart
                     data={data}
@@ -142,21 +142,23 @@ class PpmChart extends Component {
                     shouldShowPoint={shouldShowActivePoint(hoverLoc, rangeType)}
                   />
                 </div>
-                <div className="axis-wrapper">
-                  <SvgAxis minY={getMinY().y} maxY={getMaxY().y} />
-                </div>
+                <YAxis minLabel={getMaxY().y} maxLabel={getMaxY().y} />
               </div>
               <HoverToolTip
+                viewBoxWidth={viewBoxWidth}
                 shouldShow={hoverLoc}
                 hoverLoc={mouseLoc}
                 text={activePoint.date}
                 className="bottom-tooltip"
               />
               <div className="graph-filler" />
-              <div className="x-axis-wrapper">
-                <div className="x-axis-container">
-                  <XAxis data={data} getSvgX={getSvgX} rangeType={rangeType} />
-                </div>
+              <div>
+                <XAxis
+                  data={data}
+                  getSvgX={getSvgX}
+                  rangeType={rangeType}
+                  viewBoxWidth={viewBoxWidth}
+                />
               </div>
             </div>
           )}
@@ -170,8 +172,10 @@ export default PpmChart;
 PpmChart.propTypes = {
   data: PropTypes.array, //eslint-disable-line
   rangeType: PropTypes.string.isRequired,
+  windowWidth: PropTypes.number,
 };
 // DEFAULT PROPS
 PpmChart.defaultProps = {
   data: [],
+  windowWidth: 0,
 };
