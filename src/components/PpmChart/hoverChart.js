@@ -27,7 +27,11 @@ class HoverChart extends Component {
       this.setState({ svgData: this.setSvgData(this.props.data) }); //eslint-disable-line
     }
   }
-
+  /**
+   mouseMove of the parent component uses this
+   data so that we can reference where the coord of the
+   point is on the svg
+  * */
   setSvgData = (data = []) => {
     const { getSvgX, getSvgY } = this.props.coordFuncs;
     return data.reduce((svgPointArr, point) => {

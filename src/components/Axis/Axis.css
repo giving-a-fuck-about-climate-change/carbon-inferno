@@ -51,14 +51,10 @@
 
 @media only screen and (max-width: 485px) {
   .x-axis-labels {
-    font-size: 10px !important;
+    font-size: 8px !important;
     letter-spacing: 1px;
-  }
-  .graph-filler {
-    padding-top: 0px !important;
   }
   .x-axis-container {
     padding-top: 0px !important;
   }
 }
-

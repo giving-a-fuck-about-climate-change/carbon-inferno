@@ -8,16 +8,16 @@ import './Axis.css';
  Which are:
  - 1st items
  - last item
- - every quarter item
- - only sample data if its greater than 6 in length
+ - every fifth item in between
+ - only sample data if its greater than 5 in length
 * */
 export const createLabels = (items = []) => {
   // we only want 6 labels so only sample when its greater than 6
-  if (items.length > 0 && items.length >= 6) {
-    const sampleRate = Math.round(items.length / 4);
+  if (items.length > 0 && items.length >= 5) {
+    const sampleRate = Math.round(items.length / 5); // calculate a 5th of the array
     let rate = sampleRate;
     const res = [items[0]];
-    for (let i = 0; i <= 4; i++) {
+    for (let i = 0; i <= 3; i++) {
       const item = items[rate];
       if (item) {
         res.push(items[rate]);
@@ -38,7 +38,7 @@ export const formatLabel = (label, rangeType) => {
   if (rangeType === 'month') {
     return moment(dateLabel).format('MMM DD');
   }
-  return moment(dateLabel).format('MMMM YYYY');
+  return moment(dateLabel).format('MMM YYYY');
 };
 
 export const XAxis = ({ getSvgX, data, rangeType, viewBoxWidth }) => {
@@ -56,9 +56,9 @@ export const XAxis = ({ getSvgX, data, rangeType, viewBoxWidth }) => {
         overflow="visible"
       >
         <g>
-          {labels.map(({ date, x }) => (
+          {labels.map(({ date, x }, idx) => (
             <text
-              key={`x-axis-${date}-${x}`}
+              key={`x-axis-${date}-${x}-${idx}`}
               transform={`translate(${getSvgX(x)}, 20)`}
               textAnchor="middle"
               className="x-axis-labels"

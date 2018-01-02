@@ -208,8 +208,3 @@ body {
   letter-spacing: 2px;
   text-transform: uppercase;
 }
-
-.graph-filler {
-  border-top: 1px dashed #7a92a4;
-  padding-top: 10px;
-}

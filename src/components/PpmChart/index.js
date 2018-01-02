@@ -28,7 +28,7 @@ class PpmChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      viewBoxWidth: 1000,
+      viewBoxWidth: props.windowWidth,
       ...this.getInitialHoverState(),
     };
   }
@@ -110,7 +110,7 @@ class PpmChart extends Component {
           shouldShow={hoverLoc}
         />
         <SvgCoords
-          viewBoxWidth={viewBoxWidth}
+          viewBoxWidth={1000}
           viewBoxHeigth={svgHeight}
           data={data}
           render={({
@@ -144,25 +144,32 @@ class PpmChart extends Component {
                 </div>
                 <YAxis minLabel={getMaxY().y} maxLabel={getMaxY().y} />
               </div>
-              <HoverToolTip
-                viewBoxWidth={viewBoxWidth}
-                shouldShow={hoverLoc}
-                hoverLoc={mouseLoc}
-                text={activePoint.date}
-                className="bottom-tooltip"
-              />
-              <div className="graph-filler" />
-              <div>
-                <XAxis
-                  data={data}
-                  getSvgX={getSvgX}
-                  rangeType={rangeType}
-                  viewBoxWidth={viewBoxWidth}
-                />
-              </div>
             </div>
           )}
         />
+        <HoverToolTip
+          viewBoxWidth={viewBoxWidth}
+          shouldShow={hoverLoc}
+          hoverLoc={mouseLoc}
+          text={activePoint.date}
+          className="bottom-tooltip"
+        />
+        <div className="graph-filler" />
+        <div>
+          <SvgCoords
+            viewBoxWidth={viewBoxWidth}
+            viewBoxHeigth={svgHeight}
+            data={data}
+            render={({ getSvgX }) => (
+              <XAxis
+                data={data}
+                getSvgX={getSvgX}
+                rangeType={rangeType}
+                viewBoxWidth={viewBoxWidth}
+              />
+            )}
+          />
+        </div>
       </div>
     );
   }
@@ -177,5 +184,5 @@ PpmChart.propTypes = {
 // DEFAULT PROPS
 PpmChart.defaultProps = {
   data: [],
-  windowWidth: 0,
+  windowWidth: 1000,
 };
