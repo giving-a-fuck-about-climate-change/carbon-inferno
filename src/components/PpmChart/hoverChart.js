@@ -27,7 +27,11 @@ class HoverChart extends Component {
       this.setState({ svgData: this.setSvgData(this.props.data) }); //eslint-disable-line
     }
   }
-
+  /**
+   mouseMove of the parent component uses this
+   data so that we can reference where the coord of the
+   point is on the svg
+  * */
   setSvgData = (data = []) => {
     const { getSvgX, getSvgY } = this.props.coordFuncs;
     return data.reduce((svgPointArr, point) => {
@@ -50,6 +54,7 @@ class HoverChart extends Component {
       hoverLoc,
       activePoint,
       shouldShowPoint,
+      viewBoxWidth,
     } = this.props;
     const { svgData } = this.state;
     return (
@@ -58,7 +63,7 @@ class HoverChart extends Component {
         onMouseLeave={onMouseLeave}
         className="linechart"
         width="100%"
-        viewBox={`0 0 ${1000} ${svgHeight}`}
+        viewBox={`0 0 ${viewBoxWidth} ${svgHeight}`}
         data-ident="ident-ppm-chart"
         preserveAspectRatio="none"
       >
@@ -114,4 +119,5 @@ HoverChart.defaultProps = {
   hoverLoc: null,
   activePoint: { ppm: 0, date: '' },
   shouldShowPoint: false,
+  viewBoxWidth: 1000,
 };

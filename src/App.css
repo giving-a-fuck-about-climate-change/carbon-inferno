@@ -126,7 +126,7 @@ body {
   border-bottom: 1px solid #d0d0d5;
 }
 .graph-container {
-  height: 380px;
+  height: 450px;
   width: 100%;
 }
 .text-page {
@@ -207,10 +207,4 @@ body {
   font-weight: 400;
   letter-spacing: 2px;
   text-transform: uppercase;
-}
-
-.graph-filler {
-  height: 20px;
-  border-top: 1px dashed #7a92a4;
-  padding-top: 10px;
 }

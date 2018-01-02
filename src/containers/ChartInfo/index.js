@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import windowSize from 'react-window-size';
 
 import {
   InfoColumnHOC,
@@ -34,6 +35,8 @@ import {
 } from '../../constants';
 
 const todaysDate = moment().format('YYYY-MM-DD');
+
+const PpmResizedChart = windowSize(PpmChart);
 
 export class ChartInfo extends Component {
   state = {
@@ -125,7 +128,7 @@ export class ChartInfo extends Component {
               renderLoading={() => <Loading />}
               renderDiv={() =>
                 (this.props[rangeType].length > 0 ? (
-                  <PpmChart
+                  <PpmResizedChart
                     data={this.props[rangeType]}
                     rangeType={rangeType}
                   />
@@ -162,7 +165,7 @@ const mapDispatchToProps = dispatch =>
 export default connect(mapStateToProps, mapDispatchToProps)(ChartInfo);
 ChartInfo.propTypes = {
   loading: PropTypes.bool.isRequired,
-  currentPpm: PropTypes.string.isRequired,
+  currentPpm: PropTypes.number.isRequired,
   fetchCurrentPpms: PropTypes.func.isRequired,
   fetchMonthWeekPpms: PropTypes.func.isRequired,
   fetchYearPpms: PropTypes.func.isRequired,
@@ -172,7 +175,7 @@ ChartInfo.propTypes = {
 ChartInfo.defaultProps = {
   error: '',
   loading: true,
-  currentPpm: '0',
+  currentPpm: 0,
   [WEEK]: [],
   [MONTH]: [],
   [YEAR]: [],
