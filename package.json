@@ -45,10 +45,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "test:staged": "CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint -c .eslintrc src",
     "precommit": "lint-staged",
-    "prepush": "npm run test"
+    "prepush": "npm run test:staged"
   },
   "lint-staged": {
     "*.js": ["eslint", "prettier --write", "git add"],
