@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import ListItem from './ListItem';
 import { FIVE_YEAR } from '../../constants';
 
+import './ListWrapper.css';
+
 const ListWrapper = ({ className, items }) => (
   <div className={className}>
     <ul>

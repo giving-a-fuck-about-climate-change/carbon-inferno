@@ -8,6 +8,25 @@
   padding-top: 10px;
 }
 
+.svg-inline {
+  display: flex;
+  flex-direction: row;
+  padding-top: 10px;
+  height: 360px;
+}
+
+@media (max-width: 640px) {
+  .svg-inline {
+    height: 100px !important;
+  }
+}
+
+@media screen and (min-width: 640px) and (max-width: 900px) {
+  .svg-inline {
+    height: 150px !important;
+  }
+}
+
 @media only screen and (max-width: 485px) {
   .graph-filler {
     padding-top: 0px !important;
