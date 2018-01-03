@@ -9,9 +9,9 @@
 
 ![CarbonDoomsDay Logo](https://i.imgur.com/jfj3CMs.png)
 
-A [React.js] web application for visualising tracking CO2 emissions since 1958.
+A [create-react-app]  web application for visualising tracking CO2 emissions since 1958.
 
-[React.js]: https://facebook.github.io/react/
+[create-react-app]: https://github.com/facebookincubator/create-react-app
 
 This application is part of the [Carbon Doomsday project]:
 
@@ -36,3 +36,31 @@ We're currently live in Beta over at [carbondoomsday.com].
 If you're interested in contributing, we need you! Please join us in the [Gitter Lobby].
 
 [Gitter Lobby]: https://gitter.im/giving-a-fuck-about-climate-change/Lobby
+
+## How to run locally
+
+Clone the project.
+
+Install the dependencies using `yarn` or `npm i`
+
+Run `npm start`
+
+The app will run on `http://localhost:3000`
+
+## Linting
+
+We are using [eslint](https://github.com/eslint/eslint) and [prettier](https://github.com/prettier/prettier), we recommened setting up your editor to format on save. But we also have a git hook which will also do the prettier formatting upon committing. 
+
+## Tests
+
+To run the tests run `npm test`.
+
+## Deploy to Production
+
+We are deploying to heroku which will deploy every pr merged to master. 
+
+Check the [buildpack](https://github.com/mars/create-react-app-buildpack) that we are using.
+
+## Graph Component
+
+Our Chart component is an SVG component written in react. We are using this [lib](https://github.com/grady-lad/react-svg-coordfuncs).
