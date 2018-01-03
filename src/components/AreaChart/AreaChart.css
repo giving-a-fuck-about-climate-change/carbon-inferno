@@ -1,0 +1,12 @@
+.linechart_area {
+  padding: 8px;
+  fill: #f3acb1;
+  stroke: none;
+  opacity: 0.3;
+}
+
+.linechart_path {
+  stroke-width: 2;
+  fill: none;
+  stroke: #f3acb1;
+}

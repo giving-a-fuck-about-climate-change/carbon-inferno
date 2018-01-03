@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import windowSize from 'react-window-size';
 
+import './ChartInfo.css';
+
 import {
   InfoColumnHOC,
   LoadingWrapper,

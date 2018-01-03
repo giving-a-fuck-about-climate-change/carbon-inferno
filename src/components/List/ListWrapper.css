@@ -1,0 +1,10 @@
+.selected {
+  color: #365c73;
+  font-weight: bold;
+  border-bottom: 1px solid #1ba69c;
+  padding-bottom: 11px;
+}
+.selected a {
+  color: #365c73 !important;
+}
+

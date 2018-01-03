@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import './AreaChart.css';
+
 export const Path = ({ linePath, className }) => (
   <path className={className} d={linePath} />
 );

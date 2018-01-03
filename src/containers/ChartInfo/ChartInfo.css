@@ -1,0 +1,52 @@
+.graph-container {
+  height: 450px;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .graph-container {
+    height: 150px !important;
+  }
+}
+
+@media screen and (min-width: 640px) and (max-width: 900px) {
+  .graph-container {
+    height: 200px !important;
+  }
+}
+
+.time-choice-header {
+  text-align: right;
+  z-index: 1;
+  padding-bottom: 5px;
+}
+.time-choice-header ul {
+  margin: 5px;
+  padding: 0;
+}
+.time-choice-header li {
+  display: inline;
+  font-size: 13px;
+  list-style-type: none;
+  text-transform: uppercase;
+  margin-left: 20px;
+}
+
+.time-choice-header a:link {
+  color: #bcc8d1;
+  text-decoration: none;
+  padding-bottom: 11px;
+}
+.time-choice-header a:hover {
+  color: #365c73;
+  font-weight: bold;
+  border-bottom: 1px solid #1ba69c;
+}
+@media (max-width: 480px) {
+  .time-choice-header {
+    text-align: center;
+  }
+  .time-choice-header a:hover {
+    border-bottom: none;
+  }
+}

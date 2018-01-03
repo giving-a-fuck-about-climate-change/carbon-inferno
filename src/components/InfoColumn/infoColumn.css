@@ -1,3 +1,13 @@
+.flex-grid {
+  display: flex;
+  color: #365c73;
+  padding: 30px 0;
+  border-bottom: 1px dashed #7a92a4;
+  padding-bottom: 20px;
+}
+.menu-container {
+  border-bottom: 1px solid #d0d0d5;
+}
 .info-col {
   flex: 1 1 auto;
   flex-flow: row wrap;

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './Point.css';
+
 export const Point = ({ color, className, pointRadius, xCoord, yCoord }) => (
   <circle
     className={className}
