@@ -1,10 +1,8 @@
 {
   "name": "carbon-inferno",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "enzyme": "^3.2.0",
-    "enzyme-adapter-react-16": "^1.1.0",
     "history": "^4.7.2",
     "moment": "2.18.0",
     "prop-types": "^15.6.0",
@@ -26,6 +24,8 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.0",
     "eslint": "^4.12.1",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-config-react-app": "^2.0.1",
@@ -47,16 +47,11 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint -c .eslintrc src",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "prepush": "npm run test"
   },
   "lint-staged": {
-    "src/*.{js,json}": [
-      "eslint",
-      "git add"
-    ],
-    "*.{css}": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.js": ["eslint", "prettier --write", "git add"],
+    "*.css": ["prettier --write", "git add"]
   }
 }
