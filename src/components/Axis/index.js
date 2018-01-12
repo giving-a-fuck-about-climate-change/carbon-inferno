@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import moment from "moment";
+import React from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
 
-import "./Axis.css";
+import './Axis.css';
 /**
  Our axis will have 6 labels.
  Which are:
@@ -32,13 +32,13 @@ export const createLabels = (items = []) => {
 
 export const formatLabel = (label, rangeType) => {
   const dateLabel = new Date(label);
-  if (rangeType === "week") {
-    return moment(dateLabel).format("DD/MM/YY");
+  if (rangeType === 'week') {
+    return moment(dateLabel).format('DD/MM/YY');
   }
-  if (rangeType === "month") {
-    return moment(dateLabel).format("MMM DD");
+  if (rangeType === 'month') {
+    return moment(dateLabel).format('MMM DD');
   }
-  return moment(dateLabel).format("MMM YYYY");
+  return moment(dateLabel).format('MMM YYYY');
 };
 
 export const XAxis = ({ getSvgX, data, rangeType, viewBoxWidth }) => {
@@ -51,7 +51,7 @@ export const XAxis = ({ getSvgX, data, rangeType, viewBoxWidth }) => {
         height="100%"
         viewBox={`0 0 ${viewBoxWidth} ${40}`}
         preserveAspectRatio={`xMidYMax ${
-          viewBoxWidth < 1000 ? "meet" : "slice"
+          viewBoxWidth < 1000 ? 'meet' : 'slice'
         }`}
         overflow="visible"
       >
@@ -76,13 +76,13 @@ XAxis.propTypes = {
   data: PropTypes.array, //eslint-disable-line
   viewBoxWidth: PropTypes.number,
   getSvgX: PropTypes.func,
-  rangeType: PropTypes.string
+  rangeType: PropTypes.string,
 };
 XAxis.defaultProps = {
   data: [],
   viewBoxWidth: 1000,
   getSvgX: () => {},
-  rangeType: ""
+  rangeType: '',
 };
 
 export const YAxis = ({ containerClass, labelClass, minLabel, maxLabel }) => (
@@ -92,14 +92,14 @@ export const YAxis = ({ containerClass, labelClass, minLabel, maxLabel }) => (
   </div>
 );
 YAxis.defaultProps = {
-  containerClass: "y-axis",
-  labelClass: "y-labels",
+  containerClass: 'y-axis',
+  labelClass: 'y-labels',
   minLabel: 0,
-  maxLabel: 0
+  maxLabel: 0,
 };
 YAxis.propTypes = {
   containerClass: PropTypes.string,
   labelClass: PropTypes.string,
   minLabel: PropTypes.number,
-  maxLabel: PropTypes.number
+  maxLabel: PropTypes.number,
 };
