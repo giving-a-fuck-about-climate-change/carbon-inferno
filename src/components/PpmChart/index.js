@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { throttle, debounce } from "throttle-debounce";
-import { SvgCoords } from "react-svg-coordfuncs";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { throttle, debounce } from 'throttle-debounce';
+import { SvgCoords } from 'react-svg-coordfuncs';
 
-import "./PpmChart.css";
-import ToolTip from "../ToolTip";
-import { XAxis, YAxis } from "../../components/Axis";
-import ShouldShow from "../../components/ShouldShow";
-import HoverChart from "./hoverChart";
-import { WEEK, MONTH } from "../../constants";
-import binarySearch from "./utils";
+import './PpmChart.css';
+import ToolTip from '../ToolTip';
+import { XAxis, YAxis } from '../../components/Axis';
+import ShouldShow from '../../components/ShouldShow';
+import HoverChart from './hoverChart';
+import { WEEK, MONTH } from '../../constants';
+import binarySearch from './utils';
 
 const svgHeight = 350;
 const shouldShowActivePoint = (hoverState, type) => {
@@ -29,7 +29,7 @@ class PpmChart extends Component {
     super(props);
     this.state = {
       viewBoxWidth: props.windowWidth,
-      ...this.getInitialHoverState()
+      ...this.getInitialHoverState(),
     };
   }
 
@@ -41,18 +41,18 @@ class PpmChart extends Component {
     hoverLoc: null,
     activePoint: {
       ppm: 0,
-      date: ""
+      date: '',
     },
-    mouseLoc: 0
+    mouseLoc: 0,
   });
 
   // FIND CLOSEST POINT TO MOUSE
   getCoords = svgData =>
-    throttle(250, e => {
+    throttle(250, (e) => {
       e.persist();
       // http://www.codedread.com/blog/archives/2005/12/21/how-to-enable-dragging-in-svg/
       const svgElement = document.querySelector(
-        '[data-ident="ident-ppm-chart"]'
+        '[data-ident="ident-ppm-chart"]',
       );
       const svgCoords = svgElement.getScreenCTM();
       const svgPoint = svgElement.createSVGPoint();
@@ -60,7 +60,7 @@ class PpmChart extends Component {
       svgPoint.y = e.clientY; // set y coord to y coord pos of the mouse
       // http://wesbos.com/destructuring-renaming/
       const { x: hoverXLoc, y: hoverYLoc } = svgPoint.matrixTransform(
-        svgCoords.inverse()
+        svgCoords.inverse(),
       );
       // Only set the hover state if the y location is not overlapping our hover divs
       if (hoverYLoc > 2 && hoverYLoc < 332) {
@@ -68,7 +68,7 @@ class PpmChart extends Component {
         this.setState({
           hoverLoc: hoverXLoc,
           activePoint: closestPoint,
-          mouseLoc: e.clientX
+          mouseLoc: e.clientX,
         });
       } else {
         this.setState(this.getInitialHoverState());
@@ -81,7 +81,7 @@ class PpmChart extends Component {
   * Adding a debounce to stopHover ensures that the stop event is delayed
   * and always called after mouseMove.
   */
-  stopHover = debounce(60, e => {
+  stopHover = debounce(60, (e) => {
     e.persist();
     this.setState(this.getInitialHoverState());
   });
@@ -94,7 +94,7 @@ class PpmChart extends Component {
 
   determineViewPortSize = windowSize =>
     this.setState({
-      viewBoxWidth: windowSize <= 1000 ? windowSize : 1000
+      viewBoxWidth: windowSize <= 1000 ? windowSize : 1000,
     });
 
   render() {
@@ -119,7 +119,7 @@ class PpmChart extends Component {
             getMinY,
             getMaxY,
             getSvgX,
-            getSvgY
+            getSvgY,
           }) => (
             <div>
               <div className="svg-inline">
@@ -133,7 +133,7 @@ class PpmChart extends Component {
                       getMinY,
                       getMaxY,
                       getSvgX,
-                      getSvgY
+                      getSvgY,
                     }}
                     onMouseMove={this.getCoords}
                     onMouseLeave={this.stopHover}
@@ -179,10 +179,10 @@ export default PpmChart;
 PpmChart.propTypes = {
   data: PropTypes.array, //eslint-disable-line
   rangeType: PropTypes.string.isRequired,
-  windowWidth: PropTypes.number
+  windowWidth: PropTypes.number,
 };
 // DEFAULT PROPS
 PpmChart.defaultProps = {
   data: [],
-  windowWidth: 1000
+  windowWidth: 1000,
 };
