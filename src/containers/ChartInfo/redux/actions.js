@@ -50,7 +50,7 @@ export const fetchCurrentPpms = (
     dispatch(loadingPpms());
     const currentPpmResponse = await fetchData(`${api}${endpoint}`);
     const { count, results: [{ ppm }] = [{}] } = currentPpmResponse;
-    dispatch(currentPpmSuccess(parseInt(ppm, 10), count));
+    dispatch(currentPpmSuccess(parseFloat(ppm, 10), count));
   } catch (err) {
     dispatch(failedPpmFetch(err));
   }
