@@ -33,8 +33,6 @@ We're currently live in Beta over at [carbondoomsday.com].
 
 [carbondoomsday.com]: http://www.carbondoomsday.com/
 
-If you're interested in contributing, we need you! Please join us in the [Gitter Lobby].
-
 [Gitter Lobby]: https://gitter.im/giving-a-fuck-about-climate-change/Lobby
 
 ## How to run locally
@@ -64,3 +62,9 @@ Check the [buildpack](https://github.com/mars/create-react-app-buildpack) that w
 ## Graph Component
 
 Our Chart component is an SVG component written in react. We are using this [lib](https://github.com/grady-lad/react-svg-coordfuncs).
+
+## Contributing 
+
+We welcome all persons no matter skill level you have!
+
+If you're interested in contributing, we need you! Please join us in the [Gitter Lobby].
