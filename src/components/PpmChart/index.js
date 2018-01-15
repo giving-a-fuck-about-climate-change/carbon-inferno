@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { throttle, debounce } from 'throttle-debounce';
-import { SvgCoords } from 'react-svg-coordfuncs';
+import { SvgCoords } from 'react-svg-coordinates';
 
 import './PpmChart.css';
 import ToolTip from '../ToolTip';
@@ -111,7 +111,7 @@ class PpmChart extends Component {
         />
         <SvgCoords
           viewBoxWidth={1000}
-          viewBoxHeigth={svgHeight}
+          viewBoxHeight={svgHeight}
           data={data}
           render={({
             getMinX,
@@ -158,7 +158,7 @@ class PpmChart extends Component {
         <div>
           <SvgCoords
             viewBoxWidth={viewBoxWidth}
-            viewBoxHeigth={svgHeight}
+            viewBoxHeight={svgHeight}
             data={data}
             render={({ getSvgX }) => (
               <XAxis

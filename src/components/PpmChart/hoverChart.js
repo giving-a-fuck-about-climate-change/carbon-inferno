@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { SvgCoords } from 'react-svg-coordfuncs'; //eslint-disable-line
-
 import './PpmChart.css';
 import { Point as ActivePoint } from '../Point';
 import { Line } from '../Line';
