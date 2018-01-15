@@ -41,7 +41,7 @@ If you're interested in contributing, we need you! Please join us in the [Gitter
 
 Clone the project.
 
-Install the dependencies using `yarn` or `npm i`
+Install the dependencies using `npm i`
 
 Run `npm start`
 
@@ -49,7 +49,7 @@ The app will run on `http://localhost:3000`
 
 ## Linting
 
-We are using [eslint](https://github.com/eslint/eslint) and [prettier](https://github.com/prettier/prettier), we recommened setting up your editor to format on save. But we also have a git hook which will also do the prettier formatting upon committing. 
+We are using [eslint](https://github.com/eslint/eslint) and [prettier](https://github.com/prettier/prettier), we recommened setting up your editor to format on save. But we also have a git hook which will also do the prettier formatting upon committing.
 
 ## Tests
 
@@ -57,7 +57,7 @@ To run the tests run `npm test`.
 
 ## Deploy to Production
 
-We are deploying to heroku which will deploy every pr merged to master. 
+We are deploying to heroku which will deploy every pr merged to master.
 
 Check the [buildpack](https://github.com/mars/create-react-app-buildpack) that we are using.
 
