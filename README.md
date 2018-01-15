@@ -6,6 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/giving-a-fuck-about-climate-change/carbon-inferno.svg)](https://github.com/giving-a-fuck-about-climate-change/carbon-inferno/stargazers)
 [![GitHub stars](https://img.shields.io/github/watchers/giving-a-fuck-about-climate-change/carbon-inferno.svg)](https://github.com/giving-a-fuck-about-climate-change/carbon-inferno/watchers)
 [![Gitter chat](https://badges.gitter.im/giving-a-fuck-about-climate-change/gitter.png)](https://gitter.im/giving-a-fuck-about-climate-change/Lobby)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 ![CarbonDoomsDay Logo](https://i.imgur.com/jfj3CMs.png)
 
