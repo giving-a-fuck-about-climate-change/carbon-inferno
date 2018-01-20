@@ -18,17 +18,17 @@ describe('ChartInfo Utils', () => {
     test('should transform item to correct format', () => {
       expect(transformItem({ ppm: 223.4, date: '2017-06-23' }, 3)).toEqual({
         date: 'Jun 23 2017',
-        ppm: 223,
+        ppm: 223.4,
         x: 3,
-        y: 223,
+        y: 223.4,
       });
     });
     test('should transform item to correct format even if ppm is typeof string', () => {
       expect(transformItem({ ppm: '223.4', date: '2017-06-23' }, 3)).toEqual({
         date: 'Jun 23 2017',
-        ppm: 223,
+        ppm: 223.4,
         x: 3,
-        y: 223,
+        y: 223.4,
       });
     });
     test('should transform item to default item if no params passed', () => {
