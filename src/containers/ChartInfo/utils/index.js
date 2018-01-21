@@ -4,9 +4,9 @@ export const transformItem = (item = {}, count = 0) => {
   const { date = '', ppm = 0 } = item;
   return {
     date: date ? moment(date).format('MMM DD YYYY') : date,
-    ppm: parseInt(ppm, 10),
+    ppm: parseFloat(ppm),
     x: count, // where to appear on x axis.
-    y: parseInt(ppm, 10), // where to appear on y axis.
+    y: parseFloat(ppm), // where to appear on y axis.
   };
 };
 /*
