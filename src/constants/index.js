@@ -1,36 +1,62 @@
-export const resourcesLearnLinks = [
-  { href: '', className: 'resources-title', text: 'Learn More' },
-  { href: '#TODO', className: '', text: 'Link' },
-  { href: '#TODO', className: '', text: 'Link' },
-  { href: '#TODO', className: '', text: 'text' },
-  { href: '#TODO', className: '', text: 'Link' },
-  { href: '#TODO', className: '', text: 'Link' },
-];
+import {
+  FaGithub,
+  FaChild,
+  FaLightbulbO,
+  FaTwitter,
+  FaCog,
+  FaCode,
+} from 'react-icons/lib/fa';
 
-export const resourcesTakeActionLinks = [
-  { href: '', className: 'resources-title', text: 'Take Action' },
-  { href: '#TODO', className: '', text: 'Link' },
-  { href: '#TODO', className: '', text: 'Link' },
-  { href: '#TODO', className: '', text: 'Link' },
-  { href: '#TODO', className: '', text: 'Link' },
-  { href: '#TODO', className: '', text: 'Link' },
-];
-
-export const resourcesNewsLinks = [
+export const actionCardContent = [
+  {
+    href:
+      'https://github.com/giving-a-fuck-about-climate-change/carbondoomsday',
+    title: 'Give us a star on GitHub',
+    subTitle: 'Takes 5 seconds',
+    icon: FaGithub,
+  },
+  {
+    href: 'https://twitter.com',
+    title: 'Tweet this chart',
+    subTitle: 'Takes 5 seconds',
+    icon: FaTwitter,
+  },
+  {
+    href:
+      'https://docs.google.com/forms/d/e/1FAIpQLScWObxJHjnV8uMW9ywqZRo2kgFYNZKmE7aGfhrsTxS-yWXGhw/viewform',
+    title: 'Submit an idea',
+    subTitle: 'Takes 2 minutes',
+    icon: FaLightbulbO,
+  },
+  {
+    href: 'https://www.carbondoomsday.com',
+    title: 'Embed this chart',
+    subTitle: 'Takes 2 minutes',
+    icon: FaCode,
+  },
+  {
+    href: 'http://api.carbondoomsday.com/',
+    title: 'Check out our API',
+    subTitle: 'Takes 10 minutes',
+    icon: FaCog,
+  },
   {
     href: '',
-    className: 'resources-title',
-    text: 'Climate Change in the News',
+    title: 'Work with us!',
+    subTitle: 'As little an one hour per week',
+    icon: FaChild,
   },
-  { href: '', className: '', text: '(Newsfeed)' },
 ];
 
-export const aboutProjectLinks = [
-  { href: '', className: 'footer-title', text: 'About The Project' },
-  { href: '/about', className: '', text: 'Mission' },
-  { href: '/datasources', className: '', text: 'Data Sources' },
-  { href: '/team', className: '', text: 'Team' },
-];
+export const missionContent = {
+  text:
+    '<p>What if tracking climate change was as easy as checking the price of Bitcoin?</p><p>Every day, NOAA scientists carefully measure the carbon dioxide in the atmosphere from Mauna Loa, Hawaii. This important data is public but hard to digest. We want to empower everyone around the world to use it.</p><p>So we built Carbon Doomsday to chart carbon dioxide levels.</p><p>Our chart is powered by the worlds first open API for climate change. This enables anyone to enhance NOAAs carbon dioxide data by building charts, sensor networks, and more.</p><p>Our code is open source on Github. We are a growing team of 8 people, including programmers, designers and marketers from the USA, Ireland, Australia and Germany.</p>',
+};
+
+export const dataSourceContent = {
+  text:
+    "<p>All of our data is thanks to the work of scientists at NOAA's ESRL who have painstakingly measured carbon dioxide every day since 1958. Their data is free and public.</p><p><strong>Their release notes say:</strong><br />&#34;This data are made freely available to the public and the scientific community in the belief that their wide dissemination will lead to greater understanding and new scientific insights.&#34;</p><p>This data needs to be more accessible. And that's where Carbon Doomsday comes in. We've built a web API and real-time chart of carbon dioxide data.</p><p>You can see our most up to date list of sources on our Github.</p>",
+};
 
 export const socialLinks = [
   { href: '', className: 'footer-title', text: 'Social' },

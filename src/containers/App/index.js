@@ -1,21 +1,18 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Team from '../Team';
-import About from '../About';
 import Contribute from '../Contribute';
-import DataSources from '../DataSources';
 import ChartInfoDiv from '../ChartInfo';
 
-import {
-  ROOT,
-  TEAM_PAGE,
-  ABOUT_PAGE,
-  CONTRIBUTE_PAGE,
-  DATASOURCES_PAGE,
-} from '../../routes/index';
+import { ROOT, CONTRIBUTE_PAGE } from '../../routes/index';
 
-import { Footer, Header } from '../../components';
+import {
+  Footer,
+  Header,
+  ActionCards,
+  InfoCardSection,
+  SectionTitle,
+} from '../../components';
 
 import '../../App.css';
 
@@ -27,13 +24,14 @@ const AppComponent = () => (
         <BrowserRouter>
           <Switch>
             <Route exact path={ROOT} component={ChartInfoDiv} />
-            <Route path={TEAM_PAGE} component={Team} />
-            <Route path={ABOUT_PAGE} component={About} />
             <Route path={CONTRIBUTE_PAGE} component={Contribute} />
-            <Route path={DATASOURCES_PAGE} component={DataSources} />
           </Switch>
         </BrowserRouter>
       </div>
+      <SectionTitle text="Give a fuck about it" />
+      <ActionCards />
+      <SectionTitle text="About the project" />
+      <InfoCardSection />
     </div>
     <Footer />
   </div>

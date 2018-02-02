@@ -1,0 +1,22 @@
+.infocard-container {
+  min-height: 540px;
+  width: 350px;
+  background: white;
+  border-radius: 5px;
+  margin: 15px;
+  padding: 15px;
+}
+
+.infocard-title {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 20px;
+  color: #ffa5ad;
+  padding-left: 15px;
+}
+
+.infocard-text {
+  color: #46494e;
+  font-size: 14px;
+  padding: 0 15px;
+}

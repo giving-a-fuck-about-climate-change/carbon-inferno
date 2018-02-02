@@ -1,21 +1,21 @@
 @font-face {
-  font-family: 'proxima-nova-bold';
-  src: url('/Proxima-Nova/proximanova-bold-webfont.woff2') format('woff2'),
-    url('/Proxima-Nova/proximanova-bold-webfont.woff') format('woff');
+  font-family: "proxima-nova-bold";
+  src: url("/Proxima-Nova/proximanova-bold-webfont.woff2") format("woff2"),
+    url("/Proxima-Nova/proximanova-bold-webfont.woff") format("woff");
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
-  font-family: 'proxima-nova-light';
-  src: url('/Proxima-Nova/proximanova-light-webfont.woff2') format('woff2'),
-    url('/Proxima-Nova/proximanova-light-webfont.woff') format('woff');
+  font-family: "proxima-nova-light";
+  src: url("/Proxima-Nova/proximanova-light-webfont.woff2") format("woff2"),
+    url("/Proxima-Nova/proximanova-light-webfont.woff") format("woff");
   font-weight: lighter;
   font-style: normal;
 }
 @font-face {
-  font-family: 'proxima-nova';
-  src: url('/Proxima-Nova/proximanova-regular-webfont.woff2') format('woff2'),
-    url('/Proxima-Nova/proximanova-regular-webfont.woff') format('woff');
+  font-family: "proxima-nova";
+  src: url("/Proxima-Nova/proximanova-regular-webfont.woff2") format("woff2"),
+    url("/Proxima-Nova/proximanova-regular-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -26,26 +26,7 @@ body {
   margin: 0;
 }
 .page-background {
-  background: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    color-stop(35%, #46494e),
-    color-stop(36%, #46494e),
-    color-stop(100%, #2b4d4c)
-  ); /* safari4+,chrome */
-  background: -webkit-linear-gradient(
-    270deg,
-    #46494e 35%,
-    #46494e 36%,
-    #2b4d4c 100%
-  ); /* safari5.1+,chrome10+ */
-  background: -moz-linear-gradient(
-    270deg,
-    #46494e 35%,
-    #46494e 36%,
-    #2b4d4c 100%
-  ); /* ff3.6+ */
+  background: #6f7886;
   padding: 30px;
 }
 .App {
@@ -75,4 +56,12 @@ body {
 .text-page a:hover {
   color: #365c73;
   font-weight: bold;
+}
+
+.info-cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
