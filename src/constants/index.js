@@ -16,7 +16,7 @@ export const actionCardContent = [
     icon: FaGithub,
   },
   {
-    href: 'https://twitter.com',
+    href: 'https://twitter.com/carbondoomsday',
     title: 'Tweet this chart',
     subTitle: 'Takes 5 seconds',
     icon: FaTwitter,
@@ -41,44 +41,11 @@ export const actionCardContent = [
     icon: FaCog,
   },
   {
-    href: '',
-    title: 'Work with us!',
+    href: 'https://gitter.im/giving-a-fuck-about-climate-change/Lobby',
+    title: 'Work with us',
     subTitle: 'As little an one hour per week',
     icon: FaChild,
   },
-];
-
-export const missionContent = {
-  text:
-    '<p>What if tracking climate change was as easy as checking the price of Bitcoin?</p><p>Every day, NOAA scientists carefully measure the carbon dioxide in the atmosphere from Mauna Loa, Hawaii. This important data is public but hard to digest. We want to empower everyone around the world to use it.</p><p>So we built Carbon Doomsday to chart carbon dioxide levels.</p><p>Our chart is powered by the worlds first open API for climate change. This enables anyone to enhance NOAAs carbon dioxide data by building charts, sensor networks, and more.</p><p>Our code is open source on Github. We are a growing team of 8 people, including programmers, designers and marketers from the USA, Ireland, Australia and Germany.</p>',
-};
-
-export const dataSourceContent = {
-  text:
-    "<p>All of our data is thanks to the work of scientists at NOAA's ESRL who have painstakingly measured carbon dioxide every day since 1958. Their data is free and public.</p><p><strong>Their release notes say:</strong><br />&#34;This data are made freely available to the public and the scientific community in the belief that their wide dissemination will lead to greater understanding and new scientific insights.&#34;</p><p>This data needs to be more accessible. And that's where Carbon Doomsday comes in. We've built a web API and real-time chart of carbon dioxide data.</p><p>You can see our most up to date list of sources on our Github.</p>",
-};
-
-export const socialLinks = [
-  { href: '', className: 'footer-title', text: 'Social' },
-  {
-    href: 'https://twitter.com/carbondoomsday',
-    className: '',
-    text: 'Twitter',
-  },
-];
-
-export const contributingLinks = [
-  { href: '', className: 'footer-title', text: 'Give a Fuck' },
-  { href: '/contribute', className: '', text: 'Contribute' },
-  {
-    href: 'mailto:contact@carbondoomsday.com',
-    className: '',
-    text: 'Contact Us',
-  },
-];
-
-export const footerLinks = [
-  { href: '/', className: 'footer-header', text: 'Carbon Doomsday' },
 ];
 
 export const WEEK = 'week';

@@ -3,9 +3,9 @@ import './sectionTitle.css';
 
 const SectionTitle = ({ text }) => (
   <div className="divider">
-    <div className="hr" />
+    <hr />
     <p className="title-text">{text}</p>
-    <div className="hr" />
+    <hr />
   </div>
 );
 

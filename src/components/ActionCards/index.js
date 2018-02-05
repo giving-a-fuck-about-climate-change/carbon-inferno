@@ -1,14 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { actionCardContent } from '../../constants';
 import './actionCards.css';
 
 const renderIcon = Icon => (
-  <Icon size={50} color="grey" style={{ paddingRight: '10px' }} />
+  <Icon size={50} color="grey" className="card-icon" />
 );
 
-const ActionCards = () => (
+const ActionCards = ({ actionCardItems }) => (
   <div className="card-wrapper">
-    {actionCardContent.map(item => (
+    {actionCardItems.map(item => (
       <div className="card-container">
         {renderIcon(item.icon)}
         <div className="card-content">
@@ -21,5 +22,11 @@ const ActionCards = () => (
     ))}
   </div>
 );
+
+ActionCards.propTypes = {
+  actionCardItems: PropTypes.object, //eslint-disable-line
+};
+
+ActionCards.defaultProps = { actionCardItems: actionCardContent };
 
 export default ActionCards;

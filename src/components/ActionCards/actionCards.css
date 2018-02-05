@@ -10,8 +10,8 @@
   display: flex;
   flex-direction: row;
   background-color: #ffffff;
-  height: 100px;
-  min-width: 350px;
+  min-height: 100px;
+  min-width: 320px;
   color: #7a92a4;
   border-radius: 5px;
   margin: 15px;
@@ -31,9 +31,13 @@
 .card-title {
   font-size: 18px;
   color: #1ba69c;
-  font-weight: bold;
+  font-weight: bolder;
 }
 
 .card-container a:hover {
   text-decoration: underline;
+}
+
+.card-icon {
+  padding-right: 10px;
 }

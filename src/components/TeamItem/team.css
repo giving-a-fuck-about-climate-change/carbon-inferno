@@ -15,9 +15,9 @@
 }
 .team-image {
   border-radius: 100px;
-  margin: 15px;
-  width: 45px;
-  height: 45px;
+  margin: 10px;
+  width: 55px;
+  height: 55px;
 }
 .team-container {
   display: flex;
