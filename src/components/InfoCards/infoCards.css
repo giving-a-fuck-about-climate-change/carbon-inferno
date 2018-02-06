@@ -1,0 +1,33 @@
+.infocard-container {
+  min-height: 580px;
+  width: 320px;
+  background: white;
+  border-radius: 5px;
+  margin: 15px;
+  padding: 0 15px;
+}
+
+.infocard-title {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 20px;
+  color: #d59a94;
+  padding-left: 15px;
+  margin-bottom: 0;
+}
+
+.infocard-text {
+  color: #46494e;
+  font-size: 15px;
+  padding: 0 15px;
+}
+.contact-container {
+  padding: 0 0 20px 15px;
+}
+
+.contact-divider {
+  margin-bottom: 20px;
+  background-color: #d0d0d5;
+  border: 0;
+  height: 1px;
+}

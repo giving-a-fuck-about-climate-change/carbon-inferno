@@ -1,0 +1,21 @@
+.divider {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0;
+}
+
+.divider hr {
+  min-width: 40%;
+  border: 0;
+  height: 1px;
+  background-color: #ffffff;
+}
+
+.title-text {
+  white-space: nowrap;
+  padding: 0 20px;
+  color: #ffffff;
+  text-transform: uppercase;
+}

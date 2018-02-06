@@ -1,58 +1,51 @@
-export const resourcesLearnLinks = [
-  { href: '', className: 'resources-title', text: 'Learn More' },
-  { href: '#TODO', className: '', text: 'Link' },
-  { href: '#TODO', className: '', text: 'Link' },
-  { href: '#TODO', className: '', text: 'text' },
-  { href: '#TODO', className: '', text: 'Link' },
-  { href: '#TODO', className: '', text: 'Link' },
-];
+import {
+  FaGithub,
+  FaChild,
+  FaLightbulbO,
+  FaTwitter,
+  FaCog,
+  FaCode,
+} from 'react-icons/lib/fa';
 
-export const resourcesTakeActionLinks = [
-  { href: '', className: 'resources-title', text: 'Take Action' },
-  { href: '#TODO', className: '', text: 'Link' },
-  { href: '#TODO', className: '', text: 'Link' },
-  { href: '#TODO', className: '', text: 'Link' },
-  { href: '#TODO', className: '', text: 'Link' },
-  { href: '#TODO', className: '', text: 'Link' },
-];
-
-export const resourcesNewsLinks = [
+export const actionCardContent = [
   {
-    href: '',
-    className: 'resources-title',
-    text: 'Climate Change in the News',
+    href:
+      'https://github.com/giving-a-fuck-about-climate-change/carbondoomsday',
+    title: 'Give us a star on GitHub',
+    subTitle: 'Takes 5 seconds',
+    icon: FaGithub,
   },
-  { href: '', className: '', text: '(Newsfeed)' },
-];
-
-export const aboutProjectLinks = [
-  { href: '', className: 'footer-title', text: 'About The Project' },
-  { href: '/about', className: '', text: 'Mission' },
-  { href: '/datasources', className: '', text: 'Data Sources' },
-  { href: '/team', className: '', text: 'Team' },
-];
-
-export const socialLinks = [
-  { href: '', className: 'footer-title', text: 'Social' },
   {
     href: 'https://twitter.com/carbondoomsday',
-    className: '',
-    text: 'Twitter',
+    title: 'Tweet this chart',
+    subTitle: 'Takes 5 seconds',
+    icon: FaTwitter,
   },
-];
-
-export const contributingLinks = [
-  { href: '', className: 'footer-title', text: 'Give a Fuck' },
-  { href: '/contribute', className: '', text: 'Contribute' },
   {
-    href: 'mailto:contact@carbondoomsday.com',
-    className: '',
-    text: 'Contact Us',
+    href:
+      'https://docs.google.com/forms/d/e/1FAIpQLScWObxJHjnV8uMW9ywqZRo2kgFYNZKmE7aGfhrsTxS-yWXGhw/viewform',
+    title: 'Submit an idea',
+    subTitle: 'Takes 2 minutes',
+    icon: FaLightbulbO,
   },
-];
-
-export const footerLinks = [
-  { href: '/', className: 'footer-header', text: 'Carbon Doomsday' },
+  {
+    href: 'https://www.carbondoomsday.com',
+    title: 'Embed this chart',
+    subTitle: 'Takes 2 minutes',
+    icon: FaCode,
+  },
+  {
+    href: 'http://api.carbondoomsday.com/',
+    title: 'Check out our API',
+    subTitle: 'Takes 10 minutes',
+    icon: FaCog,
+  },
+  {
+    href: 'https://gitter.im/giving-a-fuck-about-climate-change/Lobby',
+    title: 'Work with us',
+    subTitle: 'As little an one hour per week',
+    icon: FaChild,
+  },
 ];
 
 export const WEEK = 'week';

@@ -1,20 +1,18 @@
-.header,
-.header a:link,
-.header a:visited {
+.header {
   font-size: 30px;
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 2px;
   color: #ffffff;
   padding-top: 20px;
-  text-decoration: none;
 }
 .header-sub {
   color: #ffffff;
-  font-weight: 300;
+  font-weight: 700;
   font-size: 14px;
   letter-spacing: 2px;
   padding-bottom: 20px;
+  margin-left: 3px;
 }
 .header-flex {
   display: flex;
@@ -24,16 +22,17 @@
 .logo {
   height: 75px;
   padding-right: 10px;
+  margin-left: -9px;
 }
 @media (max-width: 640px) {
+  .logo {
+    height: 65px;
+  }
+
   .header {
-    text-align: center;
-    padding-top: 10px;
+    font-size: 21px;
   }
   .header-sub {
-    text-align: center;
-  }
-  .header-flex {
-    flex-direction: column;
+    font-size: 11px;
   }
 }

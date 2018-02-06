@@ -1,5 +1,6 @@
 .team-content {
-  margin-bottom: 15px;
+  color: #46494e;
+  font-size: 14px;
 }
 .team-name {
   font-weight: bold;
@@ -13,34 +14,13 @@
   margin: 0;
 }
 .team-image {
-  border-radius: 5px;
-  margin: 15px;
-  width: 200px;
+  border-radius: 100px;
+  margin: 10px;
+  width: 55px;
+  height: 55px;
 }
-.team-header {
-  font-size: 20px;
-  color: #46494e;
-  text-transform: uppercase;
-  font-weight: 300;
-  letter-spacing: 1px;
-  padding-top: 20px;
-}
-.team-grid {
+.team-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  background-color: #ffffff;
-  margin: 30px auto;
-  padding: 30px;
-  border-radius: 5px;
-  max-width: 800px;
-  text-align: center;
-  color: #46494e;
-}
-@media (max-width: 569px) {
-  .team-grid {
-    justify-content: center;
-  }
 }

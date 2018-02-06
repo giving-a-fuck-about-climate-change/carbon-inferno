@@ -1,4 +1,3 @@
-export { default as Footer } from './Footer';
 export { default as Header } from './Header';
 export { default as InfoColumnHOC } from './InfoColumn';
 export { default as LoadingWrapper, Loading } from './Loading';
@@ -11,3 +10,8 @@ export { ActiveListWrapper } from './List/ListWrapper';
 export { default as Navigation } from './Navigation';
 export { default as MenuIcon } from './MenuIcon';
 export { default as ShouldShow } from './ShouldShow';
+export { default as ActionCards } from './ActionCards';
+export { default as InfoCard } from './InfoCards';
+export { default as SectionTitle } from './SectionTitle';
+export { default as TeamItem } from './TeamItem';
+export { default as InfoCardSection } from './InfoCardSection';
