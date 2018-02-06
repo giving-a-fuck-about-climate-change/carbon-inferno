@@ -7,7 +7,7 @@ const ContactUs = () => (
     <hr className="contact-divider" />
     <div className="contact-container">
       <FaEnvelope size={30} color="grey" className="card-icon" />
-      <a href="" className="card-title">
+      <a href="mailto:contact@carbondoomsday.com" className="card-title">
         Contact Us
       </a>
     </div>
