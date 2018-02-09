@@ -8,8 +8,8 @@ import { calculatePercentageDiff, calculateDiff } from './utils';
 const calculateSubHeader = (rangeType = '') => {
   const formatStr = str => str.replace('_', ' ');
   return {
-    diffPPMSubHeader: `SINCE LAST ${rangeType ? formatStr(rangeType) : ''}`,
-    diffPercentSubHeader: `SINCE LAST ${
+    diffPPMSubHeader: `IN THE PAST ${rangeType ? formatStr(rangeType) : ''}`,
+    diffPercentSubHeader: `IN THE PAST ${
       rangeType ? formatStr(rangeType) : ''
     } (%)`,
   };

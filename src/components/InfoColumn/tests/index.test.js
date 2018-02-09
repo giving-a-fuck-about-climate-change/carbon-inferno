@@ -21,9 +21,9 @@ describe('InfoColumnHOC Component', () => {
       const component = getComponent({ rangeType: ALL, currentPpm: 22 });
       expect(component.state()).toEqual({
         ppmDiff: 0,
-        diffPPMSubHeader: 'SINCE LAST ',
+        diffPPMSubHeader: 'IN THE PAST ',
         ppmPercentDiff: 0,
-        diffPercentSubHeader: 'SINCE LAST  (%)',
+        diffPercentSubHeader: 'IN THE PAST  (%)',
       }); // confirm initalstate
       component.setProps({
         rangeType: FIVE_YEAR,
@@ -32,9 +32,9 @@ describe('InfoColumnHOC Component', () => {
       });
       expect(component.state()).toEqual({
         ppmDiff: '+10.00 PPM',
-        diffPPMSubHeader: 'SINCE LAST five years',
+        diffPPMSubHeader: 'IN THE PAST five years',
         ppmPercentDiff: '+45.45 %',
-        diffPercentSubHeader: 'SINCE LAST five years (%)',
+        diffPercentSubHeader: 'IN THE PAST five years (%)',
       }); // confirm initalstate
     });
   });
@@ -42,9 +42,9 @@ describe('InfoColumnHOC Component', () => {
     const component = getComponent({ rangeType: ALL, currentPpm: 22 });
     expect(component.state()).toEqual({
       ppmDiff: 0,
-      diffPPMSubHeader: 'SINCE LAST ',
+      diffPPMSubHeader: 'IN THE PAST ',
       ppmPercentDiff: 0,
-      diffPercentSubHeader: 'SINCE LAST  (%)',
+      diffPercentSubHeader: 'IN THE PAST  (%)',
     }); // confirm initalstate
     component.setProps({
       rangeType: ALL,
@@ -53,9 +53,9 @@ describe('InfoColumnHOC Component', () => {
     });
     expect(component.state()).toEqual({
       ppmDiff: 0,
-      diffPPMSubHeader: 'SINCE LAST ',
+      diffPPMSubHeader: 'IN THE PAST ',
       ppmPercentDiff: 0,
-      diffPercentSubHeader: 'SINCE LAST  (%)',
+      diffPercentSubHeader: 'IN THE PAST  (%)',
     });
   });
 });
