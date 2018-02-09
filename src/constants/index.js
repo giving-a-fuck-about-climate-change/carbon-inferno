@@ -43,7 +43,7 @@ export const actionCardContent = [
   {
     href: 'https://gitter.im/giving-a-fuck-about-climate-change/Lobby',
     title: 'Work with us',
-    subTitle: 'As little an one hour per week',
+    subTitle: 'As little as one hour per week',
     icon: FaChild,
   },
 ];
