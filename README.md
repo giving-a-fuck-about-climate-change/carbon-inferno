@@ -25,10 +25,11 @@ This application is part of the [Carbon Doomsday project]:
 > of free software, open data access and a willingness to contribute to further
 > education on the global climate issue.
 
-We pull our data from [api.carbondoomsday.com] while [giving a fuck].
+We pull our data from [api.carbondoomsday.com] (powered by [carbondoomsday]) while [giving a fuck].
 
 [api.carbondoomsday.com]: http://api.carbondoomsday.com/apidocs/
 [giving a fuck]: http://titojankowski.com/no-one-gives-a-fck-about-climate-change/
+[carbondoomsday]: https://github.com/giving-a-fuck-about-climate-change/carbondoomsday
 
 We're currently live in Beta over at [carbondoomsday.com].
 
@@ -64,8 +65,12 @@ Check the [buildpack](https://github.com/mars/create-react-app-buildpack) that w
 
 Our Chart component is an SVG component written in react. We are using this [lib](https://github.com/grady-lad/react-svg-coordfuncs).
 
-## Contributing 
+## Contributing
 
 We welcome all persons no matter skill level you have!
 
 If you're interested in contributing, we need you! Please join us in the [Gitter Lobby].
+
+You can also suggest changes or ideas over at our [vision] repository!
+
+[vision]: https://github.com/giving-a-fuck-about-climate-change/vision
