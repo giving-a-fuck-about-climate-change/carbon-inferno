@@ -49,10 +49,20 @@ export class ChartInfo extends Component {
   };
 
   componentDidMount() {
-    // query for current ppm
-    this.props.fetchCurrentPpms();
-    // Query for five years
-    this.queryApi(this.state.rangeType);
+    // Wait for the total number of records to load
+    // before requesting ALL records from the API.
+    if (this.state.rangeType === ALL) {
+      // query for current ppm and wait for limit
+      Promise.resolve(this.props.fetchCurrentPpms()).then(() => {
+        // Query for current time period.
+        this.queryApi(this.state.rangeType);
+      });
+    } else {
+      // query for current ppm
+      this.props.fetchCurrentPpms();
+      // Query for current time period.
+      this.queryApi(this.state.rangeType);
+    }
   }
 
   queryApi = (rangeType) => {
