@@ -45,8 +45,7 @@ export class ActiveListWrapper extends Component {
     };
   }
 
-  setSelected = type => (event) => {
-    event.preventDefault();
+  setSelected = type => () => {
     const { items } = this.state;
     this.setState({ items: updateItem(type, items) }, () =>
       this.props.onClick(type),

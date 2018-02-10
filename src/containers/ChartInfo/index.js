@@ -42,7 +42,10 @@ const PpmResizedChart = windowSize(PpmChart);
 
 export class ChartInfo extends Component {
   state = {
-    rangeType: FIVE_YEAR, // Intitial date range query type
+    rangeType:
+      this.props.match && this.props.match.params.time
+        ? this.props.match.params.time
+        : FIVE_YEAR, // Intitial date range query type
   };
 
   componentDidMount() {
@@ -114,6 +117,7 @@ export class ChartInfo extends Component {
                 className="time-choice-header"
                 items={timeHeaderLinks}
                 onClick={this.handlePpmClick}
+                defaultSelected={this.state.rangeType}
               />
             }
           />
@@ -173,6 +177,7 @@ ChartInfo.propTypes = {
   fetchYearPpms: PropTypes.func.isRequired,
   fetchAllPpms: PropTypes.func.isRequired,
   error: PropTypes.string, // eslint-disable-line
+  match: PropTypes.object, // eslint-disable-line
 }; // TODO: Update the above create error handling issue
 ChartInfo.defaultProps = {
   error: '',
@@ -188,4 +193,5 @@ ChartInfo.defaultProps = {
   fetchMonthWeekPpms: () => {},
   fetchYearPpms: () => {},
   fetchAllPpms: () => {},
+  match: null,
 };

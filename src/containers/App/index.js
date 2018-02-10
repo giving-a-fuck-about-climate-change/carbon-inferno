@@ -18,7 +18,7 @@ const AppComponent = () => (
     <div className="App">
       <BrowserRouter>
         <Switch>
-          <Route component={ChartInfoDiv} />
+          <Route path="/:time?" component={ChartInfoDiv} />
         </Switch>
       </BrowserRouter>
     </div>
