@@ -80,7 +80,7 @@ If you're interested in contributing, we need you! Please check out the followin
 [Gitter Lobby]: https://gitter.im/giving-a-fuck-about-climate-change/Lobby
 [Vision]: https://github.com/giving-a-fuck-about-climate-change/vision
 
-# Support
+## Support
 
 Support us with a monthly donation and help us continue our activities.
 
