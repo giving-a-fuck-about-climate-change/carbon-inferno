@@ -10,12 +10,13 @@
 
 ![CarbonDoomsDay Logo](https://i.imgur.com/jfj3CMs.png)
 
-A [create-react-app]  web application for visualising tracking CO2 emissions since 1958.
+A [React.js] web application for visualising CO2 emissions since 1958.
 
-[create-react-app]: https://github.com/facebookincubator/create-react-app
+[React.js]: https://github.com/facebookincubator/create-react-app
 
-This application is part of the [Carbon Doomsday project]:
+We're currently live over at [carbondoomsday.com]. This application is part of the [Carbon Doomsday project]:
 
+[carbondoomsday.com]: http://www.carbondoomsday.com/
 [Carbon Doomsday project]: http://datadrivenjournalism.net/featured_projects/carbon_doomsday_tracking_co2_since_1958
 
 > Carbon Doomsday is a real-time API and chart of worldwide carbon dioxide
@@ -31,25 +32,21 @@ We pull our data from [api.carbondoomsday.com] (powered by [carbondoomsday]) whi
 [giving a fuck]: http://titojankowski.com/no-one-gives-a-fck-about-climate-change/
 [carbondoomsday]: https://github.com/giving-a-fuck-about-climate-change/carbondoomsday
 
-We're currently live in Beta over at [carbondoomsday.com].
-
-[carbondoomsday.com]: http://www.carbondoomsday.com/
-
-[Gitter Lobby]: https://gitter.im/giving-a-fuck-about-climate-change/Lobby
-
 ## How to run locally
 
-Clone the project.
-
-Install the dependencies using `npm i`
-
-Run `npm start`
-
-The app will run on `http://localhost:3000`
+  * `git clone` the project.
+  * Install the dependencies using `npm i`.
+  * Run `npm start`.
+  * The app will run on `http://localhost:3000`.
 
 ## Linting
 
-We are using [eslint](https://github.com/eslint/eslint) and [prettier](https://github.com/prettier/prettier), we recommened setting up your editor to format on save. But we also have a git hook which will also do the prettier formatting upon committing.
+We are using [eslint] and [prettier], we recommend setting up your editor to
+format on save. But we also have a git hook which will also do the prettier
+formatting upon committing.
+
+[eslint]: https://github.com/eslint/eslint
+[prettier]: https://github.com/prettier/prettier
 
 ## Tests
 
@@ -57,20 +54,36 @@ To run the tests run `npm test`.
 
 ## Deploy to Production
 
-We are deploying to heroku which will deploy every pr merged to master.
+Every merged pull request to master gets auto-magically deployed.
 
 Check the [buildpack](https://github.com/mars/create-react-app-buildpack) that we are using.
 
 ## Graph Component
 
-Our Chart component is an SVG component written in react. We are using this [lib](https://github.com/grady-lad/react-svg-coordfuncs).
+Our Chart component is an SVG component written in react.
+
+We are using [react-svg-coordfuncs].
+
+[react-svg-coordfunc]: https://github.com/grady-lad/react-svg-coordfuncs
 
 ## Contributing
 
-We welcome all persons no matter skill level you have!
+We welcome all persons no matter what skill level you have!
 
-If you're interested in contributing, we need you! Please join us in the [Gitter Lobby].
+If you're interested in contributing, we need you! Please check out the following:
 
-You can also suggest changes or ideas over at our [vision] repository!
+  * [Wiki]: Read about the project!
+  * [Gitter Lobby]: Come chat to us!
+  * [Vision] Repository: Weigh in and let us know your opinion!
 
-[vision]: https://github.com/giving-a-fuck-about-climate-change/vision
+[Wiki]: https://github.com/giving-a-fuck-about-climate-change/carbondoomsday/wiki
+[Gitter Lobby]: https://gitter.im/giving-a-fuck-about-climate-change/Lobby
+[Vision]: https://github.com/giving-a-fuck-about-climate-change/vision
+
+# Support
+
+Support us with a monthly donation and help us continue our activities.
+
+> [Become a backer!](https://opencollective.com/giving-a-fuck-about-climate-change)
+
+<a href="https://opencollective.com/giving-a-fuck-about-climate-change/backer/0/website" target="_blank"><img src="https://opencollective.com/giving-a-fuck-about-climate-change/backer/0/avatar.svg"></a>
