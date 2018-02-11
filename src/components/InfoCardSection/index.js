@@ -59,7 +59,16 @@ const InfoCardSection = () => (
           Doomsday comes in. We've built a web API and real-time chart of carbon
           dioxide data.
         </p>
-        <p>You can see our most up to date list of sources on our Github.</p>
+        <p>
+          You can see our most up to date list of sources{' '}
+          <a
+            href="https://github.com/giving-a-fuck-about-climate-change/carbondoomsday/wiki#data-sources"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            on our Github
+          </a>.
+        </p>
       </div>
     </InfoCard>
     <InfoCard title="Team">
