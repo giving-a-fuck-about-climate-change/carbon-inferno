@@ -28,7 +28,7 @@ We're currently live over at [carbondoomsday.com]. This application is part of t
 
 We pull our data from [api.carbondoomsday.com] (powered by [carbondoomsday]) while [giving a fuck].
 
-[api.carbondoomsday.com]: http://api.carbondoomsday.com/apidocs/
+[api.carbondoomsday.com]: http://api.carbondoomsday.com/
 [giving a fuck]: http://titojankowski.com/no-one-gives-a-fck-about-climate-change/
 [carbondoomsday]: https://github.com/giving-a-fuck-about-climate-change/carbondoomsday
 
