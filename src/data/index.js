@@ -25,6 +25,7 @@ export const weekData = {
 export const dayData = {
   count: 14711,
   next:
+    // NOTE: carbondoomsday-test is dead. Ask @lwm to make api-test.carbondoomsday.com soon!
     'http://carbondoomsday-test.herokuapp.com/api/co2/?limit=1&offset=1&ordering=-date',
   previous: null,
   results: [

@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/giving-a-fuck-about-climate-change/carbon-inferno.svg?branch=master)](https://travis-ci.org/giving-a-fuck-about-climate-change/carbon-inferno)
-[![Heroku](https://img.shields.io/badge/Heroku-Deployed-brightgreen.svg)](https://carbon-inferno.herokuapp.com/)
 
 [![GitHub issues](https://img.shields.io/github/issues/giving-a-fuck-about-climate-change/carbon-inferno.svg)](https://github.com/giving-a-fuck-about-climate-change/carbon-inferno/issues)
 [![GitHub forks](https://img.shields.io/github/forks/giving-a-fuck-about-climate-change/carbon-inferno.svg)](https://github.com/giving-a-fuck-about-climate-change/carbon-inferno/network)

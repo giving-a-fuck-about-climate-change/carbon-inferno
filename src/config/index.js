@@ -3,13 +3,15 @@ const environment = {
     apiEndpoint: 'http://127.0.0.1:8000',
   },
   development: {
+    // NOTE: carbondoomsday-test is dead. Ask @lwm to make api-test.carbondoomsday.com soon!
     apiEndpoint: 'https://carbondoomsday-test.herokuapp.com',
   },
   staging: {
+    // NOTE: carbondoomsday-test is dead. Ask @lwm to make api-test.carbondoomsday.com soon!
     apiEndpoint: 'https://carbondoomsday-test.herokuapp.com',
   },
   production: {
-    apiEndpoint: 'https://carbondoomsday.herokuapp.com',
+    apiEndpoint: 'https://api.carbondoomsday.com',
   },
 }[process.env.NODE_ENV || 'development'];
 
