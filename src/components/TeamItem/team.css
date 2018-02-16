@@ -24,3 +24,8 @@
   flex-direction: row;
   align-items: center;
 }
+
+.team-div {
+  max-height: 450px;
+  overflow: auto;
+}
