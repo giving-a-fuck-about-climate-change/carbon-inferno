@@ -43,7 +43,7 @@ const PpmResizedChart = windowSize(PpmChart);
 export class ChartInfo extends Component {
   state = {
     rangeType:
-      this.props.match && this.props.match.params.time
+      this.props.match.params && this.props.match.params.time
         ? this.props.match.params.time
         : FIVE_YEAR, // Intitial date range query type
   };
@@ -53,7 +53,7 @@ export class ChartInfo extends Component {
     // before requesting ALL records from the API.
     if (this.state.rangeType === ALL) {
       // query for current ppm and wait for limit
-      Promise.resolve(this.props.fetchCurrentPpms()).then(() => {
+      this.props.fetchCurrentPpms().then(() => {
         // Query for current time period.
         this.queryApi(this.state.rangeType);
       });
@@ -203,5 +203,5 @@ ChartInfo.defaultProps = {
   fetchMonthWeekPpms: () => {},
   fetchYearPpms: () => {},
   fetchAllPpms: () => {},
-  match: null,
+  match: { params: null },
 };
