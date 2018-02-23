@@ -1,12 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const ListItem = ({ className, href, text, onClick }) => (
   <li className={className}>
     {href ? (
-      <a className="item-class" onClick={onClick} href={href}>
+      <Link className="item-class" onClick={onClick} to={href}>
         {text}
-      </a>
+      </Link>
     ) : (
       text
     )}
